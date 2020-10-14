@@ -13,9 +13,11 @@ MUSTARD = (209,206,25)
 pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('Rik\'s Platform Game')
+clock = pygame.time.Clock()
 
 # player
 player_image = pygame.image.load('images/vita_00.png')
+player_x = 300
 
 # platforms
 platforms = [
@@ -31,10 +33,37 @@ running = True
 while running:
 # game loop
 
-    # input
+    # -----
+    # INPUT
+    # -----
+
+    # check for quit
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    new_player_x = player_x
+    
+    # player input
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_a]:
+        new_player_x -= 2
+    if keys[pygame.K_d]:
+        new_player_x += 2
+
+    # horizontal movement
+
+    new_player_rect = pygame.Rect(new_player_x,200,72,72)
+    x_collision = False
+
+    #...check against every platform
+    for p in platforms:
+        if p.colliderect(new_player_rect):
+            x_collision = True
+            break
+
+    if x_collision == False:
+        player_x = new_player_x
 
     # update
 
@@ -47,9 +76,11 @@ while running:
         pygame.draw.rect(screen, MUSTARD, p)
 
     # player
-    screen.blit(player_image, (300,100))
+    screen.blit(player_image, (player_x,200))
     # present screen
     pygame.display.flip()
+
+    clock.tick(60)
 
 # quit
 pygame.quit()
