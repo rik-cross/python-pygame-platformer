@@ -19,6 +19,10 @@ clock = pygame.time.Clock()
 player_image = pygame.image.load('images/vita_00.png')
 player_x = 300
 
+player_y = 0
+player_speed = 0
+player_acceleration = 0.2
+
 # platforms
 platforms = [
     # middle
@@ -43,17 +47,23 @@ while running:
             running = False
 
     new_player_x = player_x
+    new_player_y = player_y
     
     # player input
     keys = pygame.key.get_pressed()
+    # a=left
     if keys[pygame.K_a]:
         new_player_x -= 2
+    # d=right
     if keys[pygame.K_d]:
         new_player_x += 2
+    # w=jump
+    if keys[pygame.K_w]:
+        player_speed = -5
 
     # horizontal movement
 
-    new_player_rect = pygame.Rect(new_player_x,200,72,72)
+    new_player_rect = pygame.Rect(new_player_x,player_y,72,72)
     x_collision = False
 
     #...check against every platform
@@ -64,6 +74,24 @@ while running:
 
     if x_collision == False:
         player_x = new_player_x
+    
+    # vertical movement
+
+    player_speed += player_acceleration
+    new_player_y += player_speed
+
+    new_player_rect = pygame.Rect(player_x,new_player_y,72,72)
+    y_collision = False
+
+    #...check against every platform
+    for p in platforms:
+        if p.colliderect(new_player_rect):
+            y_collision = True
+            player_speed = 0
+            break
+
+    if y_collision == False:
+        player_y = new_player_y
 
     # update
 
@@ -76,7 +104,7 @@ while running:
         pygame.draw.rect(screen, MUSTARD, p)
 
     # player
-    screen.blit(player_image, (player_x,200))
+    screen.blit(player_image, (player_x, player_y))
     # present screen
     pygame.display.flip()
 
