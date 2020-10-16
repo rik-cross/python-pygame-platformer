@@ -23,6 +23,9 @@ player_y = 0
 player_speed = 0
 player_acceleration = 0.2
 
+player_width = 45
+player_height = 51
+
 # platforms
 platforms = [
     # middle
@@ -57,13 +60,13 @@ while running:
     # d=right
     if keys[pygame.K_d]:
         new_player_x += 2
-    # w=jump
-    if keys[pygame.K_w]:
+    # w=jump (if on the ground)
+    if keys[pygame.K_w] and player_on_ground:
         player_speed = -5
 
     # horizontal movement
 
-    new_player_rect = pygame.Rect(new_player_x,player_y,72,72)
+    new_player_rect = pygame.Rect(new_player_x,player_y,player_width,player_height)
     x_collision = False
 
     #...check against every platform
@@ -80,14 +83,20 @@ while running:
     player_speed += player_acceleration
     new_player_y += player_speed
 
-    new_player_rect = pygame.Rect(player_x,new_player_y,72,72)
+    new_player_rect = pygame.Rect(player_x,new_player_y,player_width,player_height)
     y_collision = False
+    player_on_ground = False
 
     #...check against every platform
     for p in platforms:
         if p.colliderect(new_player_rect):
             y_collision = True
             player_speed = 0
+            # if the platform is below the player
+            if p[1] > new_player_y:
+                # stick the player to the platform
+                player_y = p[1] - player_height
+                player_on_ground = True
             break
 
     if y_collision == False:
