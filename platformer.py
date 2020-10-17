@@ -45,6 +45,8 @@ player_acceleration = 0.2
 player_width = 45
 player_height = 51
 
+player_direction = 'right'
+
 # platforms
 platforms = [
     # middle
@@ -96,9 +98,11 @@ while running:
         # a=left
         if keys[pygame.K_a]:
             new_player_x -= 2
+            player_direction = 'left'
         # d=right
         if keys[pygame.K_d]:
             new_player_x += 2
+            player_direction = 'right'
         # w=jump (if on the ground)
         if keys[pygame.K_w] and player_on_ground:
             player_speed = -5
@@ -190,16 +194,20 @@ while running:
         screen.blit(enemy_image, (e.x, e.y))
 
     # player
-    screen.blit(player_image, (player_x, player_y))
+    if player_direction == 'right':
+        screen.blit(player_image, (player_x, player_y))
+    elif player_direction == 'left':
+        screen.blit(pygame.transform.flip(player_image, True, False), (player_x, player_y))
 
     # player information display
 
     # score
-    drawText('Score: ' + str(score), 10, 10)
+    screen.blit(coin_image, (10,10))
+    drawText(str(score), 50, 10)
 
     # lives
     for l in range(lives):
-        screen.blit(heart_image, (200 + (l*50),0))
+        screen.blit(heart_image, (200 + (l*50),10))
 
     if game_state == 'win':
         drawText('You win!', 50, 50)
