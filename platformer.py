@@ -5,6 +5,9 @@
 # Coin sprite by DasBilligeAlien
 # https://opengameart.org/content/rotating-coin-0
 
+# Enemy sprite by bevouliin.com
+# https://opengameart.org/content/bevouliin-free-ingame-items-spike-monsters
+
 import pygame
 
 # constant variables
@@ -47,6 +50,14 @@ coins = [
 ]
 
 score = 0
+
+# enemies
+enemy_image = pygame.image.load('images/spike_monster.png')
+enemies = [
+    pygame.Rect(150,274,50,26)
+]
+
+lives = 3
 
 running = True
 while running:
@@ -125,6 +136,15 @@ while running:
             coins.remove(c)
             score += 1
 
+    # see if the player has hit an enemy
+    for e in enemies:
+        if e.colliderect(player_rect):
+            lives -= 1
+            # reset player position
+            player_x = 300
+            player_y = 0
+            player_speed = 0
+
     # ----
     # DRAW
     # ----
@@ -138,7 +158,11 @@ while running:
 
     # coins
     for c in coins:
-        screen.blit(coin_image, (c[0], c[1]))
+        screen.blit(coin_image, (c.x, c.y))
+
+    # coins
+    for e in enemies:
+        screen.blit(enemy_image, (e.x, e.y))
 
     # player
     screen.blit(player_image, (player_x, player_y))
