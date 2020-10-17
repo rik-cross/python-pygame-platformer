@@ -8,6 +8,9 @@
 # Enemy sprite by bevouliin.com
 # https://opengameart.org/content/bevouliin-free-ingame-items-spike-monsters
 
+# Heart sprite by Nicole Marie T
+# https://opengameart.org/content/heart-1616
+
 import pygame
 
 # constant variables
@@ -20,6 +23,7 @@ pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('Rik\'s Platform Game')
 clock = pygame.time.Clock()
+font = pygame.font.Font(pygame.font.get_default_font(), 24)
 
 # player
 player_image = pygame.image.load('images/vita_00.png')
@@ -58,6 +62,7 @@ enemies = [
 ]
 
 lives = 3
+heart_image = pygame.image.load('images/heart.png')
 
 running = True
 while running:
@@ -166,6 +171,19 @@ while running:
 
     # player
     screen.blit(player_image, (player_x, player_y))
+
+    # player information display
+
+    # score
+    score_text = font.render('Score: ' + str(score), True, MUSTARD, DARK_GREY)
+    score_text_rectangle = score_text.get_rect()
+    score_text_rectangle.topleft = (10,10)
+    screen.blit(score_text, score_text_rectangle)
+
+    # lives
+    for l in range(lives):
+        screen.blit(heart_image, (200 + (l*50),0))
+
     # present screen
     pygame.display.flip()
 
