@@ -12,6 +12,7 @@
 # https://opengameart.org/content/heart-1616
 
 import pygame
+import engine
 
 def drawText(t, x, y):
     text = font.render(t, True, MUSTARD, DARK_GREY)
@@ -46,6 +47,24 @@ player_width = 45
 player_height = 51
 
 player_direction = 'right'
+player_state = 'idle' # or 'walking'
+
+player_animations = {
+    'idle' : engine.Animation([
+        pygame.image.load('images/vita_00.png'),
+        pygame.image.load('images/vita_01.png'),
+        pygame.image.load('images/vita_02.png'),
+        pygame.image.load('images/vita_03.png')
+    ]),
+    'walking' : engine.Animation([
+        pygame.image.load('images/vita_04.png'),
+        pygame.image.load('images/vita_05.png'),
+        pygame.image.load('images/vita_06.png'),
+        pygame.image.load('images/vita_07.png'),
+        pygame.image.load('images/vita_08.png'),
+        pygame.image.load('images/vita_09.png')
+    ])
+}
 
 # platforms
 platforms = [
@@ -59,6 +78,14 @@ platforms = [
 
 # coins
 coin_image = pygame.image.load('images/coin_0.png')
+coin_animation = engine.Animation([
+    pygame.image.load('images/coin_0.png'),
+    pygame.image.load('images/coin_1.png'),
+    pygame.image.load('images/coin_2.png'),
+    pygame.image.load('images/coin_3.png'),
+    pygame.image.load('images/coin_4.png'),
+    pygame.image.load('images/coin_5.png')
+])
 coins = [
     pygame.Rect(100,200,23,23),
     pygame.Rect(200,250,23,23)
@@ -99,10 +126,14 @@ while running:
         if keys[pygame.K_a]:
             new_player_x -= 2
             player_direction = 'left'
+            player_state = 'walking'
         # d=right
         if keys[pygame.K_d]:
             new_player_x += 2
             player_direction = 'right'
+            player_state = 'walking'
+        if not keys[pygame.K_a] and not keys[pygame.K_d]:
+            player_state = 'idle'
         # w=jump (if on the ground)
         if keys[pygame.K_w] and player_on_ground:
             player_speed = -5
@@ -112,6 +143,11 @@ while running:
     # ------
 
     if game_state == 'playing':
+
+        # update player animation
+        player_animations[player_state].update()
+        # update coin animation
+        coin_animation.update()
 
         # horizontal movement
 
@@ -187,7 +223,8 @@ while running:
 
     # coins
     for c in coins:
-        screen.blit(coin_image, (c.x, c.y))
+        #screen.blit(coin_image, (c.x, c.y))
+        coin_animation.draw(screen, c.x, c.y, False, False)
 
     # enemies
     for e in enemies:
@@ -195,9 +232,11 @@ while running:
 
     # player
     if player_direction == 'right':
-        screen.blit(player_image, (player_x, player_y))
+        #screen.blit(player_image, (player_x, player_y))
+        player_animations[player_state].draw(screen, player_x, player_y, False, False)
     elif player_direction == 'left':
-        screen.blit(pygame.transform.flip(player_image, True, False), (player_x, player_y))
+        #screen.blit(pygame.transform.flip(player_image, True, False), (player_x, player_y))
+        player_animations[player_state].draw(screen, player_x, player_y, True, False)
 
     # player information display
 
