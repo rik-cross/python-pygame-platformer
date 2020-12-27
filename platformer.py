@@ -13,6 +13,7 @@
 
 import pygame
 import engine
+import utils
 
 def drawText(t, x, y):
     text = font.render(t, True, MUSTARD, DARK_GREY)
@@ -34,6 +35,8 @@ font = pygame.font.Font(pygame.font.get_default_font(), 24)
 
 # game states = playing // win // lose
 game_state = 'playing'
+
+entities = []
 
 # player
 player_image = pygame.image.load('images/vita_00.png')
@@ -78,18 +81,9 @@ platforms = [
 
 # coins
 coin_image = pygame.image.load('images/coin_0.png')
-coin_animation = engine.Animation([
-    pygame.image.load('images/coin_0.png'),
-    pygame.image.load('images/coin_1.png'),
-    pygame.image.load('images/coin_2.png'),
-    pygame.image.load('images/coin_3.png'),
-    pygame.image.load('images/coin_4.png'),
-    pygame.image.load('images/coin_5.png')
-])
-coins = [
-    pygame.Rect(100,200,23,23),
-    pygame.Rect(200,250,23,23)
-]
+
+entities.append(utils.makeCoin(100,200))
+entities.append(utils.makeCoin(200,250))
 
 score = 0
 
@@ -146,8 +140,10 @@ while running:
 
         # update player animation
         player_animations[player_state].update()
-        # update coin animation
-        coin_animation.update()
+
+        # update animations
+        for entity in entities:
+            entity.animations.animationList[entity.state].update()
 
         # horizontal movement
 
@@ -189,13 +185,16 @@ while running:
 
         # see if any coins have been collected
         player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
-        for c in coins:
-            if c.colliderect(player_rect):
-                coins.remove(c)
-                score += 1
-                # win if the score is 2
-                if score >= 2:
-                    game_state = 'win'
+
+        # collection system
+        for entity in entities:
+            if entity.type == 'collectable':
+                if entity.position.rect.colliderect(player_rect):
+                    entities.remove(entity)
+                    score += 1
+                    # win if the score is 2
+                    if score >= 2:
+                        game_state = 'win'
 
         # see if the player has hit an enemy
         for e in enemies:
@@ -221,10 +220,11 @@ while running:
     for p in platforms:
         pygame.draw.rect(screen, MUSTARD, p)
 
-    # coins
-    for c in coins:
-        #screen.blit(coin_image, (c.x, c.y))
-        coin_animation.draw(screen, c.x, c.y, False, False)
+    # draw system
+    for entity in entities:
+        s = entity.state
+        a = entity.animations.animationList[s]
+        a.draw(screen, entity.position.rect.x, entity.position.rect.y, False, False)
 
     # enemies
     for e in enemies:

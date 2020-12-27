@@ -1,5 +1,15 @@
 import pygame
 
+class Position():
+    def __init__(self, x, y, w, h):
+        self.rect = pygame.Rect(x,y,w,h)
+
+class Animations():
+    def __init__(self):
+        self.animationList = {}
+    def add(self, state, animation):
+        self.animationList[state] = animation
+
 class Animation():
     def __init__(self, imageList):
         self.imageList = imageList
@@ -21,4 +31,11 @@ class Animation():
                 self.imageIndex = 0
     def draw(self, screen, x, y, flipX, flipY):
         screen.blit(pygame.transform.flip(self.imageList[self.imageIndex], flipX, flipY), (x, y))
+
+class Entity():
+    def __init__(self):
+        self.state = 'idle'
+        self.type = 'normal'
+        self.position = None
+        self.animations = Animations()
 
