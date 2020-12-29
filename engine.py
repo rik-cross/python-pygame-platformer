@@ -38,4 +38,5 @@ class Entity():
         self.type = 'normal'
         self.position = None
         self.animations = Animations()
+        self.direction = 'right'
 

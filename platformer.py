@@ -38,36 +38,15 @@ game_state = 'playing'
 
 entities = []
 
-# player
-player_image = pygame.image.load('images/vita_00.png')
-player_x = 300
+# images
+coin_image = pygame.image.load('images/coin_0.png')
+heart_image = pygame.image.load('images/heart.png')
 
-player_y = 0
+# player
 player_speed = 0
 player_acceleration = 0.2
-
-player_width = 45
-player_height = 51
-
-player_direction = 'right'
-player_state = 'idle' # or 'walking'
-
-player_animations = {
-    'idle' : engine.Animation([
-        pygame.image.load('images/vita_00.png'),
-        pygame.image.load('images/vita_01.png'),
-        pygame.image.load('images/vita_02.png'),
-        pygame.image.load('images/vita_03.png')
-    ]),
-    'walking' : engine.Animation([
-        pygame.image.load('images/vita_04.png'),
-        pygame.image.load('images/vita_05.png'),
-        pygame.image.load('images/vita_06.png'),
-        pygame.image.load('images/vita_07.png'),
-        pygame.image.load('images/vita_08.png'),
-        pygame.image.load('images/vita_09.png')
-    ])
-}
+score = 0
+lives = 3
 
 # platforms
 platforms = [
@@ -79,22 +58,11 @@ platforms = [
     pygame.Rect(450,250,50,50)
 ]
 
-# coins
-coin_image = pygame.image.load('images/coin_0.png')
-
 entities.append(utils.makeCoin(100,200))
 entities.append(utils.makeCoin(200,250))
-
-score = 0
-
-# enemies
-enemy_image = pygame.image.load('images/spike_monster.png')
-enemies = [
-    pygame.Rect(150,274,50,26)
-]
-
-lives = 3
-heart_image = pygame.image.load('images/heart.png')
+entities.append(utils.makeEnemy(150,274))
+player = utils.makePlayer(300,0)
+entities.append(player)
 
 running = True
 while running:
@@ -111,23 +79,23 @@ while running:
 
     if game_state == 'playing':
 
-        new_player_x = player_x
-        new_player_y = player_y
+        new_player_x = player.position.rect.x
+        new_player_y = player.position.rect.y
         
         # player input
         keys = pygame.key.get_pressed()
         # a=left
         if keys[pygame.K_a]:
             new_player_x -= 2
-            player_direction = 'left'
-            player_state = 'walking'
+            player.direction = 'left'
+            player.state = 'walking'
         # d=right
         if keys[pygame.K_d]:
             new_player_x += 2
-            player_direction = 'right'
-            player_state = 'walking'
+            player.direction = 'right'
+            player.state = 'walking'
         if not keys[pygame.K_a] and not keys[pygame.K_d]:
-            player_state = 'idle'
+            player.state = 'idle'
         # w=jump (if on the ground)
         if keys[pygame.K_w] and player_on_ground:
             player_speed = -5
@@ -138,16 +106,13 @@ while running:
 
     if game_state == 'playing':
 
-        # update player animation
-        player_animations[player_state].update()
-
         # update animations
         for entity in entities:
             entity.animations.animationList[entity.state].update()
 
         # horizontal movement
 
-        new_player_rect = pygame.Rect(new_player_x,player_y,player_width,player_height)
+        new_player_rect = pygame.Rect(new_player_x,player.position.rect.y,player.position.rect.width,player.position.rect.height)
         x_collision = False
 
         #...check against every platform
@@ -157,14 +122,14 @@ while running:
                 break
 
         if x_collision == False:
-            player_x = new_player_x
+            player.position.rect.x = new_player_x
         
         # vertical movement
 
         player_speed += player_acceleration
         new_player_y += player_speed
 
-        new_player_rect = pygame.Rect(player_x,new_player_y,player_width,player_height)
+        new_player_rect = pygame.Rect(player.position.rect.x,new_player_y,player.position.rect.width,player.position.rect.height)
         y_collision = False
         player_on_ground = False
 
@@ -176,15 +141,15 @@ while running:
                 # if the platform is below the player
                 if p[1] > new_player_y:
                     # stick the player to the platform
-                    player_y = p[1] - player_height
+                    player.position.rect.y = p[1] - player.position.rect.height
                     player_on_ground = True
                 break
 
         if y_collision == False:
-            player_y = new_player_y
+            player.position.rect.y = new_player_y
 
         # see if any coins have been collected
-        player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+        player_rect = pygame.Rect(player.position.rect.x, player.position.rect.y, player.position.rect.width, player.position.rect.height)
 
         # collection system
         for entity in entities:
@@ -196,18 +161,19 @@ while running:
                     if score >= 2:
                         game_state = 'win'
 
-        # see if the player has hit an enemy
-        for e in enemies:
-            if e.colliderect(player_rect):
-                lives -= 1
-                # reset player position
-                player_x = 300
-                player_y = 0
-                player_speed = 0
-                # change the game state
-                # if no lives remaining
-                if lives <= 0:
-                    game_state = 'lose'
+        # enemy system
+        for entity in entities:
+            if entity.type == 'dangerous':
+                if entity.position.rect.colliderect(player_rect):
+                    lives -= 1
+                    # reset player position
+                    player.position.rect.x = 300
+                    player.position.rect.y = 0
+                    player_speed = 0
+                    # change the game state
+                    # if no lives remaining
+                    if lives <= 0:
+                        game_state = 'lose'
 
     # ----
     # DRAW
@@ -224,19 +190,10 @@ while running:
     for entity in entities:
         s = entity.state
         a = entity.animations.animationList[s]
-        a.draw(screen, entity.position.rect.x, entity.position.rect.y, False, False)
-
-    # enemies
-    for e in enemies:
-        screen.blit(enemy_image, (e.x, e.y))
-
-    # player
-    if player_direction == 'right':
-        #screen.blit(player_image, (player_x, player_y))
-        player_animations[player_state].draw(screen, player_x, player_y, False, False)
-    elif player_direction == 'left':
-        #screen.blit(pygame.transform.flip(player_image, True, False), (player_x, player_y))
-        player_animations[player_state].draw(screen, player_x, player_y, True, False)
+        if entity.direction == 'left':
+            a.draw(screen, entity.position.rect.x, entity.position.rect.y, True, False)
+        else:
+            a.draw(screen, entity.position.rect.x, entity.position.rect.y, False, False)
 
     # player information display
 
