@@ -60,9 +60,16 @@ platforms = [
 
 entities.append(utils.makeCoin(100,200))
 entities.append(utils.makeCoin(200,250))
-entities.append(utils.makeEnemy(150,274))
+
+enemy = utils.makeEnemy(150,274)
+enemy.camera = engine.Camera(420,10,200,200)
+entities.append(enemy)
+
 player = utils.makePlayer(300,0)
+player.camera = engine.Camera(10,10,400,400)
 entities.append(player)
+
+cameraSys = engine.CameraSystem()
 
 running = True
 while running:
@@ -129,7 +136,7 @@ while running:
         player_speed += player_acceleration
         new_player_y += player_speed
 
-        new_player_rect = pygame.Rect(player.position.rect.x,new_player_y,player.position.rect.width,player.position.rect.height)
+        new_player_rect = pygame.Rect(int(player.position.rect.x), int(new_player_y) ,player.position.rect.width,player.position.rect.height)
         y_collision = False
         player_on_ground = False
 
@@ -146,10 +153,10 @@ while running:
                 break
 
         if y_collision == False:
-            player.position.rect.y = new_player_y
+            player.position.rect.y = int(new_player_y)
 
         # see if any coins have been collected
-        player_rect = pygame.Rect(player.position.rect.x, player.position.rect.y, player.position.rect.width, player.position.rect.height)
+        player_rect = pygame.Rect(int(player.position.rect.x), int(player.position.rect.y), player.position.rect.width, player.position.rect.height)
 
         # collection system
         for entity in entities:
@@ -182,34 +189,23 @@ while running:
     # background
     screen.fill(DARK_GREY)
 
-    # platforms
-    for p in platforms:
-        pygame.draw.rect(screen, MUSTARD, p)
-
-    # draw system
-    for entity in entities:
-        s = entity.state
-        a = entity.animations.animationList[s]
-        if entity.direction == 'left':
-            a.draw(screen, entity.position.rect.x, entity.position.rect.y, True, False)
-        else:
-            a.draw(screen, entity.position.rect.x, entity.position.rect.y, False, False)
+    cameraSys._update(screen, entities, platforms)
 
     # player information display
 
     # score
-    screen.blit(coin_image, (10,10))
-    drawText(str(score), 50, 10)
+    #screen.blit(coin_image, (10,10))
+    #drawText(str(score), 50, 10)
 
     # lives
-    for l in range(lives):
-        screen.blit(heart_image, (200 + (l*50),10))
+    #for l in range(lives):
+    #    screen.blit(heart_image, (200 + (l*50),10))
 
-    if game_state == 'win':
-        drawText('You win!', 50, 50)
+    #if game_state == 'win':
+    #    drawText('You win!', 50, 50)
         
-    if game_state == 'lose':
-        drawText('You lose!', 50, 50)
+    #if game_state == 'lose':
+    #    drawText('You lose!', 50, 50)
 
     # present screen
     pygame.display.flip()
