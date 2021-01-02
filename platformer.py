@@ -63,10 +63,13 @@ entities.append(utils.makeCoin(200,250))
 
 enemy = utils.makeEnemy(150,274)
 enemy.camera = engine.Camera(420,10,200,200)
+enemy.camera.setWorldPos(150,250)
 entities.append(enemy)
 
 player = utils.makePlayer(300,0)
 player.camera = engine.Camera(10,10,400,400)
+player.camera.setWorldPos(300,0)
+player.camera.trackEntity(player)
 entities.append(player)
 
 cameraSys = engine.CameraSystem()
@@ -189,7 +192,7 @@ while running:
     # background
     screen.fill(DARK_GREY)
 
-    cameraSys._update(screen, entities, platforms)
+    cameraSys.update(screen, entities, platforms)
 
     # player information display
 
