@@ -1,4 +1,5 @@
 import pygame
+import utils
 
 class System():
     def __init__(self):
@@ -42,22 +43,41 @@ class CameraSystem(System):
             entity.camera.worldY = (currentY * 0.95) + (targetY * 0.05)
 
         # calculate offsets
-        offsetX = cameraRect.x + cameraRect.w/2 - entity.camera.worldX
-        offsetY = cameraRect.y + cameraRect.h/2 - entity.camera.worldY
+        offsetX = cameraRect.x + cameraRect.w/2 - (entity.camera.worldX * entity.camera.zoomLevel)
+        offsetY = cameraRect.y + cameraRect.h/2 - (entity.camera.worldY * entity.camera.zoomLevel)
 
         # fill camera background
         screen.fill(BLACK)
 
         # render platforms
         for p in platforms:
-            newPosRect = pygame.Rect(p.x + offsetX, p.y + offsetY, p.w, p.h)
+            newPosRect = pygame.Rect(
+                (p.x * entity.camera.zoomLevel) + offsetX,
+                (p.y * entity.camera.zoomLevel) + offsetY,
+                p.w * entity.camera.zoomLevel,
+                p.h * entity.camera.zoomLevel)
             pygame.draw.rect(screen, MUSTARD, newPosRect)
 
         # render entities
         for e in entities:
             s = e.state
             a = e.animations.animationList[s]
-            a.draw(screen, e.position.rect.x + offsetX, e.position.rect.y + offsetY, e.direction == 'left', False)
+            a.draw(screen,
+                (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
+                (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
+                e.direction == 'left', False, entity.camera.zoomLevel)
+
+        # entity HUD
+
+        # score
+        if entity.score is not None:
+            screen.blit(utils.coin0, (entity.camera.rect.x + 10, entity.camera.rect.y + 10))
+            utils.drawText(screen, str(entity.score.score), entity.camera.rect.x + 50, entity.camera.rect.y + 10)
+
+        # lives
+        if entity.battle is not None:
+            for l in range(entity.battle.lives):
+                screen.blit(utils.heart_image, (entity.camera.rect.x + 200 + (l*50),entity.camera.rect.y + 10))
 
         # unset clipping rectangle
         screen.set_clip(None)
@@ -68,6 +88,7 @@ class Camera():
         self.worldX = 0
         self.worldY = 0
         self.entityToTrack = None
+        self.zoomLevel = 1
     def setWorldPos(self, x, y):
         self.worldX = x
         self.worldY = y
@@ -103,8 +124,19 @@ class Animation():
             # once the index gets too high
             if self.imageIndex > len(self.imageList) - 1:
                 self.imageIndex = 0
-    def draw(self, screen, x, y, flipX, flipY):
-        screen.blit(pygame.transform.flip(self.imageList[self.imageIndex], flipX, flipY), (x, y))
+    def draw(self, screen, x, y, flipX, flipY, zoomLevel):
+        image = self.imageList[self.imageIndex]
+        newWidth = int(image.get_rect().w * zoomLevel)
+        newHeight = int(image.get_rect().h * zoomLevel)
+        screen.blit(pygame.transform.scale(pygame.transform.flip(image, flipX, flipY), (newWidth, newHeight)), (x, y))
+
+class Score():
+    def __init__(self):
+        self.score = 0
+
+class Battle():
+    def __init__(self):
+        self.lives = 3
 
 class Entity():
     def __init__(self):
@@ -114,4 +146,6 @@ class Entity():
         self.animations = Animations()
         self.direction = 'right'
         self.camera = None
+        self.score = None
+        self.battle = None
 

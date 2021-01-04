@@ -15,12 +15,6 @@ import pygame
 import engine
 import utils
 
-def drawText(t, x, y):
-    text = font.render(t, True, MUSTARD, DARK_GREY)
-    text_rectangle = text.get_rect()
-    text_rectangle.topleft = (x,y)
-    screen.blit(text, text_rectangle)
-
 # constant variables
 SCREEN_SIZE = (700,500)
 DARK_GREY = (50,50,50)
@@ -31,22 +25,15 @@ pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('Rik\'s Platform Game')
 clock = pygame.time.Clock()
-font = pygame.font.Font(pygame.font.get_default_font(), 24)
 
 # game states = playing // win // lose
 game_state = 'playing'
 
 entities = []
 
-# images
-coin_image = pygame.image.load('images/coin_0.png')
-heart_image = pygame.image.load('images/heart.png')
-
 # player
 player_speed = 0
 player_acceleration = 0.2
-score = 0
-lives = 3
 
 # platforms
 platforms = [
@@ -70,6 +57,8 @@ player = utils.makePlayer(300,0)
 player.camera = engine.Camera(10,10,400,400)
 player.camera.setWorldPos(300,0)
 player.camera.trackEntity(player)
+player.score = engine.Score()
+player.battle = engine.Battle()
 entities.append(player)
 
 cameraSys = engine.CameraSystem()
@@ -109,6 +98,14 @@ while running:
         # w=jump (if on the ground)
         if keys[pygame.K_w] and player_on_ground:
             player_speed = -5
+        
+        # control zoom level of the player camera
+        # zoom out
+        if keys[pygame.K_q]:
+            player.camera.zoomLevel -= 0.01
+        # zoom in
+        if keys[pygame.K_e]:
+            player.camera.zoomLevel += 0.01
 
     # ------
     # UPDATE
@@ -166,23 +163,23 @@ while running:
             if entity.type == 'collectable':
                 if entity.position.rect.colliderect(player_rect):
                     entities.remove(entity)
-                    score += 1
+                    player.score.score += 1
                     # win if the score is 2
-                    if score >= 2:
+                    if player.score.score >= 2:
                         game_state = 'win'
 
         # enemy system
         for entity in entities:
             if entity.type == 'dangerous':
                 if entity.position.rect.colliderect(player_rect):
-                    lives -= 1
+                    player.battle.lives -= 1
                     # reset player position
                     player.position.rect.x = 300
                     player.position.rect.y = 0
                     player_speed = 0
                     # change the game state
                     # if no lives remaining
-                    if lives <= 0:
+                    if player.battle.lives <= 0:
                         game_state = 'lose'
 
     # ----
@@ -193,16 +190,6 @@ while running:
     screen.fill(DARK_GREY)
 
     cameraSys.update(screen, entities, platforms)
-
-    # player information display
-
-    # score
-    #screen.blit(coin_image, (10,10))
-    #drawText(str(score), 50, 10)
-
-    # lives
-    #for l in range(lives):
-    #    screen.blit(heart_image, (200 + (l*50),10))
 
     #if game_state == 'win':
     #    drawText('You win!', 50, 50)
