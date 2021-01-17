@@ -14,6 +14,7 @@
 import pygame
 import engine
 import utils
+import level
 
 # constant variables
 SCREEN_SIZE = (700,500)
@@ -35,23 +36,12 @@ entities = []
 player_speed = 0
 player_acceleration = 0.2
 
-# platforms
-platforms = [
-    # middle
-    pygame.Rect(100,300,400,50),
-    # left
-    pygame.Rect(100,250,50,50),
-    # right
-    pygame.Rect(450,250,50,50)
-]
-
-entities.append(utils.makeCoin(100,200))
-entities.append(utils.makeCoin(200,250))
+coin1 = utils.makeCoin(100,200)
+coin2 = utils.makeCoin(200,250)
 
 enemy = utils.makeEnemy(150,274)
 enemy.camera = engine.Camera(420,10,200,200)
 enemy.camera.setWorldPos(150,250)
-entities.append(enemy)
 
 player = utils.makePlayer(300,0)
 player.camera = engine.Camera(10,10,400,400)
@@ -59,9 +49,59 @@ player.camera.setWorldPos(300,0)
 player.camera.trackEntity(player)
 player.score = engine.Score()
 player.battle = engine.Battle()
-entities.append(player)
 
 cameraSys = engine.CameraSystem()
+
+# lose if no players have lives remaining
+def lostLevel(level):
+    # level isn't lost if any player has a life left
+    for entity in level.entities:
+        if entity.type == 'player':
+            if entity.battle is not None:
+                if entity.battle.lives > 0:
+                    return False
+    # level is lost otherwise
+    return True
+
+# win if no collectable items left
+def wonLevel(level):
+    # level isn't won if any collectable exists
+    for entity in level.entities:
+        if entity.type == 'collectable':
+            return False
+    # level isn't won otherwise
+    return True
+
+level1 = level.Level(
+    platforms=[
+        # middle
+        pygame.Rect(100,300,400,50),
+        # left
+        pygame.Rect(100,250,50,50),
+        # right
+        pygame.Rect(450,250,50,50)
+    ],
+    entities = [
+        player, enemy, coin1, coin2
+    ],
+    winFunc=wonLevel,
+    loseFunc=lostLevel
+)
+
+level2 = level.Level(
+    platforms=[
+        # middle
+        pygame.Rect(100,300,400,50)
+    ],
+    entities = [
+        player, coin1
+    ],
+    winFunc=wonLevel,
+    loseFunc=lostLevel
+)
+
+# set the current level
+world = level1
 
 running = True
 while running:
@@ -114,7 +154,7 @@ while running:
     if game_state == 'playing':
 
         # update animations
-        for entity in entities:
+        for entity in world.entities:
             entity.animations.animationList[entity.state].update()
 
         # horizontal movement
@@ -123,7 +163,7 @@ while running:
         x_collision = False
 
         #...check against every platform
-        for p in platforms:
+        for p in world.platforms:
             if p.colliderect(new_player_rect):
                 x_collision = True
                 break
@@ -141,7 +181,7 @@ while running:
         player_on_ground = False
 
         #...check against every platform
-        for p in platforms:
+        for p in world.platforms:
             if p.colliderect(new_player_rect):
                 y_collision = True
                 player_speed = 0
@@ -159,17 +199,14 @@ while running:
         player_rect = pygame.Rect(int(player.position.rect.x), int(player.position.rect.y), player.position.rect.width, player.position.rect.height)
 
         # collection system
-        for entity in entities:
+        for entity in world.entities:
             if entity.type == 'collectable':
                 if entity.position.rect.colliderect(player_rect):
-                    entities.remove(entity)
+                    world.entities.remove(entity)
                     player.score.score += 1
-                    # win if the score is 2
-                    if player.score.score >= 2:
-                        game_state = 'win'
 
         # enemy system
-        for entity in entities:
+        for entity in world.entities:
             if entity.type == 'dangerous':
                 if entity.position.rect.colliderect(player_rect):
                     player.battle.lives -= 1
@@ -177,10 +214,11 @@ while running:
                     player.position.rect.x = 300
                     player.position.rect.y = 0
                     player_speed = 0
-                    # change the game state
-                    # if no lives remaining
-                    if player.battle.lives <= 0:
-                        game_state = 'lose'
+
+    if world.isWon():
+        game_state = 'win'
+    if world.isLost():
+        game_state = 'lose'
 
     # ----
     # DRAW
@@ -189,7 +227,7 @@ while running:
     # background
     screen.fill(DARK_GREY)
 
-    cameraSys.update(screen, entities, platforms)
+    cameraSys.update(screen, world)
 
     #if game_state == 'win':
     #    drawText('You win!', 50, 50)
