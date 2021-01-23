@@ -15,6 +15,7 @@ import pygame
 import engine
 import utils
 import level
+import scene
 
 # constant variables
 SCREEN_SIZE = (700,500)
@@ -103,9 +104,19 @@ level2 = level.Level(
 # set the current level
 world = level1
 
+sceneManager = scene.SceneManager()
+mainMenu = scene.MainMenuScene()
+sceneManager.push(mainMenu)
+
 running = True
 while running:
 # game loop
+
+    if sceneManager.isEmpty():
+        running = False
+    sceneManager.input()
+    sceneManager.update()
+    sceneManager.draw()
 
     # -----
     # INPUT
