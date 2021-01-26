@@ -116,7 +116,7 @@ while running:
         running = False
     sceneManager.input()
     sceneManager.update()
-    sceneManager.draw()
+    sceneManager.draw(screen) 
 
     # -----
     # INPUT
@@ -235,19 +235,13 @@ while running:
     # DRAW
     # ----
 
-    # background
-    screen.fill(DARK_GREY)
-
-    cameraSys.update(screen, world)
+    #cameraSys.update(screen, world)
 
     #if game_state == 'win':
     #    drawText('You win!', 50, 50)
         
     #if game_state == 'lose':
     #    drawText('You lose!', 50, 50)
-
-    # present screen
-    pygame.display.flip()
 
     clock.tick(60)
 
