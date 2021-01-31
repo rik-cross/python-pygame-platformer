@@ -16,6 +16,7 @@ import engine
 import utils
 import level
 import scene
+import globals
 
 # constant variables
 SCREEN_SIZE = (700,500)
@@ -73,7 +74,7 @@ def wonLevel(level):
     # level isn't won otherwise
     return True
 
-level1 = level.Level(
+globals.levels[1] = level.Level(
     platforms=[
         # middle
         pygame.Rect(100,300,400,50),
@@ -89,7 +90,7 @@ level1 = level.Level(
     loseFunc=lostLevel
 )
 
-level2 = level.Level(
+globals.levels[2] = level.Level(
     platforms=[
         # middle
         pygame.Rect(100,300,400,50)
@@ -102,7 +103,7 @@ level2 = level.Level(
 )
 
 # set the current level
-world = level1
+globals.world = globals.levels[1]
 
 sceneManager = scene.SceneManager()
 mainMenu = scene.MainMenuScene()
@@ -165,7 +166,7 @@ while running:
     if game_state == 'playing':
 
         # update animations
-        for entity in world.entities:
+        for entity in globals.world.entities:
             entity.animations.animationList[entity.state].update()
 
         # horizontal movement
@@ -174,7 +175,7 @@ while running:
         x_collision = False
 
         #...check against every platform
-        for p in world.platforms:
+        for p in globals.world.platforms:
             if p.colliderect(new_player_rect):
                 x_collision = True
                 break
@@ -192,7 +193,7 @@ while running:
         player_on_ground = False
 
         #...check against every platform
-        for p in world.platforms:
+        for p in globals.world.platforms:
             if p.colliderect(new_player_rect):
                 y_collision = True
                 player_speed = 0
@@ -210,14 +211,14 @@ while running:
         player_rect = pygame.Rect(int(player.position.rect.x), int(player.position.rect.y), player.position.rect.width, player.position.rect.height)
 
         # collection system
-        for entity in world.entities:
+        for entity in globals.world.entities:
             if entity.type == 'collectable':
                 if entity.position.rect.colliderect(player_rect):
-                    world.entities.remove(entity)
+                    globals.world.entities.remove(entity)
                     player.score.score += 1
 
         # enemy system
-        for entity in world.entities:
+        for entity in globals.world.entities:
             if entity.type == 'dangerous':
                 if entity.position.rect.colliderect(player_rect):
                     player.battle.lives -= 1
@@ -225,23 +226,6 @@ while running:
                     player.position.rect.x = 300
                     player.position.rect.y = 0
                     player_speed = 0
-
-    if world.isWon():
-        game_state = 'win'
-    if world.isLost():
-        game_state = 'lose'
-
-    # ----
-    # DRAW
-    # ----
-
-    #cameraSys.update(screen, world)
-
-    #if game_state == 'win':
-    #    drawText('You win!', 50, 50)
-        
-    #if game_state == 'lose':
-    #    drawText('You lose!', 50, 50)
 
     clock.tick(60)
 

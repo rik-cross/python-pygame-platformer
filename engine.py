@@ -1,16 +1,17 @@
 import pygame
 import utils
+import globals
 
 class System():
     def __init__(self):
         pass
     def check(self, entity):
         return True
-    def update(self, screen, world):
-        for entity in world.entities:
+    def update(self, screen):
+        for entity in globals.world.entities:
             if self.check(entity):
-                self.updateEntity(screen, entity, world)
-    def updateEntity(self, screen, entity, world):
+                self.updateEntity(screen, entity)
+    def updateEntity(self, screen, entity):
         pass
 
 MUSTARD = (209,206,25)
@@ -21,7 +22,7 @@ class CameraSystem(System):
         super().__init__()
     def check(self, entity):
         return entity.camera is not None
-    def updateEntity(self, screen, entity, world):
+    def updateEntity(self, screen, entity):
 
         # set clipping rectangle
         cameraRect = entity.camera.rect
@@ -50,7 +51,7 @@ class CameraSystem(System):
         screen.fill(BLACK)
 
         # render platforms
-        for p in world.platforms:
+        for p in globals.world.platforms:
             newPosRect = pygame.Rect(
                 (p.x * entity.camera.zoomLevel) + offsetX,
                 (p.y * entity.camera.zoomLevel) + offsetY,
@@ -59,7 +60,7 @@ class CameraSystem(System):
             pygame.draw.rect(screen, MUSTARD, newPosRect)
 
         # render entities
-        for e in world.entities:
+        for e in globals.world.entities:
             s = e.state
             a = e.animations.animationList[s]
             a.draw(screen,
@@ -72,7 +73,7 @@ class CameraSystem(System):
         # score
         if entity.score is not None:
             screen.blit(utils.coin0, (entity.camera.rect.x + 10, entity.camera.rect.y + 10))
-            utils.drawText(screen, str(entity.score.score), entity.camera.rect.x + 50, entity.camera.rect.y + 10)
+            utils.drawText(screen, str(entity.score.score), entity.camera.rect.x + 50, entity.camera.rect.y + 10, globals.WHITE, 255)
 
         # lives
         if entity.battle is not None:
