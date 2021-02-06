@@ -67,6 +67,8 @@ class LevelSelectScene(Scene):
 class GameScene(Scene):
     def __init__(self):
         self.cameraSystem = engine.CameraSystem()
+        self.collectionSystem = engine.CollectionSystem()
+        self.battleSystem = engine.BattleSystem()
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()
@@ -75,6 +77,9 @@ class GameScene(Scene):
             sm.push(WinScene())
         if globals.world.isLost():
             sm.push(LoseScene())
+    def update(self, sm, inputStream):
+        self.collectionSystem.update()
+        self.battleSystem.update()
     def draw(self, sm, screen):
         # background
         screen.fill(globals.DARK_GREY)

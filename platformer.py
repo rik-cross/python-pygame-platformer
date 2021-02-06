@@ -36,7 +36,6 @@ game_state = 'playing'
 entities = []
 
 # player
-player_speed = 0
 player_acceleration = 0.2
 
 coin1 = utils.makeCoin(100,200)
@@ -154,7 +153,7 @@ while running:
             player.state = 'idle'
         # w=jump (if on the ground)
         if keys[pygame.K_w] and player_on_ground:
-            player_speed = -5
+            player.speed = -5
         
         # control zoom level of the player camera
         # zoom out
@@ -190,8 +189,8 @@ while running:
         
         # vertical movement
 
-        player_speed += player_acceleration
-        new_player_y += player_speed
+        player.speed += player_acceleration
+        new_player_y += player.speed
 
         new_player_rect = pygame.Rect(int(player.position.rect.x), int(new_player_y) ,player.position.rect.width,player.position.rect.height)
         y_collision = False
@@ -201,7 +200,7 @@ while running:
         for p in globals.world.platforms:
             if p.colliderect(new_player_rect):
                 y_collision = True
-                player_speed = 0
+                player.speed = 0
                 # if the platform is below the player
                 if p[1] > new_player_y:
                     # stick the player to the platform
@@ -211,26 +210,6 @@ while running:
 
         if y_collision == False:
             player.position.rect.y = int(new_player_y)
-
-        # see if any coins have been collected
-        player_rect = pygame.Rect(int(player.position.rect.x), int(player.position.rect.y), player.position.rect.width, player.position.rect.height)
-
-        # collection system
-        for entity in globals.world.entities:
-            if entity.type == 'collectable':
-                if entity.position.rect.colliderect(player_rect):
-                    globals.world.entities.remove(entity)
-                    player.score.score += 1
-
-        # enemy system
-        for entity in globals.world.entities:
-            if entity.type == 'dangerous':
-                if entity.position.rect.colliderect(player_rect):
-                    player.battle.lives -= 1
-                    # reset player position
-                    player.position.rect.x = 300
-                    player.position.rect.y = 0
-                    player_speed = 0
 
     clock.tick(60)
 
