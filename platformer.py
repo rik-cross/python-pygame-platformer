@@ -17,6 +17,7 @@ import utils
 import level
 import scene
 import globals
+import inputstream
 
 # constant variables
 SCREEN_SIZE = (700,500)
@@ -109,14 +110,18 @@ sceneManager = scene.SceneManager()
 mainMenu = scene.MainMenuScene()
 sceneManager.push(mainMenu)
 
+inputStream = inputstream.InputStream()
+
 running = True
 while running:
 # game loop
 
+    inputStream.processInput()
+
     if sceneManager.isEmpty():
         running = False
-    sceneManager.input()
-    sceneManager.update()
+    sceneManager.input(inputStream)
+    sceneManager.update(inputStream)
     sceneManager.draw(screen) 
 
     # -----
