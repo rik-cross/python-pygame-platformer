@@ -51,6 +51,8 @@ player.camera.setWorldPos(300,0)
 player.camera.trackEntity(player)
 player.score = engine.Score()
 player.battle = engine.Battle()
+player.input = engine.Input(pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d, pygame.K_q, pygame.K_e)
+player.intention = engine.Intention()
 
 cameraSys = engine.CameraSystem()
 
@@ -154,14 +156,6 @@ while running:
         # w=jump (if on the ground)
         if keys[pygame.K_w] and player_on_ground:
             player.speed = -5
-        
-        # control zoom level of the player camera
-        # zoom out
-        if keys[pygame.K_q]:
-            player.camera.zoomLevel -= 0.01
-        # zoom in
-        if keys[pygame.K_e]:
-            player.camera.zoomLevel += 0.01
 
     # ------
     # UPDATE

@@ -69,6 +69,7 @@ class GameScene(Scene):
         self.cameraSystem = engine.CameraSystem()
         self.collectionSystem = engine.CollectionSystem()
         self.battleSystem = engine.BattleSystem()
+        self.inputSystem = engine.InputSystem()
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()
@@ -78,6 +79,7 @@ class GameScene(Scene):
         if globals.world.isLost():
             sm.push(LoseScene())
     def update(self, sm, inputStream):
+        self.inputSystem.update(inputStream=inputStream)
         self.collectionSystem.update()
         self.battleSystem.update()
     def draw(self, sm, screen):

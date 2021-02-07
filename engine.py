@@ -7,17 +7,47 @@ class System():
         pass
     def check(self, entity):
         return True
-    def update(self, screen=None):
+    def update(self, screen=None, inputStream=None):
         for entity in globals.world.entities:
             if self.check(entity):
-                self.updateEntity(screen, entity)
-    def updateEntity(self, screen, entity):
+                self.updateEntity(screen, inputStream, entity)
+    def updateEntity(self, screen, inputStream, entity):
         pass
+
+class InputSystem(System):
+    def check(self, entity):
+        return entity.input is not None and entity.intention is not None
+    def updateEntity(self, screen, inputStream, entity):
+        # up = jump
+        if inputStream.keyboard.isKeyDown(entity.input.up):
+            entity.intention.jump = True
+        else:
+            entity.intention.jump = False
+        # left = moveLeft
+        if inputStream.keyboard.isKeyDown(entity.input.left):
+            entity.intention.moveLeft = True
+        else:
+            entity.intention.moveLeft = False
+        # right = moveRight    
+        if inputStream.keyboard.isKeyDown(entity.input.right):
+            entity.intention.moveRight = True
+        else:
+            entity.intention.moveRight = False
+        # b1 = zoom out
+        if inputStream.keyboard.isKeyDown(entity.input.b1):
+            entity.intention.zoomOut = True
+        else:
+            entity.intention.zoomOut = False        
+        # b2 = zoom in
+        if inputStream.keyboard.isKeyDown(entity.input.b2):
+            entity.intention.zoomIn = True
+        else:
+            entity.intention.zoomIn = False 
 
 class CollectionSystem(System):
     def check(self, entity):
         return entity.type == 'player' and entity.score is not None   
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, screen, inputStream, entity):
         for otherEntity in globals.world.entities:
             if otherEntity is not entity and otherEntity.type == 'collectable':
                 if entity.position.rect.colliderect(otherEntity.position.rect):
@@ -28,7 +58,7 @@ class CollectionSystem(System):
 class BattleSystem(System):
     def check(self, entity):
         return entity.type == 'player' and entity.battle is not None   
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, screen, inputStream, entity):
         for otherEntity in globals.world.entities:
             if otherEntity is not entity and otherEntity.type == 'dangerous':
                 if entity.position.rect.colliderect(otherEntity.position.rect):
@@ -42,7 +72,14 @@ class BattleSystem(System):
 class CameraSystem(System):
     def check(self, entity):
         return entity.camera is not None
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, screen, inputStream, entity):
+
+        # zoom
+        if entity.intention is not None:
+            if entity.intention.zoomIn:
+                entity.camera.zoomLevel += 0.01
+            if entity.intention.zoomOut:
+                entity.camera.zoomLevel -= 0.01
 
         # set clipping rectangle
         cameraRect = entity.camera.rect
@@ -103,7 +140,7 @@ class CameraSystem(System):
         # unset clipping rectangle
         screen.set_clip(None)
 
-class Camera():
+class Camera:
     def __init__(self, x, y, w, h):
         self.rect = pygame.Rect(x,y,w,h)
         self.worldX = 0
@@ -126,7 +163,7 @@ class Animations():
     def add(self, state, animation):
         self.animationList[state] = animation
 
-class Animation():
+class Animation:
     def __init__(self, imageList):
         self.imageList = imageList
         self.imageIndex = 0
@@ -151,15 +188,32 @@ class Animation():
         newHeight = int(image.get_rect().h * zoomLevel)
         screen.blit(pygame.transform.scale(pygame.transform.flip(image, flipX, flipY), (newWidth, newHeight)), (x, y))
 
-class Score():
+class Score:
     def __init__(self):
         self.score = 0
 
-class Battle():
+class Battle:
     def __init__(self):
         self.lives = 3
 
-class Entity():
+class Input:
+    def __init__(self, up, down, left, right, b1, b2):
+        self.up = up
+        self.down = down
+        self.left = left
+        self.right = right
+        self.b1 = b1
+        self.b2 = b2
+
+class Intention:
+    def __init__(self):
+        self.moveLeft = False
+        self.moveRight = False
+        self.jump = False
+        self.zoomIn = False
+        self.zoomOut = False
+
+class Entity:
     def __init__(self):
         self.state = 'idle'
         self.type = 'normal'
@@ -170,4 +224,6 @@ class Entity():
         self.score = None
         self.battle = None
         self.speed = 0
+        self.input = None
+        self.intention = None
 
