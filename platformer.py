@@ -30,13 +30,7 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('Rik\'s Platform Game')
 clock = pygame.time.Clock()
 
-# game states = playing // win // lose
-game_state = 'playing'
-
 entities = []
-
-# player
-player_acceleration = 0.2
 
 coin1 = utils.makeCoin(100,200)
 coin2 = utils.makeCoin(200,250)
@@ -117,6 +111,11 @@ running = True
 while running:
 # game loop
 
+    # check for quit
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
     inputStream.processInput()
 
     if sceneManager.isEmpty():
@@ -124,86 +123,6 @@ while running:
     sceneManager.input(inputStream)
     sceneManager.update(inputStream)
     sceneManager.draw(screen) 
-
-    # -----
-    # INPUT
-    # -----
-
-    # check for quit
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    if game_state == 'playing':
-
-        new_player_x = player.position.rect.x
-        new_player_y = player.position.rect.y
-        
-        # player input
-        keys = pygame.key.get_pressed()
-        # a=left
-        if keys[pygame.K_a]:
-            new_player_x -= 2
-            player.direction = 'left'
-            player.state = 'walking'
-        # d=right
-        if keys[pygame.K_d]:
-            new_player_x += 2
-            player.direction = 'right'
-            player.state = 'walking'
-        if not keys[pygame.K_a] and not keys[pygame.K_d]:
-            player.state = 'idle'
-        # w=jump (if on the ground)
-        if keys[pygame.K_w] and player_on_ground:
-            player.speed = -5
-
-    # ------
-    # UPDATE
-    # ------
-
-    if game_state == 'playing':
-
-        # update animations
-        for entity in globals.world.entities:
-            entity.animations.animationList[entity.state].update()
-
-        # horizontal movement
-
-        new_player_rect = pygame.Rect(new_player_x,player.position.rect.y,player.position.rect.width,player.position.rect.height)
-        x_collision = False
-
-        #...check against every platform
-        for p in globals.world.platforms:
-            if p.colliderect(new_player_rect):
-                x_collision = True
-                break
-
-        if x_collision == False:
-            player.position.rect.x = new_player_x
-        
-        # vertical movement
-
-        player.speed += player_acceleration
-        new_player_y += player.speed
-
-        new_player_rect = pygame.Rect(int(player.position.rect.x), int(new_player_y) ,player.position.rect.width,player.position.rect.height)
-        y_collision = False
-        player_on_ground = False
-
-        #...check against every platform
-        for p in globals.world.platforms:
-            if p.colliderect(new_player_rect):
-                y_collision = True
-                player.speed = 0
-                # if the platform is below the player
-                if p[1] > new_player_y:
-                    # stick the player to the platform
-                    player.position.rect.y = p[1] - player.position.rect.height
-                    player_on_ground = True
-                break
-
-        if y_collision == False:
-            player.position.rect.y = int(new_player_y)
 
     clock.tick(60)
 

@@ -14,6 +14,88 @@ class System():
     def updateEntity(self, screen, inputStream, entity):
         pass
 
+class AnimationSystem(System):
+    def check(self, entity):
+        return entity.animations is not None
+    def updateEntity(self, screen, inputStream, entity):    
+        entity.animations.animationList[entity.state].update()
+
+class PhysicsSystem(System):
+    def check(self, entity):
+        return entity.position is not None
+    def updateEntity(self, screen, inputStream, entity):
+
+        new_x = entity.position.rect.x
+        new_y = entity.position.rect.y
+
+        if entity.intention is not None:
+            if entity.intention.moveLeft:
+                new_x -= 2
+                entity.direction = 'left'
+                entity.state = 'walking'
+            if entity.intention.moveRight:
+                new_x += 2
+                entity.direction = 'right'
+                entity.state = 'walking'
+            if not entity.intention.moveLeft and not entity.intention.moveRight:
+                entity.state = 'idle'
+            if entity.intention.jump and entity.on_ground:
+                entity.speed = -5
+
+        # horizontal movement
+
+        new_x_rect = pygame.Rect(
+            int(new_x),
+            int(entity.position.rect.y),
+            entity.position.rect.width,
+            entity.position.rect.height)
+        
+        x_collision = False
+
+        #...check against every platform
+        for platform in globals.world.platforms:
+            if platform.colliderect(new_x_rect):
+                x_collision = True
+                break
+
+        if x_collision == False:
+            entity.position.rect.x = new_x
+        
+        # vertical movement
+
+        entity.speed += entity.acceleration
+        new_y += entity.speed
+
+        new_y_rect = pygame.Rect(
+            int(entity.position.rect.x),
+            int(new_y),
+            entity.position.rect.width,
+            entity.position.rect.height)
+        
+        y_collision = False
+        entity.on_ground = False
+
+        #...check against every platform
+        for platform in globals.world.platforms:
+            if platform.colliderect(new_y_rect):
+                y_collision = True
+                entity.speed = 0
+                # if the platform is below the player
+                if platform[1] > new_y:
+                    # stick the player to the platform
+                    entity.position.rect.y = platform[1] - entity.position.rect.height
+                    entity.on_ground = True
+                break
+
+        if y_collision == False:
+            entity.position.rect.y = int(new_y)
+        
+        # reset intentions
+        if entity.intention is not None:
+            entity.intention.moveLeft = False
+            entity.intention.moveRight = False
+            entity.intention.jump = False
+
 class InputSystem(System):
     def check(self, entity):
         return entity.input is not None and entity.intention is not None
@@ -226,4 +308,6 @@ class Entity:
         self.speed = 0
         self.input = None
         self.intention = None
+        self.on_ground = False
+        self.acceleration = 0.2
 
