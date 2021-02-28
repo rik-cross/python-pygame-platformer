@@ -65,6 +65,15 @@ walking3 = pygame.image.load('images/vita_07.png')
 walking4 = pygame.image.load('images/vita_08.png')
 walking5 = pygame.image.load('images/vita_09.png')
 
+def resetPlayer(entity):
+    entity.score.score = 0
+    entity.battle.lives = 3
+    entity.position.rect.x = 300
+    entity.position.rect.y = 0
+    entity.speed = 0
+    entity.acceleration = 0.2
+    entity.camera.setWorldPos(300,0)
+
 def makePlayer(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,45,51)
@@ -72,5 +81,10 @@ def makePlayer(x,y):
     entityWalkingAnimation = engine.Animation([walking0, walking1, walking2, walking3, walking4, walking5])
     entity.animations.add('idle', entityIdleAnimation)
     entity.animations.add('walking', entityWalkingAnimation)
+    entity.score = engine.Score()
+    entity.battle = engine.Battle()
+    entity.intention = engine.Intention()
+    entity.acceleration = 0.2
     entity.type = 'player'
+    entity.reset = resetPlayer
     return entity

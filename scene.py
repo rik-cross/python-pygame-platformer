@@ -3,6 +3,7 @@ import utils
 import globals
 import engine
 import ui
+import level
 
 class Scene:
     def __init__(self):
@@ -48,10 +49,10 @@ class LevelSelectScene(Scene):
         self.esc.update(inputStream)
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_1):
-            globals.world = globals.levels[1]
+            level.loadLevel(1)
             sm.push(FadeTransitionScene([self], [GameScene()]))
         if inputStream.keyboard.isKeyPressed(pygame.K_2):
-            globals.world = globals.levels[2]
+            level.loadLevel(2)
             sm.push(FadeTransitionScene([self], [GameScene()]))
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()

@@ -30,82 +30,18 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('Rik\'s Platform Game')
 clock = pygame.time.Clock()
 
-entities = []
-
-coin1 = utils.makeCoin(100,200)
-coin2 = utils.makeCoin(200,250)
-
-enemy = utils.makeEnemy(150,274)
-enemy.camera = engine.Camera(420,10,200,200)
-enemy.camera.setWorldPos(150,250)
-
-player = utils.makePlayer(300,0)
-player.camera = engine.Camera(10,10,400,400)
-player.camera.setWorldPos(300,0)
-player.camera.trackEntity(player)
-player.score = engine.Score()
-player.battle = engine.Battle()
-player.input = engine.Input(pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d, pygame.K_q, pygame.K_e)
-player.intention = engine.Intention()
-
-cameraSys = engine.CameraSystem()
-
-# lose if no players have lives remaining
-def lostLevel(level):
-    # level isn't lost if any player has a life left
-    for entity in level.entities:
-        if entity.type == 'player':
-            if entity.battle is not None:
-                if entity.battle.lives > 0:
-                    return False
-    # level is lost otherwise
-    return True
-
-# win if no collectable items left
-def wonLevel(level):
-    # level isn't won if any collectable exists
-    for entity in level.entities:
-        if entity.type == 'collectable':
-            return False
-    # level isn't won otherwise
-    return True
-
-globals.levels[1] = level.Level(
-    platforms=[
-        # middle
-        pygame.Rect(100,300,400,50),
-        # left
-        pygame.Rect(100,250,50,50),
-        # right
-        pygame.Rect(450,250,50,50)
-    ],
-    entities = [
-        player, enemy, coin1, coin2
-    ],
-    winFunc=wonLevel,
-    loseFunc=lostLevel
-)
-
-globals.levels[2] = level.Level(
-    platforms=[
-        # middle
-        pygame.Rect(100,300,400,50)
-    ],
-    entities = [
-        player, coin1
-    ],
-    winFunc=wonLevel,
-    loseFunc=lostLevel
-)
-
-# set the current level
-globals.world = globals.levels[1]
-
 sceneManager = scene.SceneManager()
 mainMenu = scene.MainMenuScene()
 sceneManager.push(mainMenu)
 
 inputStream = inputstream.InputStream()
+
+# create player
+globals.player1 = utils.makePlayer(300,0)
+globals.player1.camera = engine.Camera(10,10,400,400)
+globals.player1.camera.setWorldPos(300,0)
+globals.player1.camera.trackEntity(globals.player1)
+globals.player1.input = engine.Input(pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d, pygame.K_q, pygame.K_e)
 
 running = True
 while running:
