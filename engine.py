@@ -40,6 +40,7 @@ class PhysicsSystem(System):
             if not entity.intention.moveLeft and not entity.intention.moveRight:
                 entity.state = 'idle'
             if entity.intention.jump and entity.on_ground:
+                globals.soundManager.playSound('jump')
                 entity.speed = -5
 
         # horizontal movement
@@ -134,6 +135,7 @@ class CollectionSystem(System):
             if otherEntity is not entity and otherEntity.type == 'collectable':
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     # entity.collectable.onCollide(entity, otherEntity)
+                    globals.soundManager.playSound('coin')
                     globals.world.entities.remove(otherEntity)
                     entity.score.score += 1
 

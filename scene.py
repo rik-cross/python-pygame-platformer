@@ -23,6 +23,8 @@ class MainMenuScene(Scene):
     def __init__(self):
         self.enter = ui.ButtonUI(pygame.K_RETURN, '[Enter=next]', 50, 200)
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 250)
+    def onEnter(self):
+        globals.soundManager.playMusicFade('solace')
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
             sm.push(FadeTransitionScene([self], [LevelSelectScene()]))
@@ -73,6 +75,8 @@ class GameScene(Scene):
         self.inputSystem = engine.InputSystem()
         self.physicsSystem = engine.PhysicsSystem()
         self.animationSystem = engine.AnimationSystem()
+    def onEnter(self):
+        globals.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()

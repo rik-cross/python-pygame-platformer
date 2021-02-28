@@ -1,3 +1,4 @@
+import soundmanager
 
 world = None
 
@@ -8,3 +9,5 @@ GREEN = (0,255,0)
 MUSTARD = (209,206,25)
 
 player1 = None
+
+soundManager = soundmanager.SoundManager()
