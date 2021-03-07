@@ -3,10 +3,11 @@ import pygame
 class SoundManager:
     def __init__(self):
         pygame.mixer.init()
-        self.soundVolume = 0.4
-        self.musicVolume = 0.2
-        self.targetMusicVolume = 0.2
+        self.soundVolume = 0 #0.4
+        self.musicVolume = 0 #0.2
+        self.targetMusicVolume = 0 #0.2
         self.nextMusic = None
+        self.currentMusic = None
         self.sounds = {
             'jump' : pygame.mixer.Sound('sounds/03_Jump_v2.ogg'),
             'coin' : pygame.mixer.Sound('sounds/01_Coin Pickup_v2.ogg')
@@ -19,10 +20,21 @@ class SoundManager:
         self.sounds[soundName].set_volume(self.soundVolume)
         self.sounds[soundName].play()
     def playMusic(self, musicName):
+
+        # don't play the music if already playing
+        if musicName is self.currentMusic:
+            return
+        
         pygame.mixer.music.load(self.music[musicName])
         pygame.mixer.music.set_volume(self.musicVolume)
+        self.currentMusic = musicName
         pygame.mixer.music.play(-1)
     def playMusicFade(self, musicName):
+
+        # don't play the music if already playing
+        if musicName is self.currentMusic:
+            return
+
         # add music to queue
         self.nextMusic = musicName
         # fade out current music
@@ -38,6 +50,7 @@ class SoundManager:
         if self.nextMusic is not None:
             # if 'old' music has finished fading out
             if not pygame.mixer.music.get_busy():
+                self.currentMusic = None
                 self.musicVolume = 0
                 pygame.mixer.music.set_volume(self.musicVolume)
                 self.playMusic(self.nextMusic)

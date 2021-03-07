@@ -42,20 +42,20 @@ class MainMenuScene(Scene):
 
 class LevelSelectScene(Scene):
     def __init__(self):
-        self.b1 = ui.ButtonUI(pygame.K_1, '[1=l1]', 50, 200)
-        self.b2 = ui.ButtonUI(pygame.K_2, '[2=l2]', 50, 250)
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 300)
+    def onEnter(self):
+        globals.soundManager.playMusicFade('solace')
     def update(self, sm, inputStream):
-        self.b1.update(inputStream)
-        self.b2.update(inputStream)
         self.esc.update(inputStream)
     def input(self, sm, inputStream):
-        if inputStream.keyboard.isKeyPressed(pygame.K_1):
-            level.loadLevel(1)
+        if inputStream.keyboard.isKeyPressed(pygame.K_a):
+            globals.curentLevel = max(globals.curentLevel-1, 1)
+        if inputStream.keyboard.isKeyPressed(pygame.K_d):
+            globals.curentLevel = min(globals.curentLevel+1, globals.lastCompletedLevel)
+        if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
+            level.loadLevel(globals.curentLevel)
             sm.push(FadeTransitionScene([self], [GameScene()]))
-        if inputStream.keyboard.isKeyPressed(pygame.K_2):
-            level.loadLevel(2)
-            sm.push(FadeTransitionScene([self], [GameScene()]))
+
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))
@@ -63,9 +63,18 @@ class LevelSelectScene(Scene):
         # background
         screen.fill(globals.DARK_GREY)
         utils.drawText(screen, 'Level Select', 50, 50, globals.WHITE, 255)
-        self.b1.draw(screen)
-        self.b2.draw(screen)
         self.esc.draw(screen)
+
+        # draw level select menu
+        for levelNumber in range(1, globals.maxLevel+1):
+            c = globals.WHITE
+            if levelNumber == globals.curentLevel:
+                c = globals.GREEN
+            a = 255
+            if levelNumber > globals.lastCompletedLevel:
+                a = 100
+            utils.drawText(screen, str(levelNumber), levelNumber*100, 100, c, a)
+
 
 class GameScene(Scene):
     def __init__(self):
@@ -82,6 +91,11 @@ class GameScene(Scene):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))
         if globals.world.isWon():
+            # update the level select map accessible levels
+            nextLevel = min(globals.curentLevel+1, globals.maxLevel)
+            levelToUnlock = max(nextLevel, globals.lastCompletedLevel)
+            globals.lastCompletedLevel = levelToUnlock
+            globals.curentLevel = nextLevel
             sm.push(WinScene())
         if globals.world.isLost():
             sm.push(LoseScene())

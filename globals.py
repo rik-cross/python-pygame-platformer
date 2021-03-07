@@ -2,6 +2,10 @@ import soundmanager
 
 world = None
 
+maxLevel = 2
+lastCompletedLevel = 1
+curentLevel = 1
+
 DARK_GREY = (50,50,50)
 BLACK = (0,0,0)
 WHITE = (255,255,255)
