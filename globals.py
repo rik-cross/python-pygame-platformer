@@ -13,5 +13,9 @@ GREEN = (0,255,0)
 MUSTARD = (209,206,25)
 
 player1 = None
+player2 = None
+player3 = None
+player4 = None
+players = []
 
 soundManager = soundmanager.SoundManager()

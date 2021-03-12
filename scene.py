@@ -27,7 +27,7 @@ class MainMenuScene(Scene):
         globals.soundManager.playMusicFade('solace')
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
-            sm.push(FadeTransitionScene([self], [LevelSelectScene()]))
+            sm.push(FadeTransitionScene([self], [PlayerSelectScene()]))
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()
     def update(self, sm, inputStream):
@@ -75,7 +75,70 @@ class LevelSelectScene(Scene):
                 a = 100
             utils.drawText(screen, str(levelNumber), levelNumber*100, 100, c, a)
 
+class PlayerSelectScene(Scene):
+    def __init__(self):
+        self.enter = ui.ButtonUI(pygame.K_RETURN, '[Enter=next]', 50, 200)
+        self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 250)
+    def onEnter(self):
+        globals.soundManager.playMusicFade('solace')
+    def update(self, sm, inputStream):
+        self.esc.update(inputStream)
+        self.enter.update(inputStream)
+    def input(self, sm, inputStream):
 
+        # handle each player
+        for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
+
+            # add to the game
+            if inputStream.keyboard.isKeyPressed(player.input.b1):
+                if player not in globals.players:
+                    globals.players.append(player)
+            
+            # remove from the game
+            if inputStream.keyboard.isKeyPressed(player.input.b2):
+                if player in globals.players:
+                    globals.players.remove(player)
+
+        print(len(globals.players))
+
+        if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
+            if len(globals.players) > 0:
+                utils.setPlayerCameras()
+                sm.push(FadeTransitionScene([self], [LevelSelectScene()]))
+
+        if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
+            sm.pop()
+            sm.push(FadeTransitionScene([self], []))
+    def draw(self, sm, screen):
+        # background
+        screen.fill(globals.DARK_GREY)
+        utils.drawText(screen, 'Player Select', 50, 50, globals.WHITE, 255)
+
+        self.esc.draw(screen)
+        self.enter.draw(screen)
+
+        # draw active players
+
+        if globals.player1 in globals.players:
+            screen.blit(utils.playing, (100,100))
+        else:
+            screen.blit(utils.not_playing, (100,100))
+        
+        if globals.player2 in globals.players:
+            screen.blit(utils.playing, (150,100))
+        else:
+            screen.blit(utils.not_playing, (150,100))
+
+        if globals.player3 in globals.players:
+            screen.blit(utils.playing, (200,100))
+        else:
+            screen.blit(utils.not_playing, (200,100))
+
+        if globals.player4 in globals.players:
+            screen.blit(utils.playing, (250,100))
+        else:
+            screen.blit(utils.not_playing, (250,100))
+        
 class GameScene(Scene):
     def __init__(self):
         self.cameraSystem = engine.CameraSystem()
@@ -125,7 +188,7 @@ class WinScene(Scene):
             sm.scenes[-2].draw(sm, screen)
 
         # draw a transparent bg
-        bgSurf = pygame.Surface((700,500))
+        bgSurf = pygame.Surface((830,830))
         bgSurf.fill((globals.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
@@ -147,7 +210,7 @@ class LoseScene(Scene):
             sm.scenes[-2].draw(sm, screen)
 
         # draw a transparent bg
-        bgSurf = pygame.Surface((700,500))
+        bgSurf = pygame.Surface((830,830))
         bgSurf.fill((globals.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
@@ -188,7 +251,7 @@ class FadeTransitionScene(TransitionScene):
                     s.draw(sm, screen)
 
         # fade overlay
-        overlay = pygame.Surface((700,500))
+        overlay = pygame.Surface((830,830))
         alpha = int(abs((255 - ((255/50)*self.currentPercentage))))
         overlay.set_alpha(255 - alpha)
         overlay.fill(globals.BLACK)

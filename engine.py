@@ -148,10 +148,15 @@ class BattleSystem(System):
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     # entity.battle.onCollide(entity, otherEntity)
                     entity.battle.lives -= 1
+                    
                     # reset player position
-                    entity.position.rect.x = 300
-                    entity.position.rect.y = 0
+                    entity.position.rect.x = entity.position.initial.x
+                    entity.position.rect.y = entity.position.initial.y
                     entity.speed = 0
+
+                    # remove player if no lives left
+                    if entity.battle.lives <= 0:
+                        globals.world.entities.remove(entity)
 
 class CameraSystem(System):
     def check(self, entity):
@@ -240,6 +245,7 @@ class Camera:
 class Position():
     def __init__(self, x, y, w, h):
         self.rect = pygame.Rect(x,y,w,h)
+        self.initial = pygame.Rect(x,y,w,h)
 
 class Animations():
     def __init__(self):

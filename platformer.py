@@ -27,7 +27,7 @@ import inputstream
 import soundmanager
 
 # constant variables
-SCREEN_SIZE = (700,500)
+SCREEN_SIZE = (830,830)
 DARK_GREY = (50,50,50)
 MUSTARD = (209,206,25)
 
@@ -43,15 +43,33 @@ sceneManager.push(mainMenu)
 
 inputStream = inputstream.InputStream()
 
-#globals.soundManager = soundmanager.SoundManager()
-#globals.soundManager.playMusic('solace')
-
 # create player
 globals.player1 = utils.makePlayer(300,0)
-globals.player1.camera = engine.Camera(10,10,400,400)
-globals.player1.camera.setWorldPos(300,0)
-globals.player1.camera.trackEntity(globals.player1)
+#globals.player1.camera = engine.Camera(10,10,400,400)
+#globals.player1.camera.setWorldPos(300,0)
+#globals.player1.camera.trackEntity(globals.player1)
 globals.player1.input = engine.Input(pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d, pygame.K_q, pygame.K_e)
+
+# create player
+globals.player2 = utils.makePlayer(350,0)
+#globals.player2.camera = engine.Camera(420,10,400,400)
+#globals.player2.camera.setWorldPos(350,0)
+#globals.player2.camera.trackEntity(globals.player2)
+globals.player2.input = engine.Input(pygame.K_i, pygame.K_k, pygame.K_j, pygame.K_l, pygame.K_u, pygame.K_o)
+
+# create player
+globals.player3 = utils.makePlayer(400,0)
+#globals.player3.camera = engine.Camera(10,420,400,400)
+#globals.player3.camera.setWorldPos(400,0)
+#globals.player3.camera.trackEntity(globals.player3)
+globals.player3.input = engine.Input(pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_x)
+
+# create player
+globals.player4 = utils.makePlayer(450,0)
+#globals.player4.camera = engine.Camera(420,420,400,400)
+#globals.player4.camera.setWorldPos(450,0)
+#globals.player4.camera.trackEntity(globals.player4)
+globals.player4.input = engine.Input(pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_x)
 
 running = True
 while running:

@@ -1,5 +1,6 @@
 import pygame
 import engine
+import globals
 
 DARK_GREY = (50,50,50)
 MUSTARD = (209,206,25)
@@ -53,6 +54,9 @@ def makeEnemy(x,y):
     entity.type = 'dangerous'
     return entity
 
+playing = pygame.image.load('images/playing.png')
+not_playing = pygame.image.load('images/not_playing.png')
+
 idle0 = pygame.image.load('images/vita_00.png')
 idle1 = pygame.image.load('images/vita_01.png')
 idle2 = pygame.image.load('images/vita_02.png')
@@ -65,14 +69,59 @@ walking3 = pygame.image.load('images/vita_07.png')
 walking4 = pygame.image.load('images/vita_08.png')
 walking5 = pygame.image.load('images/vita_09.png')
 
+def setPlayerCameras():
+
+    # 1 player game
+    if len(globals.players) == 1:
+        p = globals.players[0]
+        p.camera = engine.Camera(10,10,810,810)
+        p.camera.setWorldPos(p.position.initial.x, p.position.initial.y)
+        p.camera.trackEntity(p)
+    
+    # 2 player game
+    if len(globals.players) == 2:
+        p1 = globals.players[0]
+        p1.camera = engine.Camera(10,10,400,810)
+        p1.camera.setWorldPos(p1.position.initial.x, p1.position.initial.y)
+        p1.camera.trackEntity(p1)
+
+        p2 = globals.players[1]
+        p2.camera = engine.Camera(420,10,400,810)
+        p2.camera.setWorldPos(p2.position.initial.x, p2.position.initial.y)
+        p2.camera.trackEntity(p2)
+
+    # 3 or 4 player game
+    if len(globals.players) >= 3:
+        p1 = globals.players[0]
+        p1.camera = engine.Camera(10,10,400,400)
+        p1.camera.setWorldPos(p1.position.initial.x, p1.position.initial.y)
+        p1.camera.trackEntity(p1)
+
+        p2 = globals.players[1]
+        p2.camera = engine.Camera(420,10,400,400)
+        p2.camera.setWorldPos(p2.position.initial.x, p2.position.initial.y)
+        p2.camera.trackEntity(p2)
+
+        p3 = globals.players[2]
+        p3.camera = engine.Camera(10,420,400,400)
+        p3.camera.setWorldPos(p3.position.initial.x, p3.position.initial.y)
+        p3.camera.trackEntity(p3)
+
+        if len(globals.players) == 4:
+            p4 = globals.players[3]
+            p4.camera = engine.Camera(420,420,400,400)
+            p4.camera.setWorldPos(p4.position.initial.x, p4.position.initial.y)
+            p4.camera.trackEntity(p4)
+
 def resetPlayer(entity):
     entity.score.score = 0
     entity.battle.lives = 3
-    entity.position.rect.x = 300
-    entity.position.rect.y = 0
+    entity.position.rect.x = entity.position.initial.x
+    entity.position.rect.y = entity.position.initial.y
     entity.speed = 0
     entity.acceleration = 0.2
-    entity.camera.setWorldPos(300,0)
+    entity.camera.setWorldPos(entity.position.initial.x, entity.position.initial.y)
+    entity.direction = 'right'
 
 def makePlayer(x,y):
     entity = engine.Entity()

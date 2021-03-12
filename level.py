@@ -52,8 +52,7 @@ def loadLevel(levelNumber):
             entities = [
                 utils.makeCoin(100,200),
                 utils.makeCoin(200,250),
-                utils.makeEnemy(150,274),
-                globals.player1
+                utils.makeEnemy(150,274)
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel
@@ -66,12 +65,15 @@ def loadLevel(levelNumber):
                 pygame.Rect(100,300,400,50)
             ],
             entities = [
-                utils.makeCoin(100,200),
-                globals.player1
+                utils.makeCoin(100,200)
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel
-        )        
+        )
+
+    # add players
+    for player in globals.players:
+        globals.world.entities.append(player)     
 
     # reset players
     for entity in globals.world.entities:
