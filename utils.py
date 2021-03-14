@@ -29,6 +29,56 @@ def drawText(screen, t, x, y, fg, alpha):
 
 heart_image = pygame.image.load('images/heart.png')
 
+def setHealth(entity):
+    if entity.battle:
+        entity.battle.lives = 3
+
+def setInvisible(entity):
+    if entity.animations:
+        entity.animations.alpha = 50
+
+def endInvisible(entity):
+    if entity.animations:
+        entity.animations.alpha = 255
+
+powerupImages = {
+    'health' : [pygame.image.load('images/powerup_health.png')],
+    'invisible' : [pygame.image.load('images/powerup_invisible.png')]
+}
+
+powerupSound = {
+    'health' : 'coin',
+    'invisible' : 'coin'
+}
+
+powerupApply = {
+    'health' : setHealth,
+    'invisible' : setInvisible
+}
+
+powerupEnd = {
+    'health' : None,
+    'invisible' : endInvisible
+}
+
+powerupEffectTimer = {
+    'health' : 0,
+    'invisible' : 1000
+}
+
+def makePowerup(type, x, y):
+    entity = engine.Entity()
+    entity.position = engine.Position(x,y,40,40)
+    entityAnimation = engine.Animation(powerupImages[type])
+    entity.animations.add('idle', entityAnimation)
+    entity.effect = engine.Effect(
+        powerupApply[type], 
+        powerupEffectTimer[type],
+        powerupSound[type],
+        powerupEnd[type]
+    )
+    return entity    
+
 coin0 = pygame.image.load('images/coin_0.png')
 coin1 = pygame.image.load('images/coin_1.png')
 coin2 = pygame.image.load('images/coin_2.png')
@@ -122,6 +172,8 @@ def resetPlayer(entity):
     entity.acceleration = 0.2
     entity.camera.setWorldPos(entity.position.initial.x, entity.position.initial.y)
     entity.direction = 'right'
+    entity.animations.alpha = 255
+    entity.effect = None
 
 def makePlayer(x,y):
     entity = engine.Entity()

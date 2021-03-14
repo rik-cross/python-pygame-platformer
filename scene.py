@@ -99,7 +99,7 @@ class PlayerSelectScene(Scene):
                 if player in globals.players:
                     globals.players.remove(player)
 
-        print(len(globals.players))
+        #print(len(globals.players))
 
         if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
             if len(globals.players) > 0:
@@ -147,6 +147,7 @@ class GameScene(Scene):
         self.inputSystem = engine.InputSystem()
         self.physicsSystem = engine.PhysicsSystem()
         self.animationSystem = engine.AnimationSystem()
+        self.powerupSystem = engine.PowerupSystem()
     def onEnter(self):
         globals.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
@@ -168,6 +169,7 @@ class GameScene(Scene):
         self.battleSystem.update()
         self.physicsSystem.update()
         self.animationSystem.update()
+        self.powerupSystem.update()
     def draw(self, sm, screen):
         # background
         screen.fill(globals.DARK_GREY)

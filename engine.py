@@ -14,6 +14,33 @@ class System():
     def updateEntity(self, screen, inputStream, entity):
         pass
 
+class PowerupSystem(System):
+    def check(self, entity):
+        return entity.effect is not None
+    def updateEntity(self, screen, inputStream, entity):
+
+        # player collection of powerups
+        for otherEntity in globals.world.entities:
+            if otherEntity is not entity and otherEntity.type == 'player' and entity.type != 'player':
+                if entity.position.rect.colliderect(otherEntity.position.rect):
+                    # give the effect component to the player
+                    otherEntity.effect = entity.effect
+                    globals.soundManager.playSound(entity.effect.sound)
+                    # remove the collected powerup from the world
+                    globals.world.entities.remove(entity)
+        
+        # apply powerup effects for players
+        if entity.type == 'player':
+            entity.effect.apply(entity)
+            entity.effect.timer -= 1
+            # if the effect has run out
+            if entity.effect.timer < 0:
+                # reset entity if appropriate
+                if entity.effect.end:
+                    entity.effect.end(entity)
+                # destroy the effect
+                entity.effect = None
+
 class AnimationSystem(System):
     def check(self, entity):
         return entity.animations is not None
@@ -212,7 +239,7 @@ class CameraSystem(System):
             a.draw(screen,
                 (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
                 (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
-                e.direction == 'left', False, entity.camera.zoomLevel)
+                e.direction == 'left', False, entity.camera.zoomLevel, e.animations.alpha)
 
         # entity HUD
 
@@ -250,6 +277,7 @@ class Position():
 class Animations():
     def __init__(self):
         self.animationList = {}
+        self.alpha = 255
     def add(self, state, animation):
         self.animationList[state] = animation
 
@@ -272,8 +300,9 @@ class Animation:
             # once the index gets too high
             if self.imageIndex > len(self.imageList) - 1:
                 self.imageIndex = 0
-    def draw(self, screen, x, y, flipX, flipY, zoomLevel):
+    def draw(self, screen, x, y, flipX, flipY, zoomLevel, alpha):
         image = self.imageList[self.imageIndex]
+        image.set_alpha(alpha)
         newWidth = int(image.get_rect().w * zoomLevel)
         newHeight = int(image.get_rect().h * zoomLevel)
         screen.blit(pygame.transform.scale(pygame.transform.flip(image, flipX, flipY), (newWidth, newHeight)), (x, y))
@@ -303,6 +332,13 @@ class Intention:
         self.zoomIn = False
         self.zoomOut = False
 
+class Effect:
+    def __init__(self, apply, timer, sound, end):
+        self.apply = apply
+        self.timer = timer
+        self.sound = sound
+        self.end = end
+
 def resetEntity(entity):
     pass
 
@@ -321,5 +357,6 @@ class Entity:
         self.intention = None
         self.on_ground = False
         self.acceleration = 0
+        self.effect = None
         self.reset = resetEntity
 

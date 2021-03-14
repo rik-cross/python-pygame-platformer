@@ -52,7 +52,8 @@ def loadLevel(levelNumber):
             entities = [
                 utils.makeCoin(100,200),
                 utils.makeCoin(200,250),
-                utils.makeEnemy(150,274)
+                utils.makeEnemy(150,274),
+                utils.makePowerup('invisible', 400,260)
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel
