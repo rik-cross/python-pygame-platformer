@@ -225,9 +225,9 @@ class CameraSystem(System):
         # zoom
         if entity.intention is not None:
             if entity.intention.zoomIn:
-                entity.camera.zoomLevel += 0.01
+                entity.camera.zoomLevel = min(4, entity.camera.zoomLevel+0.01)
             if entity.intention.zoomOut:
-                entity.camera.zoomLevel -= 0.01
+                entity.camera.zoomLevel = max(0.1, entity.camera.zoomLevel-0.01)
 
         # set clipping rectangle
         cameraRect = entity.camera.rect
@@ -245,8 +245,7 @@ class CameraSystem(System):
             targetX = trackedEntity.position.rect.x + trackedEntity.position.rect.w/2
             targetY = trackedEntity.position.rect.y + trackedEntity.position.rect.h/2
 
-            entity.camera.worldX = (currentX * 0.95) + (targetX * 0.05)
-            entity.camera.worldY = (currentY * 0.95) + (targetY * 0.05)
+            entity.camera.setWorldPos((currentX * 0.95) + (targetX * 0.05), (currentY * 0.95) + (targetY * 0.05))
 
         # calculate offsets
         offsetX = cameraRect.x + cameraRect.w/2 - (entity.camera.worldX * entity.camera.zoomLevel)
@@ -254,6 +253,15 @@ class CameraSystem(System):
 
         # fill camera background
         screen.fill(globals.BLACK)
+
+        # draw level background
+        if globals.world is not None:
+            worldRect = pygame.Rect(
+                0 + offsetX,
+                0 + offsetY,
+                globals.world.size[0] * entity.camera.zoomLevel,
+                globals.world.size[1] * entity.camera.zoomLevel)
+            pygame.draw.rect(screen, (50,50,50), worldRect)
 
         # render platforms
         for p in globals.world.platforms:
@@ -296,8 +304,32 @@ class Camera:
         self.entityToTrack = None
         self.zoomLevel = 1
     def setWorldPos(self, x, y):
-        self.worldX = x
-        self.worldY = y
+        newX = x
+        newY = y
+  
+        if globals.world is not None:
+
+            # calculate x value
+
+            # if world narrower than camera:
+            if (self.rect.w) > (globals.world.size[0]*self.zoomLevel):
+                newX = (globals.world.size[0] / 2)
+            else:
+                newX = max(newX, (self.rect.w/self.zoomLevel)/2)
+                newX = min(newX, ( ((globals.world.size[0]) - (self.rect.w/2/self.zoomLevel)) ) )
+
+            # calculate y value
+
+            # if world narrower than camera:
+            if self.rect.h > (globals.world.size[1]*self.zoomLevel):
+                newY = (globals.world.size[1] / 2)
+            else:
+                newY = max(newY, (self.rect.h/self.zoomLevel/2))
+                newY = min(newY, ( ((globals.world.size[1]) - (self.rect.h/2/self.zoomLevel)) ) )
+
+        self.worldX = newX
+        self.worldY = newY
+
     def trackEntity(self, e):
         self.entityToTrack = e
 

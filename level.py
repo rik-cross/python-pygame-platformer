@@ -3,7 +3,8 @@ import globals
 import utils
 
 class Level:
-    def __init__(self, platforms=None, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None):
+    def __init__(self, size, platforms=None, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None):
+        self.size = size
         self.platforms = platforms
         self.entities = entities
         self.winFunc = winFunc
@@ -42,9 +43,10 @@ def loadLevel(levelNumber):
     if levelNumber == 1:
         # load level 1
         globals.world = Level(
+            size=(1200,1200),
             platforms = [
                 # middle
-                pygame.Rect(100,300,400,50),
+                pygame.Rect(0,300,1200,50),
                 # left
                 pygame.Rect(100,250,50,50),
                 # right
@@ -62,9 +64,10 @@ def loadLevel(levelNumber):
     if levelNumber == 2:
         # load level 2
         globals.world = Level(
+            size=(1200,1200),
             platforms = [
                 # middle
-                pygame.Rect(100,300,400,50)
+                pygame.Rect(0,300,1200,50)
             ],
             entities = [
                 utils.makeCoin(100,200)
