@@ -35,8 +35,8 @@ class MainMenuScene(Scene):
         self.esc.update(inputStream)
     def draw(self, sm, screen):
         # background
-        screen.fill(globals.DARK_GREY)
-        utils.drawText(screen, 'Main Menu', 50, 50, globals.WHITE, 255)
+        screen.fill(engine.DARK_GREY)
+        utils.drawText(screen, 'Main Menu', 50, 50, engine.WHITE, 255)
         self.enter.draw(screen)
         self.esc.draw(screen)
 
@@ -61,15 +61,15 @@ class LevelSelectScene(Scene):
             sm.push(FadeTransitionScene([self], []))
     def draw(self, sm, screen):
         # background
-        screen.fill(globals.DARK_GREY)
-        utils.drawText(screen, 'Level Select', 50, 50, globals.WHITE, 255)
+        screen.fill(engine.DARK_GREY)
+        utils.drawText(screen, 'Level Select', 50, 50, engine.WHITE, 255)
         self.esc.draw(screen)
 
         # draw level select menu
         for levelNumber in range(1, globals.maxLevel+1):
-            c = globals.WHITE
+            c = engine.WHITE
             if levelNumber == globals.curentLevel:
-                c = globals.GREEN
+                c = engine.GREEN
             a = 255
             if levelNumber > globals.lastCompletedLevel:
                 a = 100
@@ -99,8 +99,6 @@ class PlayerSelectScene(Scene):
                 if player in globals.players:
                     globals.players.remove(player)
 
-        #print(len(globals.players))
-
         if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
             if len(globals.players) > 0:
                 utils.setPlayerCameras()
@@ -111,8 +109,8 @@ class PlayerSelectScene(Scene):
             sm.push(FadeTransitionScene([self], []))
     def draw(self, sm, screen):
         # background
-        screen.fill(globals.DARK_GREY)
-        utils.drawText(screen, 'Player Select', 50, 50, globals.WHITE, 255)
+        screen.fill(engine.DARK_GREY)
+        utils.drawText(screen, 'Player Select', 50, 50, engine.WHITE, 255)
 
         self.esc.draw(screen)
         self.enter.draw(screen)
@@ -172,7 +170,7 @@ class GameScene(Scene):
         self.powerupSystem.update()
     def draw(self, sm, screen):
         # background
-        screen.fill(globals.DARK_GREY)
+        screen.fill(engine.DARK_GREY)
         self.cameraSystem.update(screen)
 
 class WinScene(Scene):
@@ -191,10 +189,10 @@ class WinScene(Scene):
 
         # draw a transparent bg
         bgSurf = pygame.Surface((830,830))
-        bgSurf.fill((globals.BLACK))
+        bgSurf.fill((engine.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        utils.drawText(screen, 'You win!', 50, 50, globals.WHITE, self.alpha)
+        utils.drawText(screen, 'You win!', 50, 50, engine.WHITE, self.alpha)
         self.esc.draw(screen, alpha=self.alpha)
 
 class LoseScene(Scene):
@@ -213,10 +211,10 @@ class LoseScene(Scene):
 
         # draw a transparent bg
         bgSurf = pygame.Surface((830,830))
-        bgSurf.fill((globals.BLACK))
+        bgSurf.fill((engine.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        utils.drawText(screen, 'You lose!', 150, 150, globals.WHITE, self.alpha)
+        utils.drawText(screen, 'You lose!', 150, 150, engine.WHITE, self.alpha)
         self.esc.draw(screen, alpha=self.alpha)
 
 class TransitionScene(Scene):
@@ -256,7 +254,7 @@ class FadeTransitionScene(TransitionScene):
         overlay = pygame.Surface((830,830))
         alpha = int(abs((255 - ((255/50)*self.currentPercentage))))
         overlay.set_alpha(255 - alpha)
-        overlay.fill(globals.BLACK)
+        overlay.fill(engine.BLACK)
         screen.blit(overlay, (0,0))
 
 class SceneManager:

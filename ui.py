@@ -1,5 +1,6 @@
 import utils
 import globals
+import engine
 
 class ButtonUI:
     def __init__(self, keyCode, text, x, y):
@@ -21,7 +22,7 @@ class ButtonUI:
                 self.timer = 20
     def draw(self, screen, alpha=255):
         if self.on:
-            colour = globals.GREEN
+            colour = engine.GREEN
         else:
-            colour = globals.WHITE
+            colour = engine.WHITE
         utils.drawText(screen, self.text, self.x, self.y, colour, alpha)

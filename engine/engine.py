@@ -2,18 +2,8 @@ import pygame
 import utils
 import globals
 import random
-
-class System():
-    def __init__(self):
-        pass
-    def check(self, entity):
-        return True
-    def update(self, screen=None, inputStream=None):
-        for entity in globals.world.entities:
-            if self.check(entity):
-                self.updateEntity(screen, inputStream, entity)
-    def updateEntity(self, screen, inputStream, entity):
-        pass
+from .colours import *
+from .entity_component_system import *
 
 class PowerupSystem(System):
     def __init__(self):
@@ -46,8 +36,6 @@ class PowerupSystem(System):
                         globals.world.entities.append(
                             utils.makePowerup(random.choice(utils.powerups), spawnPos[0], spawnPos[1])
                         )
-
-        print('count:', count, 'timer', self.timer)
 
     def updateEntity(self, screen, inputStream, entity):
 
@@ -256,7 +244,7 @@ class CameraSystem(System):
         offsetY = cameraRect.y + cameraRect.h/2 - (entity.camera.worldY * entity.camera.zoomLevel)
 
         # fill camera background
-        screen.fill(globals.BLACK)
+        screen.fill(BLACK)
 
         # draw level background
         if globals.world is not None:
@@ -274,7 +262,7 @@ class CameraSystem(System):
                 (p.y * entity.camera.zoomLevel) + offsetY,
                 p.w * entity.camera.zoomLevel,
                 p.h * entity.camera.zoomLevel)
-            pygame.draw.rect(screen, globals.MUSTARD, newPosRect)
+            pygame.draw.rect(screen, MUSTARD, newPosRect)
 
         # render entities
         for e in globals.world.entities:
@@ -290,7 +278,7 @@ class CameraSystem(System):
         # score
         if entity.score is not None:
             screen.blit(utils.coin0, (entity.camera.rect.x + 10, entity.camera.rect.y + 10))
-            utils.drawText(screen, str(entity.score.score), entity.camera.rect.x + 50, entity.camera.rect.y + 10, globals.WHITE, 255)
+            utils.drawText(screen, str(entity.score.score), entity.camera.rect.x + 50, entity.camera.rect.y + 10, WHITE, 255)
 
         # lives
         if entity.battle is not None:
@@ -407,24 +395,6 @@ class Effect:
         self.sound = sound
         self.end = end
 
-def resetEntity(entity):
-    pass
 
-class Entity:
-    def __init__(self):
-        self.state = 'idle'
-        self.type = 'normal'
-        self.position = None
-        self.animations = Animations()
-        self.direction = 'right'
-        self.camera = None
-        self.score = None
-        self.battle = None
-        self.speed = 0
-        self.input = None
-        self.intention = None
-        self.on_ground = False
-        self.acceleration = 0
-        self.effect = None
-        self.reset = resetEntity
+
 
