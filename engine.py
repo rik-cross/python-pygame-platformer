@@ -100,13 +100,14 @@ class PhysicsSystem(System):
                 entity.state = 'idle'
             if entity.intention.jump and entity.on_ground:
                 globals.soundManager.playSound('jump')
+                entity.state = 'jumping'
                 entity.speed = -5
 
         # horizontal movement
 
         new_x_rect = pygame.Rect(
             int(new_x),
-            int(entity.position.rect.y),
+            int(entity.position.rect.y-1),
             entity.position.rect.width,
             entity.position.rect.height)
         
@@ -143,12 +144,15 @@ class PhysicsSystem(System):
                 # if the platform is below the player
                 if platform[1] > new_y:
                     # stick the player to the platform
-                    entity.position.rect.y = platform[1] - entity.position.rect.height
+                    entity.position.rect.y = platform[1] - entity.position.rect.height + 1
                     entity.on_ground = True
                 break
 
         if y_collision == False:
             entity.position.rect.y = int(new_y)
+        
+        if entity.type == 'player' and not entity.on_ground:
+            entity.state = 'jumping'
         
         # reset intentions
         if entity.intention is not None:

@@ -121,6 +121,8 @@ walking3 = pygame.image.load('images/vita_07.png')
 walking4 = pygame.image.load('images/vita_08.png')
 walking5 = pygame.image.load('images/vita_09.png')
 
+jumping = pygame.image.load('images/vita_11.png')
+
 def setPlayerCameras():
 
     # 1 player game
@@ -176,14 +178,17 @@ def resetPlayer(entity):
     entity.direction = 'right'
     entity.animations.alpha = 255
     entity.effect = None
+    entity.state = 'idle'
 
 def makePlayer(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,45,51)
     entityIdleAnimation = engine.Animation([idle0, idle1, idle2, idle3])
     entityWalkingAnimation = engine.Animation([walking0, walking1, walking2, walking3, walking4, walking5])
+    entityJumpingAnimation = engine.Animation([jumping])
     entity.animations.add('idle', entityIdleAnimation)
     entity.animations.add('walking', entityWalkingAnimation)
+    entity.animations.add('jumping', entityJumpingAnimation)
     entity.score = engine.Score()
     entity.battle = engine.Battle()
     entity.intention = engine.Intention()
