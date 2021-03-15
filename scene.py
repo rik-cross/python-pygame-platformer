@@ -5,21 +5,7 @@ import engine
 import ui
 import level
 
-class Scene:
-    def __init__(self):
-        pass
-    def onEnter(self):
-        pass
-    def onExit(self):
-        pass
-    def input(self, sm, inputStream):
-        pass
-    def update(self, sm, inputStream):
-        pass
-    def draw(self, sm, screen):
-        pass
-
-class MainMenuScene(Scene):
+class MainMenuScene(engine.Scene):
     def __init__(self):
         self.enter = ui.ButtonUI(pygame.K_RETURN, '[Enter=next]', 50, 200)
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 250)
@@ -40,7 +26,7 @@ class MainMenuScene(Scene):
         self.enter.draw(screen)
         self.esc.draw(screen)
 
-class LevelSelectScene(Scene):
+class LevelSelectScene(engine.Scene):
     def __init__(self):
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 300)
     def onEnter(self):
@@ -75,7 +61,7 @@ class LevelSelectScene(Scene):
                 a = 100
             utils.drawText(screen, str(levelNumber), levelNumber*100, 100, c, a)
 
-class PlayerSelectScene(Scene):
+class PlayerSelectScene(engine.Scene):
     def __init__(self):
         self.enter = ui.ButtonUI(pygame.K_RETURN, '[Enter=next]', 50, 200)
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 250)
@@ -137,7 +123,7 @@ class PlayerSelectScene(Scene):
         else:
             screen.blit(utils.not_playing, (250,100))
         
-class GameScene(Scene):
+class GameScene(engine.Scene):
     def __init__(self):
         self.cameraSystem = engine.CameraSystem()
         self.collectionSystem = engine.CollectionSystem()
@@ -173,7 +159,7 @@ class GameScene(Scene):
         screen.fill(engine.DARK_GREY)
         self.cameraSystem.update(screen)
 
-class WinScene(Scene):
+class WinScene(engine.Scene):
     def __init__(self):
         self.alpha = 0
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 200)
@@ -195,7 +181,7 @@ class WinScene(Scene):
         utils.drawText(screen, 'You win!', 50, 50, engine.WHITE, self.alpha)
         self.esc.draw(screen, alpha=self.alpha)
 
-class LoseScene(Scene):
+class LoseScene(engine.Scene):
     def __init__(self):
         self.alpha = 0
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 200)
@@ -217,27 +203,7 @@ class LoseScene(Scene):
         utils.drawText(screen, 'You lose!', 150, 150, engine.WHITE, self.alpha)
         self.esc.draw(screen, alpha=self.alpha)
 
-class TransitionScene(Scene):
-    def __init__(self, fromScenes, toScenes):
-        self.currentPercentage = 0
-        self.fromScenes = fromScenes
-        self.toScenes = toScenes
-    def update(self, sm, inputStream):
-        self.currentPercentage += 2
-        if self.currentPercentage >= 100:
-            sm.pop()
-            for s in self.toScenes:
-                sm.push(s)
-        for scene in self.fromScenes:
-            scene.update(sm, inputStream)
-        if len(self.toScenes) > 0:
-            for scene in self.toScenes:
-                scene.update(sm, inputStream)
-        else:
-            if len(sm.scenes) > 1:
-                sm.scenes[-2].update(sm, inputStream)
-
-class FadeTransitionScene(TransitionScene):
+class FadeTransitionScene(engine.TransitionScene):
     def draw(self, sm, screen):
         if self.currentPercentage < 50:
             for s in self.fromScenes:
@@ -257,40 +223,3 @@ class FadeTransitionScene(TransitionScene):
         overlay.fill(engine.BLACK)
         screen.blit(overlay, (0,0))
 
-class SceneManager:
-    def __init__(self):
-        self.scenes = []
-    def isEmpty(self):
-        return len(self.scenes) == 0
-    def enterScene(self):
-        if len(self.scenes) > 0:
-            self.scenes[-1].onEnter()
-    def exitScene(self):
-        if len(self.scenes) > 0:
-            self.scenes[-1].onExit()
-    def input(self, inputStream):
-        if len(self.scenes) > 0:
-            self.scenes[-1].input(self, inputStream)
-    def update(self, inputStream):
-        if len(self.scenes) > 0:
-            self.scenes[-1].update(self, inputStream)
-    def draw(self, screen):
-        if len(self.scenes) > 0:
-            self.scenes[-1].draw(self, screen)
-        # present screen
-        pygame.display.flip()
-    def push(self, scene):
-        self.exitScene()
-        self.scenes.append(scene)
-        self.enterScene()
-    def pop(self):
-        self.exitScene()
-        self.scenes.pop()
-        self.enterScene()
-    def set(self, scenes):
-        # pop all scenes
-        while len(self.scenes) > 0:
-            self.pop()
-        # add new scenes
-        for s in scenes:
-            self.push(s)

@@ -14,7 +14,8 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('Rik\'s Platform Game')
 clock = pygame.time.Clock()
 
-sceneManager = scene.SceneManager()
+sceneManager = engine.SceneManager()
+
 mainMenu = scene.MainMenuScene()
 sceneManager.push(mainMenu)
 
