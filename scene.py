@@ -24,7 +24,7 @@ class MainMenuScene(Scene):
         self.enter = ui.ButtonUI(pygame.K_RETURN, '[Enter=next]', 50, 200)
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 250)
     def onEnter(self):
-        globals.soundManager.playMusicFade('solace')
+        engine.soundManager.playMusicFade('solace')
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
             sm.push(FadeTransitionScene([self], [PlayerSelectScene()]))
@@ -44,7 +44,7 @@ class LevelSelectScene(Scene):
     def __init__(self):
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 300)
     def onEnter(self):
-        globals.soundManager.playMusicFade('solace')
+        engine.soundManager.playMusicFade('solace')
     def update(self, sm, inputStream):
         self.esc.update(inputStream)
     def input(self, sm, inputStream):
@@ -80,7 +80,7 @@ class PlayerSelectScene(Scene):
         self.enter = ui.ButtonUI(pygame.K_RETURN, '[Enter=next]', 50, 200)
         self.esc = ui.ButtonUI(pygame.K_ESCAPE, '[Esc=quit]', 50, 250)
     def onEnter(self):
-        globals.soundManager.playMusicFade('solace')
+        engine.soundManager.playMusicFade('solace')
     def update(self, sm, inputStream):
         self.esc.update(inputStream)
         self.enter.update(inputStream)
@@ -147,7 +147,7 @@ class GameScene(Scene):
         self.animationSystem = engine.AnimationSystem()
         self.powerupSystem = engine.PowerupSystem()
     def onEnter(self):
-        globals.soundManager.playMusicFade('dawn')
+        engine.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()

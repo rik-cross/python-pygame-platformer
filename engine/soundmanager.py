@@ -3,9 +3,9 @@ import pygame
 class SoundManager:
     def __init__(self):
         pygame.mixer.init()
-        self.soundVolume = 0 #0.4
-        self.musicVolume = 0 #0.2
-        self.targetMusicVolume = 0 #0.2
+        self.soundVolume = 0#0.4
+        self.musicVolume = 0#0.2
+        self.targetMusicVolume = 0#0.2
         self.nextMusic = None
         self.currentMusic = None
         self.sounds = {
@@ -56,3 +56,5 @@ class SoundManager:
                 self.playMusic(self.nextMusic)
                 # remove from music queue
                 self.nextMusic = None
+
+soundManager = SoundManager()

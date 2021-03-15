@@ -1,5 +1,3 @@
-import soundmanager
-
 world = None
 
 maxLevel = 2
@@ -11,5 +9,3 @@ player2 = None
 player3 = None
 player4 = None
 players = []
-
-soundManager = soundmanager.SoundManager()

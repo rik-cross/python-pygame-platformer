@@ -4,6 +4,7 @@ import globals
 import random
 from .colours import *
 from .entity_component_system import *
+from .soundmanager import *
 
 class PowerupSystem(System):
     def __init__(self):
@@ -45,7 +46,7 @@ class PowerupSystem(System):
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     # give the effect component to the player
                     otherEntity.effect = entity.effect
-                    globals.soundManager.playSound(entity.effect.sound)
+                    soundManager.playSound(entity.effect.sound)
                     # remove the collected powerup from the world
                     globals.world.entities.remove(entity)
         
@@ -87,7 +88,7 @@ class PhysicsSystem(System):
             if not entity.intention.moveLeft and not entity.intention.moveRight:
                 entity.state = 'idle'
             if entity.intention.jump and entity.on_ground:
-                globals.soundManager.playSound('jump')
+                soundManager.playSound('jump')
                 entity.state = 'jumping'
                 entity.speed = -5
 
@@ -186,7 +187,7 @@ class CollectionSystem(System):
             if otherEntity is not entity and otherEntity.type == 'collectable':
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     # entity.collectable.onCollide(entity, otherEntity)
-                    globals.soundManager.playSound('coin')
+                    soundManager.playSound('coin')
                     globals.world.entities.remove(otherEntity)
                     entity.score.score += 1
 

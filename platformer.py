@@ -24,7 +24,6 @@ import level
 import scene
 import globals
 import inputstream
-import soundmanager
 
 # constant variables
 SCREEN_SIZE = (830,830)
@@ -68,7 +67,7 @@ while running:
             running = False
 
     inputStream.processInput()
-    globals.soundManager.update()
+    engine.soundManager.update()
 
     if sceneManager.isEmpty():
         running = False
