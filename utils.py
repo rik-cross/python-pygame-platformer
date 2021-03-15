@@ -41,6 +41,8 @@ def endInvisible(entity):
     if entity.animations:
         entity.animations.alpha = 255
 
+powerups = ['health', 'invisible']
+
 powerupImages = {
     'health' : [pygame.image.load('images/powerup_health.png')],
     'invisible' : [pygame.image.load('images/powerup_invisible.png')]

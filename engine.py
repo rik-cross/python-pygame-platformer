@@ -1,6 +1,7 @@
 import pygame
 import utils
 import globals
+import random
 
 class System():
     def __init__(self):
@@ -15,8 +16,39 @@ class System():
         pass
 
 class PowerupSystem(System):
+    def __init__(self):
+        self.timer = 0
     def check(self, entity):
         return entity.effect is not None
+    def update(self, screen=None, inputStream=None):
+        super().update(screen, inputStream)
+
+        # count the number of powerups in the world
+        count = 0
+        for entity in globals.world.entities:
+            if entity.type != 'player':
+                if entity.effect:
+                    count += 1
+
+        # if no powerups -- start a timer to create new
+        if count == 0 and self.timer == 0:
+            self.timer = 500
+
+        # create new powerup if it's time
+        if self.timer > 0:
+            # decrement timer
+            self.timer -= 1
+            if self.timer <= 0:
+                # spawn a powerup
+                if globals.world.powerupSpawnPoints is not None:
+                    if len(globals.world.powerupSpawnPoints) > 0:
+                        spawnPos = random.choice(globals.world.powerupSpawnPoints)
+                        globals.world.entities.append(
+                            utils.makePowerup(random.choice(utils.powerups), spawnPos[0], spawnPos[1])
+                        )
+
+        print('count:', count, 'timer', self.timer)
+
     def updateEntity(self, screen, inputStream, entity):
 
         # player collection of powerups

@@ -3,11 +3,12 @@ import globals
 import utils
 
 class Level:
-    def __init__(self, platforms=None, entities=None, winFunc=None, loseFunc=None):
+    def __init__(self, platforms=None, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None):
         self.platforms = platforms
         self.entities = entities
         self.winFunc = winFunc
         self.loseFunc = loseFunc
+        self.powerupSpawnPoints = powerupSpawnPoints
     def isWon(self):
         if self.winFunc is None:
             return False
@@ -52,11 +53,11 @@ def loadLevel(levelNumber):
             entities = [
                 utils.makeCoin(100,200),
                 utils.makeCoin(200,250),
-                utils.makeEnemy(150,274),
-                utils.makePowerup('invisible', 400,260)
+                utils.makeEnemy(150,274)
             ],
             winFunc = wonLevel,
-            loseFunc = lostLevel
+            loseFunc = lostLevel,
+            powerupSpawnPoints = [(400,260),(300,100)]
         )
     if levelNumber == 2:
         # load level 2
@@ -69,7 +70,8 @@ def loadLevel(levelNumber):
                 utils.makeCoin(100,200)
             ],
             winFunc = wonLevel,
-            loseFunc = lostLevel
+            loseFunc = lostLevel,
+            powerupSpawnPoints = [(400,260),(300,100)]
         )
 
     # add players
