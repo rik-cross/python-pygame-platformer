@@ -23,12 +23,9 @@ import utils
 import level
 import scene
 import globals
-import inputstream
 
 # constant variables
 SCREEN_SIZE = (830,830)
-DARK_GREY = (50,50,50)
-MUSTARD = (209,206,25)
 
 # init
 pygame.init()
@@ -40,7 +37,7 @@ sceneManager = scene.SceneManager()
 mainMenu = scene.MainMenuScene()
 sceneManager.push(mainMenu)
 
-inputStream = inputstream.InputStream()
+inputStream = engine.InputStream()
 
 # create players
 
