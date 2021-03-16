@@ -20,7 +20,7 @@ class Keyboard:
             return False
         return self.currentKeyStates[keyCode] == False and self.previousKeyStates[keyCode] == True
 
-class InputStream:
+class InputManager:
     def __init__(self):
         self.keyboard = Keyboard()
     def processInput(self):

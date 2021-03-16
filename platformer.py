@@ -19,7 +19,7 @@ sceneManager = engine.SceneManager()
 mainMenu = scene.MainMenuScene()
 sceneManager.push(mainMenu)
 
-inputStream = engine.InputStream()
+inputManager = engine.InputManager()
 
 # create players
 
@@ -51,13 +51,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    inputStream.processInput()
+    inputManager.processInput()
     engine.soundManager.update()
 
     if sceneManager.isEmpty():
         running = False
-    sceneManager.input(inputStream)
-    sceneManager.update(inputStream)
+    sceneManager.input(inputManager)
+    sceneManager.update(inputManager)
     sceneManager.draw(screen) 
 
     clock.tick(60)
