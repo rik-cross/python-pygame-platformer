@@ -156,7 +156,7 @@ class GameScene(engine.Scene):
         self.powerupSystem.update()
     def draw(self, sm, screen):
         # background
-        screen.fill(engine.DARK_GREY)
+        screen.fill(engine.BLACK)
         self.cameraSystem.update(screen)
 
 class WinScene(engine.Scene):
@@ -174,7 +174,7 @@ class WinScene(engine.Scene):
             sm.scenes[-2].draw(sm, screen)
 
         # draw a transparent bg
-        bgSurf = pygame.Surface((830,830))
+        bgSurf = pygame.Surface(pygame.display.get_surface().get_size())
         bgSurf.fill((engine.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
@@ -196,7 +196,7 @@ class LoseScene(engine.Scene):
             sm.scenes[-2].draw(sm, screen)
 
         # draw a transparent bg
-        bgSurf = pygame.Surface((830,830))
+        bgSurf = pygame.Surface(pygame.display.get_surface().get_size())
         bgSurf.fill((engine.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
@@ -217,7 +217,7 @@ class FadeTransitionScene(engine.TransitionScene):
                     s.draw(sm, screen)
 
         # fade overlay
-        overlay = pygame.Surface((830,830))
+        overlay = pygame.Surface(pygame.display.get_surface().get_size())
         alpha = int(abs((255 - ((255/50)*self.currentPercentage))))
         overlay.set_alpha(255 - alpha)
         overlay.fill(engine.BLACK)
