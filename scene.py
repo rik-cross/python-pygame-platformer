@@ -132,9 +132,12 @@ class GameScene(engine.Scene):
         self.physicsSystem = engine.PhysicsSystem()
         self.animationSystem = engine.AnimationSystem()
         self.powerupSystem = engine.PowerupSystem()
+        self.traumaSystem = engine.TraumaSystem()
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
+        if inputStream.keyboard.isKeyPressed(pygame.K_1):
+            globals.player1.trauma = 1 #min(1, globals.player1.trauma + 0.2)
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))
@@ -154,6 +157,7 @@ class GameScene(engine.Scene):
         self.physicsSystem.update()
         self.animationSystem.update()
         self.powerupSystem.update()
+        self.traumaSystem.update()
     def draw(self, sm, screen):
         # background
         screen.fill(engine.BLACK)

@@ -3,6 +3,13 @@ import globals
 import utils
 from .entity_component_system import *
 from .colours import *
+import random
+
+class TraumaSystem(System):
+    def check(self, entity):
+        return entity.trauma is not None
+    def updateEntity(self, screen, inputStream, entity):    
+        entity.trauma =  max(0, entity.trauma - 0.01 )
 
 class AnimationSystem(System):
     def check(self, entity):
@@ -158,6 +165,13 @@ class CameraSystem(System):
         offsetX = cameraRect.x + cameraRect.w/2 - (entity.camera.worldX * entity.camera.zoomLevel)
         offsetY = cameraRect.y + cameraRect.h/2 - (entity.camera.worldY * entity.camera.zoomLevel)
 
+        angle = 0
+        # add camera shake
+        if entity.trauma is not None:
+            offsetX += (entity.trauma ** 3) * (random.random()*2-1) * 10 * entity.camera.zoomLevel
+            offsetY += (entity.trauma ** 3) * (random.random()*2-1) * 10 * entity.camera.zoomLevel
+            angle += (entity.trauma ** 3) * (random.random()*2-1) * 30 * entity.camera.zoomLevel
+
         # fill camera background
         screen.fill(BLACK)
 
@@ -168,7 +182,7 @@ class CameraSystem(System):
                 0 + offsetY,
                 globals.world.size[0] * entity.camera.zoomLevel,
                 globals.world.size[1] * entity.camera.zoomLevel)
-            pygame.draw.rect(screen, (50,50,50), worldRect)
+            pygame.draw.rect(screen, DARK_GREY, worldRect)
 
         # render platforms
         for p in globals.world.platforms:

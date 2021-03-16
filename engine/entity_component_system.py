@@ -21,6 +21,7 @@ class Entity:
         self.acceleration = 0
         self.effect = None
         self.reset = resetEntity
+        self.trauma = 0
 
 class System():
     def __init__(self):
