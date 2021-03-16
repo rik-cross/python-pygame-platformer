@@ -14,12 +14,8 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption('Rik\'s Platform Game')
 clock = pygame.time.Clock()
 
-sceneManager = engine.SceneManager()
-
 mainMenu = scene.MainMenuScene()
-sceneManager.push(mainMenu)
-
-inputManager = engine.InputManager()
+engine.sceneManager.push(mainMenu)
 
 # create players
 
@@ -51,14 +47,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    inputManager.processInput()
+    engine.inputManager.processInput()
     engine.soundManager.update()
 
-    if sceneManager.isEmpty():
+    if engine.sceneManager.isEmpty():
         running = False
-    sceneManager.input(inputManager)
-    sceneManager.update(inputManager)
-    sceneManager.draw(screen) 
+    engine.sceneManager.input(engine.inputManager)
+    engine.sceneManager.update(engine.inputManager)
+    engine.sceneManager.draw(screen) 
 
     clock.tick(60)
 

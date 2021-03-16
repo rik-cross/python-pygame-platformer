@@ -5,7 +5,11 @@ import random
 from .colours import *
 from .entity_component_system import *
 from .soundmanager import *
+from .inputmanager import *
+from .scenemanager import *
 
+sceneManager = SceneManager()
+inputManager = InputManager()
 soundManager = SoundManager()
 
 class PowerupSystem(System):
