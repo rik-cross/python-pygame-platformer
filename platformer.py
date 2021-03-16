@@ -5,14 +5,7 @@ import level
 import scene
 import globals
 
-# constant variables
-SCREEN_SIZE = (830,830)
-
-# init
-pygame.init()
-screen = pygame.display.set_mode(SCREEN_SIZE)
-pygame.display.set_caption('Rik\'s Platform Game')
-clock = pygame.time.Clock()
+engine.init((1000,500), 'Platform Game')
 
 mainMenu = scene.MainMenuScene()
 engine.sceneManager.push(mainMenu)
@@ -38,25 +31,5 @@ engine.soundManager.addMusic('dawn', 'music/03 Before the Dawn.ogg')
 engine.soundManager.addSound('jump', 'sounds/03_Jump_v2.ogg')
 engine.soundManager.addSound('coin', 'sounds/01_Coin Pickup_v2.ogg')
 
-running = True
-while running:
-# game loop
 
-    # check for quit
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    engine.inputManager.processInput()
-    engine.soundManager.update()
-
-    if engine.sceneManager.isEmpty():
-        running = False
-    engine.sceneManager.input(engine.inputManager)
-    engine.sceneManager.update(engine.inputManager)
-    engine.sceneManager.draw(screen) 
-
-    clock.tick(60)
-
-# quit
-pygame.quit()
+engine.run()
