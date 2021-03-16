@@ -126,17 +126,20 @@ class CameraSystem(System):
         return entity.camera is not None
     def updateEntity(self, screen, inputStream, entity):
 
+        # set clipping rectangle
+        cameraRect = entity.camera.rect
+        clipRect = pygame.Rect(cameraRect.x, cameraRect.y, cameraRect.w, cameraRect.h)
+        screen.set_clip(clipRect)
+
         # zoom
         if entity.intention is not None:
             if entity.intention.zoomIn:
                 entity.camera.zoomLevel = min(4, entity.camera.zoomLevel+0.01)
             if entity.intention.zoomOut:
-                entity.camera.zoomLevel = max(0.1, entity.camera.zoomLevel-0.01)
-
-        # set clipping rectangle
-        cameraRect = entity.camera.rect
-        clipRect = pygame.Rect(cameraRect.x, cameraRect.y, cameraRect.w, cameraRect.h)
-        screen.set_clip(clipRect)
+                # only zoom out if there's more of the world to see
+                newZoomLevel = entity.camera.zoomLevel-0.01
+                if (globals.world.size[0] * newZoomLevel >= cameraRect.w) or (globals.world.size[1] * newZoomLevel >= cameraRect.h):
+                    entity.camera.zoomLevel = newZoomLevel
 
         # update camera if tracking an entity
         if entity.camera.entityToTrack is not None:
