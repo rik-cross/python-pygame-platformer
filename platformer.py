@@ -36,6 +36,12 @@ globals.player3.input = engine.Input(pygame.K_z, pygame.K_z, pygame.K_z, pygame.
 globals.player4 = utils.makePlayer(450,0)
 globals.player4.input = engine.Input(pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_x)
 
+engine.soundManager.addMusic('solace', 'music/23 Solace.ogg')
+engine.soundManager.addMusic('dawn', 'music/03 Before the Dawn.ogg')
+
+engine.soundManager.addSound('jump', 'sounds/03_Jump_v2.ogg')
+engine.soundManager.addSound('coin', 'sounds/01_Coin Pickup_v2.ogg')
+
 running = True
 while running:
 # game loop

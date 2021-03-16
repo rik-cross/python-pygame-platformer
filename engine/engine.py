@@ -6,6 +6,8 @@ from .colours import *
 from .entity_component_system import *
 from .soundmanager import *
 
+soundManager = SoundManager()
+
 class PowerupSystem(System):
     def __init__(self):
         self.timer = 0
