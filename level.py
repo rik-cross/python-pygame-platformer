@@ -43,23 +43,24 @@ def loadLevel(levelNumber):
     if levelNumber == 1:
         # load level 1
         globals.world = Level(
-            size=(1200,1200),
+            size=(3000,600),
             platforms = [
-                # middle
-                pygame.Rect(0,300,1200,50),
-                # left
-                pygame.Rect(100,250,50,50),
-                # right
-                pygame.Rect(450,250,50,50)
+                pygame.Rect(0,580,3000,20),
+                pygame.Rect(0,400,100,200),
+                pygame.Rect(2900,400,100,200),
+                pygame.Rect(500,500,100,20),
+                pygame.Rect(600,450,100,20),
+                pygame.Rect(800,450,200,20)
             ],
             entities = [
-                utils.makeCoin(100,200),
-                utils.makeCoin(200,250),
-                utils.makeEnemy(150,274)
+                utils.makeCoin(520,450),
+                utils.makeCoin(120,530),
+                utils.makeCoin(1700,550),
+                utils.makeEnemy(1500,580-26)
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
-            powerupSpawnPoints = [(400,260),(300,100)]
+            powerupSpawnPoints = [(900,350),(200,500)]
         )
     if levelNumber == 2:
         # load level 2
@@ -67,7 +68,7 @@ def loadLevel(levelNumber):
             size=(1200,1200),
             platforms = [
                 # middle
-                pygame.Rect(0,300,1200,50)
+                pygame.Rect(0,300,1200,20)
             ],
             entities = [
                 utils.makeCoin(100,200)

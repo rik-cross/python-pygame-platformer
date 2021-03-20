@@ -27,11 +27,11 @@ class PhysicsSystem(System):
 
         if entity.intention is not None:
             if entity.intention.moveLeft:
-                new_x -= 2
+                new_x -= 3
                 entity.direction = 'left'
                 entity.state = 'walking'
             if entity.intention.moveRight:
-                new_x += 2
+                new_x += 3
                 entity.direction = 'right'
                 entity.state = 'walking'
             if not entity.intention.moveLeft and not entity.intention.moveRight:
@@ -39,7 +39,7 @@ class PhysicsSystem(System):
             if entity.intention.jump and entity.on_ground:
                 engine.soundManager.playSound('jump')
                 entity.state = 'jumping'
-                entity.speed = -5
+                entity.speed = -7
 
         # horizontal movement
 

@@ -19,6 +19,7 @@ class Entity:
         self.intention = None
         self.on_ground = False
         self.acceleration = 0
+        self.initialAcceleration = 0
         self.effect = None
         self.reset = resetEntity
         self.trauma = 0

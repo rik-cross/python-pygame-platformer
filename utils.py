@@ -187,7 +187,7 @@ def resetPlayer(entity):
     entity.position.rect.x = entity.position.initial.x
     entity.position.rect.y = entity.position.initial.y
     entity.speed = 0
-    entity.acceleration = 0.2
+    entity.acceleration = entity.initialAcceleration
     entity.camera.setWorldPos(entity.position.initial.x, entity.position.initial.y)
     entity.direction = 'right'
     entity.imageGroups.alpha = 255
@@ -200,7 +200,7 @@ def makePlayer(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,45,51)
     entityIdleAnimation = engine.ImageGroup([idle0, idle1, idle2, idle3])
-    entityWalkingAnimation = engine.ImageGroup([walking0, walking1, walking2, walking3, walking4, walking5])
+    entityWalkingAnimation = engine.ImageGroup([walking0, walking1, walking2, walking3, walking4, walking5], delay=6)
     entityJumpingAnimation = engine.ImageGroup([jumping])
     entity.imageGroups.add('idle', entityIdleAnimation)
     entity.imageGroups.add('walking', entityWalkingAnimation)
@@ -208,7 +208,8 @@ def makePlayer(x,y):
     entity.score = gamecomponents.Score()
     entity.battle = gamecomponents.Battle()
     entity.intention = engine.Intention()
-    entity.acceleration = 0.2
+    entity.acceleration = 0.3
+    entity.initialAcceleration = entity.acceleration
     entity.type = 'player'
     entity.reset = resetPlayer
     entity.rigidBody = engine.RigidBody(10,1,25,50)
