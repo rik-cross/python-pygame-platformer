@@ -13,9 +13,9 @@ class TraumaSystem(System):
 
 class AnimationSystem(System):
     def check(self, entity):
-        return entity.animations is not None
+        return entity.imageGroups is not None
     def updateEntity(self, screen, inputStream, entity):    
-        entity.animations.animationList[entity.state].update()
+        entity.imageGroups.animationList[entity.state].update()
 
 class PhysicsSystem(System):
     def check(self, entity):
@@ -196,11 +196,11 @@ class CameraSystem(System):
         # render entities
         for e in globals.world.entities:
             s = e.state
-            a = e.animations.animationList[s]
+            a = e.imageGroups.animationList[s]
             a.draw(screen,
                 (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
                 (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
-                e.direction == 'left', False, entity.camera.zoomLevel, e.animations.alpha)
+                e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha)
 
         # entity HUD
 

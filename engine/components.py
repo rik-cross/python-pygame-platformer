@@ -6,14 +6,14 @@ class Position():
         self.rect = pygame.Rect(x,y,w,h)
         self.initial = pygame.Rect(x,y,w,h)
 
-class Animations():
+class ImageGroups():
     def __init__(self):
         self.animationList = {}
         self.alpha = 255
     def add(self, state, animation):
         self.animationList[state] = animation
 
-class Animation:
+class ImageGroup:
     def __init__(self, imageList):
         self.imageList = imageList
         self.imageIndex = 0

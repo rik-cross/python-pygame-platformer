@@ -30,12 +30,12 @@ def setHealth(entity):
         entity.battle.lives = 3
 
 def setInvisible(entity):
-    if entity.animations:
-        entity.animations.alpha = 50
+    if entity.imageGroups:
+        entity.imageGroups.alpha = 50
 
 def endInvisible(entity):
-    if entity.animations:
-        entity.animations.alpha = 255
+    if entity.imageGroups:
+        entity.imageGroups.alpha = 255
 
 powerups = ['health', 'invisible']
 
@@ -67,8 +67,8 @@ powerupEffectTimer = {
 def makePowerup(type, x, y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,40,40)
-    entityAnimation = engine.Animation(powerupImages[type])
-    entity.animations.add('idle', entityAnimation)
+    entityAnimation = engine.ImageGroup(powerupImages[type])
+    entity.imageGroups.add('idle', entityAnimation)
     entity.effect = engine.Effect(
         powerupApply[type], 
         powerupEffectTimer[type],
@@ -87,8 +87,8 @@ coin5 = pygame.image.load('images/coin_5.png')
 def makeCoin(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,23,23)
-    entityAnimation = engine.Animation([coin1, coin2, coin3, coin4, coin5])
-    entity.animations.add('idle', entityAnimation)
+    entityAnimation = engine.ImageGroup([coin1, coin2, coin3, coin4, coin5])
+    entity.imageGroups.add('idle', entityAnimation)
     entity.type = 'collectable'
     return entity
 
@@ -97,8 +97,8 @@ enemy0 = pygame.image.load('images/spike_monster.png')
 def makeEnemy(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,50,26)
-    entityAnimation = engine.Animation([enemy0])
-    entity.animations.add('idle', entityAnimation)
+    entityAnimation = engine.ImageGroup([enemy0])
+    entity.imageGroups.add('idle', entityAnimation)
     entity.type = 'dangerous'
     return entity
 
@@ -182,19 +182,19 @@ def resetPlayer(entity):
     entity.acceleration = 0.2
     entity.camera.setWorldPos(entity.position.initial.x, entity.position.initial.y)
     entity.direction = 'right'
-    entity.animations.alpha = 255
+    entity.imageGroups.alpha = 255
     entity.effect = None
     entity.state = 'idle'
 
 def makePlayer(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,45,51)
-    entityIdleAnimation = engine.Animation([idle0, idle1, idle2, idle3])
-    entityWalkingAnimation = engine.Animation([walking0, walking1, walking2, walking3, walking4, walking5])
-    entityJumpingAnimation = engine.Animation([jumping])
-    entity.animations.add('idle', entityIdleAnimation)
-    entity.animations.add('walking', entityWalkingAnimation)
-    entity.animations.add('jumping', entityJumpingAnimation)
+    entityIdleAnimation = engine.ImageGroup([idle0, idle1, idle2, idle3])
+    entityWalkingAnimation = engine.ImageGroup([walking0, walking1, walking2, walking3, walking4, walking5])
+    entityJumpingAnimation = engine.ImageGroup([jumping])
+    entity.imageGroups.add('idle', entityIdleAnimation)
+    entity.imageGroups.add('walking', entityWalkingAnimation)
+    entity.imageGroups.add('jumping', entityJumpingAnimation)
     entity.score = engine.Score()
     entity.battle = engine.Battle()
     entity.intention = engine.Intention()

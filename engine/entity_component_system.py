@@ -9,7 +9,7 @@ class Entity:
         self.state = 'idle'
         self.type = 'normal'
         self.position = None
-        self.animations = engine.Animations()
+        self.imageGroups = engine.ImageGroups()
         self.direction = 'right'
         self.camera = None
         self.score = None
