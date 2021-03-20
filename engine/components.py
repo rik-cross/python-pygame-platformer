@@ -18,16 +18,16 @@ class ImageGroups:
         self.animationList[state] = animation
 
 class ImageGroup:
-    def __init__(self, imageList):
+    def __init__(self, imageList, delay=8):
         self.imageList = imageList
         self.imageIndex = 0
         self.animationTimer = 0
-        self.animationSpeed = 8
+        self.animationDelay = delay
     def update(self):
         # increment the timer
         self.animationTimer += 1
         # if the timer gets too high...
-        if self.animationTimer >= self.animationSpeed:
+        if self.animationTimer >= self.animationDelay:
             # reset the timer
             self.animationTimer = 0
             # increment the current image

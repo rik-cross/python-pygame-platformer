@@ -87,7 +87,7 @@ coin5 = pygame.image.load('images/coin_5.png')
 def makeCoin(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,23,23)
-    entityAnimation = engine.ImageGroup([coin1, coin2, coin3, coin4, coin5])
+    entityAnimation = engine.ImageGroup([coin1, coin2, coin3, coin4, coin5], delay=12)
     entity.imageGroups.add('idle', entityAnimation)
     entity.type = 'collectable'
     return entity
