@@ -12,16 +12,16 @@ engine.sceneManager.push(mainMenu)
 
 # player 1
 globals.player1 = utils.makePlayer(300,50)
-globals.player1.input = engine.Input(pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d, pygame.K_q, pygame.K_e)
+globals.player1.input = engine.Input(engine.w, engine.s, engine.a, engine.d, engine.q, engine.e)
 # player 2
 globals.player2 = utils.makePlayer(350,50)
-globals.player2.input = engine.Input(pygame.K_i, pygame.K_k, pygame.K_j, pygame.K_l, pygame.K_u, pygame.K_o)
+globals.player2.input = engine.Input(engine.i, engine.k, engine.j, engine.l, engine.u, engine.o)
 # player 3
 globals.player3 = utils.makePlayer(400,50)
-globals.player3.input = engine.Input(pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_x)
+globals.player3.input = engine.Input(None, None, None, None, None, None)
 # player 4
 globals.player4 = utils.makePlayer(450,50)
-globals.player4.input = engine.Input(pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_z, pygame.K_x)
+globals.player4.input = engine.Input(None, None, None, None, None, None)
 
 engine.soundManager.addMusic('solace', 'music/23 Solace.ogg')
 engine.soundManager.addMusic('dawn', 'music/03 Before the Dawn.ogg')

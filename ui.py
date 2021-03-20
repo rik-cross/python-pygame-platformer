@@ -12,7 +12,7 @@ class ButtonUI:
         self.on = False
         self.timer = 20
     def update(self, inputStream):
-        self.pressed = inputStream.keyboard.isKeyPressed(self.keyCode)
+        self.pressed = inputStream.isPressed(self.keyCode)
         if self.pressed:
             self.on = True
         if self.on:
