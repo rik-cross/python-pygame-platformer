@@ -4,6 +4,7 @@ import globals
 import engine
 import ui
 import level
+import gamesystems
 
 class MainMenuScene(engine.Scene):
     def __init__(self):
@@ -126,12 +127,12 @@ class PlayerSelectScene(engine.Scene):
 class GameScene(engine.Scene):
     def __init__(self):
         self.cameraSystem = engine.CameraSystem()
-        self.collectionSystem = engine.CollectionSystem()
-        self.battleSystem = engine.BattleSystem()
+        self.collectionSystem = gamesystems.CollectionSystem()
+        self.battleSystem = gamesystems.BattleSystem()
         self.inputSystem = engine.InputSystem()
         self.physicsSystem = engine.PhysicsSystem()
         self.animationSystem = engine.AnimationSystem()
-        self.powerupSystem = engine.PowerupSystem()
+        self.powerupSystem = gamesystems.PowerupSystem()
         self.traumaSystem = engine.TraumaSystem()
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')

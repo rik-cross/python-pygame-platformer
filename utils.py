@@ -1,6 +1,7 @@
 import pygame
 import engine
 import globals
+import gamecomponents
 
 pygame.font.init()
 font = pygame.font.Font(pygame.font.get_default_font(), 24)
@@ -69,7 +70,7 @@ def makePowerup(type, x, y):
     entity.position = engine.Position(x,y,40,40)
     entityAnimation = engine.ImageGroup(powerupImages[type])
     entity.imageGroups.add('idle', entityAnimation)
-    entity.effect = engine.Effect(
+    entity.effect = gamecomponents.Effect(
         powerupApply[type], 
         powerupEffectTimer[type],
         powerupSound[type],
@@ -195,8 +196,8 @@ def makePlayer(x,y):
     entity.imageGroups.add('idle', entityIdleAnimation)
     entity.imageGroups.add('walking', entityWalkingAnimation)
     entity.imageGroups.add('jumping', entityJumpingAnimation)
-    entity.score = engine.Score()
-    entity.battle = engine.Battle()
+    entity.score = gamecomponents.Score()
+    entity.battle = gamecomponents.Battle()
     entity.intention = engine.Intention()
     entity.acceleration = 0.2
     entity.type = 'player'
