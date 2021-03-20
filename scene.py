@@ -40,6 +40,10 @@ class LevelSelectScene(engine.Scene):
         if inputStream.keyboard.isKeyPressed(pygame.K_d):
             globals.curentLevel = min(globals.curentLevel+1, globals.lastCompletedLevel)
         if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
+            # keep players in a sensible order (mainly for cameras)
+            utils.orderPlayers()
+            # resize player cameras, depending on the number playing
+            utils.setPlayerCameras()
             level.loadLevel(globals.curentLevel)
             sm.push(FadeTransitionScene([self], [GameScene()]))
 
@@ -88,7 +92,6 @@ class PlayerSelectScene(engine.Scene):
 
         if inputStream.keyboard.isKeyPressed(pygame.K_RETURN):
             if len(globals.players) > 0:
-                utils.setPlayerCameras()
                 sm.push(FadeTransitionScene([self], [LevelSelectScene()]))
 
         if inputStream.keyboard.isKeyPressed(pygame.K_ESCAPE):

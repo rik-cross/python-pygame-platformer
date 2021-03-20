@@ -120,6 +120,13 @@ walking5 = pygame.image.load('images/vita_09.png')
 
 jumping = pygame.image.load('images/vita_11.png')
 
+def orderPlayers():
+    newPlayerOrder = []
+    for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
+        if player in globals.players:
+            newPlayerOrder.append(player)
+    globals.players = newPlayerOrder
+
 def setPlayerCameras():
 
     screenWidth, screenHeight = pygame.display.get_surface().get_size()
