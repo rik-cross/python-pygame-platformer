@@ -55,6 +55,8 @@ class PhysicsSystem(System):
         for platform in globals.world.platforms:
             if platform.colliderect(new_x_rect):
                 x_collision = True
+                if abs(entity.speed) > 10:
+                    entity.trauma += 0.5
                 break
 
         if x_collision == False:
@@ -78,6 +80,8 @@ class PhysicsSystem(System):
         for platform in globals.world.platforms:
             if platform.colliderect(new_y_rect):
                 y_collision = True
+                if abs(entity.speed) > 10:
+                    entity.trauma += 0.5
                 entity.speed = 0
                 # if the platform is below the player
                 if platform[1] > new_y:
@@ -168,8 +172,8 @@ class CameraSystem(System):
         angle = 0
         # add camera shake
         if entity.trauma is not None:
-            offsetX += (entity.trauma ** 3) * (random.random()*2-1) * 10 * entity.camera.zoomLevel
-            offsetY += (entity.trauma ** 3) * (random.random()*2-1) * 10 * entity.camera.zoomLevel
+            offsetX += (entity.trauma ** 3) * (random.random()*2-1) * 20 * entity.camera.zoomLevel
+            offsetY += (entity.trauma ** 3) * (random.random()*2-1) * 20 * entity.camera.zoomLevel
             angle += (entity.trauma ** 3) * (random.random()*2-1) * 30 * entity.camera.zoomLevel
 
         # fill camera background
