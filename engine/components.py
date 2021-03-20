@@ -1,12 +1,16 @@
 import pygame
 import globals
 
-class Position():
+class RigidBody:
+    def __init__(self, offsetX, offsetY, w, h):
+        self.rect = pygame.Rect(offsetX,offsetY,w,h)
+
+class Position:
     def __init__(self, x, y, w, h):
         self.rect = pygame.Rect(x,y,w,h)
         self.initial = pygame.Rect(x,y,w,h)
 
-class ImageGroups():
+class ImageGroups:
     def __init__(self):
         self.animationList = {}
         self.alpha = 255
