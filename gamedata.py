@@ -12,10 +12,10 @@ engine.sceneManager.push(mainMenu)
 
 # player 1
 globals.player1 = utils.makePlayer(300,50)
-globals.player1.input = engine.Input(engine.w, engine.s, engine.a, engine.d, engine.q, engine.e)
+globals.player1.input = engine.Input(engine.keys.w, engine.keys.d, engine.keys.a, engine.keys.d, engine.keys.q, engine.keys.e)
 # player 2
 globals.player2 = utils.makePlayer(350,50)
-globals.player2.input = engine.Input(engine.i, engine.k, engine.j, engine.l, engine.u, engine.o)
+globals.player2.input = engine.Input(engine.controller[0].dpad_up, engine.controller[0].dpad_down, engine.controller[0].dpad_left, engine.controller[0].dpad_right, engine.controller[0].a, engine.controller[0].b)
 # player 3
 globals.player3 = utils.makePlayer(400,50)
 globals.player3.input = engine.Input(None, None, None, None, None, None)

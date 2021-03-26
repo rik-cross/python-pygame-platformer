@@ -8,14 +8,14 @@ import gamesystems
 
 class MainMenuScene(engine.Scene):
     def __init__(self):
-        self.enter = ui.ButtonUI(engine.enter, '[Enter=next]', 50, 200)
-        self.esc = ui.ButtonUI(engine.esc, '[Esc=quit]', 50, 250)
+        self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 200)
+        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 250)
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
     def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.enter):
+        if inputStream.isPressed(engine.keys.enter):
             sm.push(FadeTransitionScene([self], [PlayerSelectScene()]))
-        if inputStream.isPressed(engine.esc):
+        if inputStream.isPressed(engine.keys.esc):
             sm.pop()
     def update(self, sm, inputStream):
         self.enter.update(inputStream)
@@ -29,17 +29,17 @@ class MainMenuScene(engine.Scene):
 
 class LevelSelectScene(engine.Scene):
     def __init__(self):
-        self.esc = ui.ButtonUI(engine.esc, '[Esc=quit]', 50, 300)
+        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 300)
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
     def update(self, sm, inputStream):
         self.esc.update(inputStream)
     def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.a):
+        if inputStream.isPressed(engine.keys.a):
             globals.curentLevel = max(globals.curentLevel-1, 1)
-        if inputStream.isPressed(engine.d):
+        if inputStream.isPressed(engine.keys.d):
             globals.curentLevel = min(globals.curentLevel+1, globals.lastCompletedLevel)
-        if inputStream.isPressed(engine.enter):
+        if inputStream.isPressed(engine.keys.enter):
             # keep players in a sensible order (mainly for cameras)
             utils.orderPlayers()
             # resize player cameras, depending on the number playing
@@ -47,7 +47,7 @@ class LevelSelectScene(engine.Scene):
             level.loadLevel(globals.curentLevel)
             sm.push(FadeTransitionScene([self], [GameScene()]))
 
-        if inputStream.isPressed(engine.esc):
+        if inputStream.isPressed(engine.keys.esc):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))
     def draw(self, sm, screen):
@@ -68,8 +68,8 @@ class LevelSelectScene(engine.Scene):
 
 class PlayerSelectScene(engine.Scene):
     def __init__(self):
-        self.enter = ui.ButtonUI(engine.enter, '[Enter=next]', 50, 200)
-        self.esc = ui.ButtonUI(engine.esc, '[Esc=quit]', 50, 250)
+        self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 200)
+        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 250)
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
     def update(self, sm, inputStream):
@@ -90,11 +90,11 @@ class PlayerSelectScene(engine.Scene):
                 if player in globals.players:
                     globals.players.remove(player)
 
-        if inputStream.isPressed(engine.enter):
+        if inputStream.isPressed(engine.keys.enter):
             if len(globals.players) > 0:
                 sm.push(FadeTransitionScene([self], [LevelSelectScene()]))
 
-        if inputStream.isPressed(engine.esc):
+        if inputStream.isPressed(engine.keys.esc):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))
     def draw(self, sm, screen):
@@ -140,9 +140,9 @@ class GameScene(engine.Scene):
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.n1):
+        if inputStream.isPressed(engine.keys.n1):
             globals.player1.trauma = 1 #min(1, globals.player1.trauma + 0.2)
-        if inputStream.isPressed(engine.esc):
+        if inputStream.isPressed(engine.keys.esc):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))
         if globals.world.isWon():
@@ -170,12 +170,12 @@ class GameScene(engine.Scene):
 class WinScene(engine.Scene):
     def __init__(self):
         self.alpha = 0
-        self.esc = ui.ButtonUI(engine.esc, '[Esc=quit]', 50, 200)
+        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 200)
     def update(self, sm, inputStream):
         self.alpha = min(255, self.alpha + 10)
         self.esc.update(inputStream)
     def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.esc):
+        if inputStream.isPressed(engine.keys.esc):
             sm.set([FadeTransitionScene([GameScene(), self], [MainMenuScene(), LevelSelectScene()])])
     def draw(self, sm, screen):
         if len(sm.scenes) > 1:
@@ -192,7 +192,7 @@ class WinScene(engine.Scene):
 class LoseScene(engine.Scene):
     def __init__(self):
         self.alpha = 0
-        self.esc = ui.ButtonUI(engine.esc, '[Esc=quit]', 50, 200)
+        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 200)
     def update(self, sm, inputStream):
         self.alpha = min(255, self.alpha + 10)
         self.esc.update(inputStream)
