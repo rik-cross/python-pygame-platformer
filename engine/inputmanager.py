@@ -1,12 +1,11 @@
 import pygame
 
 class PlayerInput:
-    def __init__(self, controllerNumber, inputNumber, type, threshhold, eq='gt'):
+    def __init__(self, controllerNumber, inputNumber, type, threshhold):
         self.controllerNumber = controllerNumber
         self.inputNumber = inputNumber
         self.type = type
         self.threshhold = threshhold
-        self.eq = eq
 
 class Controller:
     def __init__(self, number):
@@ -61,7 +60,7 @@ class Controller:
             return False
         if len(self.currentHats) <= controllerInput.inputNumber[0]:
             return False
-        if controllerInput.eq == 'gt':
+        if controllerInput.threshhold > 0:
             return self.currentHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] >= controllerInput.threshhold
         else:
             return self.currentHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] <= controllerInput.threshhold
@@ -70,7 +69,7 @@ class Controller:
             return False
         if len(self.currentHats) <= controllerInput.inputNumber[0]:
             return False
-        if controllerInput.eq == 'gt':
+        if controllerInput.threshhold > 0:
             return self.currentHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] >= controllerInput.threshhold and self.previousHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] < controllerInput.threshhold
         else:
             return self.currentHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] <= controllerInput.threshhold and self.previousHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] > controllerInput.threshhold
@@ -79,7 +78,7 @@ class Controller:
             return False
         if len(self.currentHats) <= controllerInput.inputNumber[0]:
             return False
-        if controllerInput.eq == 'gt':
+        if controllerInput.threshhold > 0:
             return self.currentHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] < controllerInput.threshhold and self.previousHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] >= controllerInput.threshhold
         else:
             return self.currentHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] > controllerInput.threshhold and self.previousHats[controllerInput.inputNumber[0]][controllerInput.inputNumber[1]] <= controllerInput.threshhold
@@ -89,7 +88,7 @@ class Controller:
             return False
         if len(self.currentAxes) <= controllerInput.inputNumber:
             return False
-        if controllerInput.eq == 'gt':
+        if controllerInput.threshhold > 0:
             return self.currentAxes[controllerInput.inputNumber] >= controllerInput.threshhold
         else:
             return self.currentAxes[controllerInput.inputNumber] <= controllerInput.threshhold
@@ -98,7 +97,7 @@ class Controller:
             return False
         if len(self.currentAxes) <= controllerInput.inputNumber:
             return False
-        if controllerInput.eq == 'gt':
+        if controllerInput.threshhold > 0:
             return self.currentAxes[controllerInput.inputNumber] >= controllerInput.threshhold and self.previousAxes[controllerInput.inputNumber] < controllerInput.threshhold
         else:
             return self.currentAxes[controllerInput.inputNumber] <= controllerInput.threshhold and self.previousAxes[controllerInput.inputNumber] > controllerInput.threshhold
@@ -107,11 +106,10 @@ class Controller:
             return False
         if len(self.currentAxes) <= controllerInput.inputNumber:
             return False
-        if controllerInput.eq == 'gt':
+        if controllerInput.threshhold > 0:
             return self.currentAxes[controllerInput.inputNumber] < controllerInput.threshhold and self.previousAxes[controllerInput.inputNumber] >= controllerInput.threshhold
         else:
             return self.currentAxes[controllerInput.inputNumber] > controllerInput.threshhold and self.previousAxes[controllerInput.inputNumber] <= controllerInput.threshhold
-
 
 class Keyboard:
     def __init__(self):
@@ -221,19 +219,19 @@ class ControllerInput:
         self.leftTrigger = PlayerInput(number,2,'axis',0.1)
         self.rightTrigger = PlayerInput(number,5,'axis',0.1)
 
-        self.dpad_left = PlayerInput(number, (0,0), 'hat', -1, eq='lt')
+        self.dpad_left = PlayerInput(number, (0,0), 'hat', -1)
         self.dpad_right = PlayerInput(number, (0,0), 'hat', 1)
         self.dpad_up = PlayerInput(number, (0,1), 'hat', 1)
-        self.dpad_down = PlayerInput(number, (0,1), 'hat', -1, eq='lt')
+        self.dpad_down = PlayerInput(number, (0,1), 'hat', -1)
 
-        self.leftDir_left = PlayerInput(number,0,'axis',-0.2, eq='lt')
+        self.leftDir_left = PlayerInput(number,0,'axis',-0.2)
         self.leftDir_right = PlayerInput(number,0,'axis',0.2)
-        self.leftDir_up = PlayerInput(number,1,'axis',-0.2, eq='lt')
+        self.leftDir_up = PlayerInput(number,1,'axis',-0.2)
         self.leftDir_down = PlayerInput(number,1,'axis',0.2)
 
-        self.rightDir_left = PlayerInput(number,3,'axis',-0.2, eq='lt')
+        self.rightDir_left = PlayerInput(number,3,'axis',-0.2)
         self.rightDir_right = PlayerInput(number,3,'axis',0.2)
-        self.rightDir_up = PlayerInput(number,4,'axis',-0.2, eq='lt')
+        self.rightDir_up = PlayerInput(number,4,'axis',-0.2)
         self.rightDir_down = PlayerInput(number,4,'axis',0.2)
 
 controller = [ ControllerInput(i) for i in range(4)]

@@ -43,8 +43,6 @@ def run():
         sceneManager.update(inputManager)
         sceneManager.draw(screen) 
 
-        #print(inputManager.isReleased(engine.controller[0].switchTest))
-
         clock.tick(60)
 
     # quit
