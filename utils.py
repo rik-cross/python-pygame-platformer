@@ -78,12 +78,12 @@ def makePowerup(type, x, y):
     )
     return entity    
 
-coin0 = pygame.image.load('images/coin_0.png')
-coin1 = pygame.image.load('images/coin_1.png')
-coin2 = pygame.image.load('images/coin_2.png')
-coin3 = pygame.image.load('images/coin_3.png')
-coin4 = pygame.image.load('images/coin_4.png')
-coin5 = pygame.image.load('images/coin_5.png')
+coin0 = pygame.image.load('images/coin/coin_0.png')
+coin1 = pygame.image.load('images/coin/coin_1.png')
+coin2 = pygame.image.load('images/coin/coin_2.png')
+coin3 = pygame.image.load('images/coin/coin_3.png')
+coin4 = pygame.image.load('images/coin/coin_4.png')
+coin5 = pygame.image.load('images/coin/coin_5.png')
 
 def makeCoin(x,y):
     entity = engine.Entity()
@@ -103,22 +103,22 @@ def makeEnemy(x,y):
     entity.type = 'dangerous'
     return entity
 
-playing = pygame.image.load('images/playing.png')
-not_playing = pygame.image.load('images/not_playing.png')
+playing = pygame.image.load('images/players/player_green/playing.png')
+not_playing = pygame.image.load('images/players/player_green/not_playing.png')
 
-idle0 = pygame.image.load('images/vita_00.png')
-idle1 = pygame.image.load('images/vita_01.png')
-idle2 = pygame.image.load('images/vita_02.png')
-idle3 = pygame.image.load('images/vita_03.png')
+idle0 = pygame.image.load('images/players/player_green/vita_00.png')
+idle1 = pygame.image.load('images/players/player_green/vita_01.png')
+idle2 = pygame.image.load('images/players/player_green/vita_02.png')
+idle3 = pygame.image.load('images/players/player_green/vita_03.png')
 
-walking0 = pygame.image.load('images/vita_04.png')
-walking1 = pygame.image.load('images/vita_05.png')
-walking2 = pygame.image.load('images/vita_06.png')
-walking3 = pygame.image.load('images/vita_07.png')
-walking4 = pygame.image.load('images/vita_08.png')
-walking5 = pygame.image.load('images/vita_09.png')
+walking0 = pygame.image.load('images/players/player_green/vita_04.png')
+walking1 = pygame.image.load('images/players/player_green/vita_05.png')
+walking2 = pygame.image.load('images/players/player_green/vita_06.png')
+walking3 = pygame.image.load('images/players/player_green/vita_07.png')
+walking4 = pygame.image.load('images/players/player_green/vita_08.png')
+walking5 = pygame.image.load('images/players/player_green/vita_09.png')
 
-jumping = pygame.image.load('images/vita_11.png')
+jumping = pygame.image.load('images/players/player_green/vita_11.png')
 
 def orderPlayers():
     newPlayerOrder = []
