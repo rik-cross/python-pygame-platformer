@@ -1,16 +1,8 @@
 import pygame
-import utils
-import globals
-import random
-from .colours import *
-from .entity_component_system import *
 
 from .soundmanager import *
 from .inputmanager import *
 from .scenemanager import *
-
-from .components import *
-from .systems import *
 
 sceneManager = SceneManager()
 inputManager = InputManager()

@@ -1,15 +1,16 @@
 import pygame
 import engine
+import globals
 import utils
 import level
 import scene
-import globals
+
 
 mainMenu = scene.MainMenuScene()
 engine.sceneManager.push(mainMenu)
 
 # create players
-
+print('gamedata')
 # player 1
 globals.player1 = utils.makePlayer(300,50)
 globals.player1.input = engine.Input(engine.keys.w, engine.keys.d, engine.keys.a, engine.keys.d, engine.keys.q, engine.keys.e)
