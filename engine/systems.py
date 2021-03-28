@@ -204,7 +204,7 @@ class CameraSystem(System):
             a.draw(screen,
                 (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
                 (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
-                e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha)
+                e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
 
             # draw rigidBody component
             #if e.rigidBody is not None:

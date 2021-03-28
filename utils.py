@@ -6,6 +6,14 @@ import gamecomponents
 pygame.font.init()
 font = pygame.font.Font(pygame.font.get_default_font(), 24)
 
+def changeColour(image, colour):
+    colouredImage = pygame.Surface(image.get_size())
+    colouredImage.fill(colour)
+    
+    finalImage = image.copy()
+    finalImage.blit(colouredImage, (0, 0), special_flags = pygame.BLEND_MULT)
+    return finalImage
+
 # function from:
 # https://nerdparadise.com/programming/pygameblitopacity
 def blit_alpha(target, source, location, opacity):
@@ -103,22 +111,22 @@ def makeEnemy(x,y):
     entity.type = 'dangerous'
     return entity
 
-playing = pygame.image.load('images/players/player_green/playing.png')
-not_playing = pygame.image.load('images/players/player_green/not_playing.png')
+playing = pygame.image.load('images/player/playing.png')
+not_playing = pygame.image.load('images/player/not_playing.png')
 
-idle0 = pygame.image.load('images/players/player_green/vita_00.png')
-idle1 = pygame.image.load('images/players/player_green/vita_01.png')
-idle2 = pygame.image.load('images/players/player_green/vita_02.png')
-idle3 = pygame.image.load('images/players/player_green/vita_03.png')
+idle0 = pygame.image.load('images/player/vita_00.png')
+idle1 = pygame.image.load('images/player/vita_01.png')
+idle2 = pygame.image.load('images/player/vita_02.png')
+idle3 = pygame.image.load('images/player/vita_03.png')
 
-walking0 = pygame.image.load('images/players/player_green/vita_04.png')
-walking1 = pygame.image.load('images/players/player_green/vita_05.png')
-walking2 = pygame.image.load('images/players/player_green/vita_06.png')
-walking3 = pygame.image.load('images/players/player_green/vita_07.png')
-walking4 = pygame.image.load('images/players/player_green/vita_08.png')
-walking5 = pygame.image.load('images/players/player_green/vita_09.png')
+walking0 = pygame.image.load('images/player/vita_04.png')
+walking1 = pygame.image.load('images/player/vita_05.png')
+walking2 = pygame.image.load('images/player/vita_06.png')
+walking3 = pygame.image.load('images/player/vita_07.png')
+walking4 = pygame.image.load('images/player/vita_08.png')
+walking5 = pygame.image.load('images/player/vita_09.png')
 
-jumping = pygame.image.load('images/players/player_green/vita_11.png')
+jumping = pygame.image.load('images/player/vita_11.png')
 
 def orderPlayers():
     newPlayerOrder = []

@@ -105,27 +105,34 @@ class PlayerSelectScene(engine.Scene):
         self.esc.draw(screen)
         self.enter.draw(screen)
 
+        positions = [100,200,300,400]
+
         # draw active players
-
+        colour = pygame.Color(0)
+        colour.hsla = (globals.player1.imageGroups.hue, 100, 50, 100)
+        #utils.changColour
         if globals.player1 in globals.players:
-            screen.blit(utils.playing, (100,100))
+            screen.blit(utils.changeColour(utils.playing, colour), (100,100))
         else:
-            screen.blit(utils.not_playing, (100,100))
-        
+            screen.blit(utils.changeColour(utils.not_playing, colour), (100,100))
+        colour = pygame.Color(0)
+        colour.hsla = (globals.player2.imageGroups.hue, 100, 50, 100)
         if globals.player2 in globals.players:
-            screen.blit(utils.playing, (150,100))
+            screen.blit(utils.changeColour(utils.playing, colour), (150,100))
         else:
-            screen.blit(utils.not_playing, (150,100))
-
+            screen.blit(utils.changeColour(utils.not_playing, colour), (150,100))
+        colour = pygame.Color(0)
+        colour.hsla = (globals.player3.imageGroups.hue, 100, 50, 100)
         if globals.player3 in globals.players:
-            screen.blit(utils.playing, (200,100))
+            screen.blit(utils.changeColour(utils.playing, colour), (200,100))
         else:
-            screen.blit(utils.not_playing, (200,100))
-
+            screen.blit(utils.changeColour(utils.not_playing, colour), (200,100))
+        colour = pygame.Color(0)
+        colour.hsla = (globals.player4.imageGroups.hue, 100, 50, 100)
         if globals.player4 in globals.players:
-            screen.blit(utils.playing, (250,100))
+            screen.blit(utils.changeColour(utils.playing, colour), (250,100))
         else:
-            screen.blit(utils.not_playing, (250,100))
+            screen.blit(utils.changeColour(utils.not_playing, colour), (250,100))
         
 class GameScene(engine.Scene):
     def __init__(self):
