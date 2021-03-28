@@ -68,13 +68,17 @@ class LevelSelectScene(engine.Scene):
 
 class PlayerSelectScene(engine.Scene):
     def __init__(self):
-        self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 200)
-        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 250)
+        self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 600)
+        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 650)
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
     def update(self, sm, inputStream):
         self.esc.update(inputStream)
         self.enter.update(inputStream)
+
+        for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
+            player.imageGroups.animationList['idle'].update()
+
     def input(self, sm, inputStream):
 
         # handle each player
@@ -105,35 +109,29 @@ class PlayerSelectScene(engine.Scene):
         self.esc.draw(screen)
         self.enter.draw(screen)
 
-        positions = [100,200,300,400]
+        screenWidth, screenHeight = pygame.display.get_surface().get_size()
+        spacing = screenWidth/4
 
-        # draw active players
-        colour = pygame.Color(0)
-        colour.hsla = (globals.player1.imageGroups.hue, 100, 50, 100)
-        #utils.changColour
-        if globals.player1 in globals.players:
-            screen.blit(utils.changeColour(utils.playing, colour), (100,100))
-        else:
-            screen.blit(utils.changeColour(utils.not_playing, colour), (100,100))
-        colour = pygame.Color(0)
-        colour.hsla = (globals.player2.imageGroups.hue, 100, 50, 100)
-        if globals.player2 in globals.players:
-            screen.blit(utils.changeColour(utils.playing, colour), (150,100))
-        else:
-            screen.blit(utils.changeColour(utils.not_playing, colour), (150,100))
-        colour = pygame.Color(0)
-        colour.hsla = (globals.player3.imageGroups.hue, 100, 50, 100)
-        if globals.player3 in globals.players:
-            screen.blit(utils.changeColour(utils.playing, colour), (200,100))
-        else:
-            screen.blit(utils.changeColour(utils.not_playing, colour), (200,100))
-        colour = pygame.Color(0)
-        colour.hsla = (globals.player4.imageGroups.hue, 100, 50, 100)
-        if globals.player4 in globals.players:
-            screen.blit(utils.changeColour(utils.playing, colour), (250,100))
-        else:
-            screen.blit(utils.changeColour(utils.not_playing, colour), (250,100))
-        
+        positions = [(spacing*i)+90 for i in range(4)]
+        players = [globals.player1, globals.player2, globals.player3, globals.player4]
+
+        for player in players:
+            # draw active players
+            colour = pygame.Color(0)
+            colour.hsla = (player.imageGroups.hue, 100, 50, 100)
+            #utils.changColour
+            if player in globals.players:
+                #img = utils.playing
+                imgGroup = player.imageGroups.animationList['idle']
+                imgList = imgGroup.imageList
+                index = imgGroup.imageIndex
+                img = imgList[index]
+            else:
+                img = utils.not_playing  
+            screen.blit(pygame.transform.scale(utils.player_shadow, (144*2,144*2)), (positions[players.index(player)]-53,200)) 
+            screen.blit(pygame.transform.scale(utils.changeColour(img, colour), (45*4,51*4)), (positions[players.index(player)],250))
+            
+
 class GameScene(engine.Scene):
     def __init__(self):
         self.cameraSystem = engine.CameraSystem()

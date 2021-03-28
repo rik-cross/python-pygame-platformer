@@ -114,6 +114,8 @@ def makeEnemy(x,y):
 playing = pygame.image.load('images/player/playing.png')
 not_playing = pygame.image.load('images/player/not_playing.png')
 
+player_shadow = pygame.image.load('images/player/shadow.png')
+
 idle0 = pygame.image.load('images/player/vita_00.png')
 idle1 = pygame.image.load('images/player/vita_01.png')
 idle2 = pygame.image.load('images/player/vita_02.png')
