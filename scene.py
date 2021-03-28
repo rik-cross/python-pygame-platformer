@@ -93,6 +93,43 @@ class PlayerSelectScene(engine.Scene):
             if inputStream.isPressed(player.input.b2):
                 if player in globals.players:
                     globals.players.remove(player)
+            
+            # recolour
+            if inputStream.isPressed(player.input.right):
+                if player in globals.players:
+
+                    colourClash = True
+                    currentHuePos = engine.hues.index(player.imageGroups.hue)
+                    nextHuePos = currentHuePos
+
+                    # dont allow two player to be the same colour
+                    while colourClash:
+                        colourClash = False
+                        nextHuePos = (nextHuePos+1)%(len(engine.hues))
+                        nextHue = engine.hues[nextHuePos]
+                        for otherPlayer in [globals.player1, globals.player2, globals.player3, globals.player4]:
+                            if otherPlayer.imageGroups.hue == nextHue:
+                                colourClash = True
+                    
+                    player.imageGroups.hue = nextHue
+            
+            if inputStream.isPressed(player.input.left):
+                if player in globals.players:
+
+                    colourClash = True
+                    currentHuePos = engine.hues.index(player.imageGroups.hue)
+                    nextHuePos = currentHuePos
+
+                    # dont allow two player to be the same colour
+                    while colourClash:
+                        colourClash = False
+                        nextHuePos = (nextHuePos-1)%(len(engine.hues))
+                        nextHue = engine.hues[nextHuePos]
+                        for otherPlayer in [globals.player1, globals.player2, globals.player3, globals.player4]:
+                            if otherPlayer.imageGroups.hue == nextHue:
+                                colourClash = True
+                    
+                    player.imageGroups.hue = nextHue
 
         if inputStream.isPressed(engine.keys.enter):
             if len(globals.players) > 0:
@@ -101,6 +138,7 @@ class PlayerSelectScene(engine.Scene):
         if inputStream.isPressed(engine.keys.esc):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))
+
     def draw(self, sm, screen):
         # background
         screen.fill(engine.DARK_GREY)
