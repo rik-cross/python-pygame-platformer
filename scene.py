@@ -72,6 +72,8 @@ class PlayerSelectScene(engine.Scene):
         self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 650)
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
+        for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
+            player.imageGroups.animationList['idle'].imageIndex = 0
     def update(self, sm, inputStream):
         self.esc.update(inputStream)
         self.enter.update(inputStream)
