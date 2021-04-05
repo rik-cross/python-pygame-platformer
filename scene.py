@@ -72,8 +72,8 @@ class PlayerSelectScene(engine.Scene):
         self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 650)
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
-        for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
-            player.imageGroups.animationList['idle'].imageIndex = 0
+        #for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
+        #    player.imageGroups.animationList['idle'].imageIndex = 0
     def update(self, sm, inputStream):
         self.esc.update(inputStream)
         self.enter.update(inputStream)
@@ -167,8 +167,8 @@ class PlayerSelectScene(engine.Scene):
                 index = imgGroup.imageIndex
                 img = imgList[index]
             else:
-                img = utils.not_playing  
-            screen.blit(pygame.transform.scale(utils.player_shadow, (144*2,144*2)), (positions[players.index(player)]-53,200)) 
+                img = utils.not_playing
+            #screen.blit(pygame.transform.scale(utils.player_shadow, (144*2,144*2)), (positions[players.index(player)]-53,200)) 
             screen.blit(pygame.transform.scale(utils.changeColour(img, colour), (45*4,51*4)), (positions[players.index(player)],250))
             
 
@@ -242,7 +242,7 @@ class LoseScene(engine.Scene):
         self.alpha = min(255, self.alpha + 10)
         self.esc.update(inputStream)
     def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.esc):
+        if inputStream.isPressed(engine.keys.esc):
             sm.set([FadeTransitionScene([GameScene(), self], [MainMenuScene(), LevelSelectScene()])])
     def draw(self, sm, screen):
         if len(sm.scenes) > 1:

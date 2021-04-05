@@ -35,7 +35,7 @@ def run():
         sceneManager.update(inputManager)
         sceneManager.draw(screen) 
 
-        print(clock.get_fps())
+        #print(clock.get_fps())
         clock.tick(60)
 
     # quit

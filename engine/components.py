@@ -93,6 +93,7 @@ class Camera:
     def trackEntity(self, e):
         self.entityToTrack = e
 
+# TODO -- add other inputs...
 class Input:
     def __init__(self, up, down, left, right, b1, b2):
         self.up = up
