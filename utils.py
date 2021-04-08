@@ -222,5 +222,5 @@ def makePlayer(x,y):
     entity.initialAcceleration = entity.acceleration
     entity.type = 'player'
     entity.reset = resetPlayer
-    entity.rigidBody = engine.RigidBody(10,1,25,50)
+    entity.collider = engine.Collider(10,1,25,50)
     return entity

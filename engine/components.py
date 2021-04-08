@@ -9,7 +9,7 @@ def changeColour(image, colour):
     finalImage.blit(colouredImage, (0, 0), special_flags = pygame.BLEND_MULT)
     return finalImage
 
-class RigidBody:
+class Collider:
     def __init__(self, offsetX, offsetY, w, h):
         self.rect = pygame.Rect(offsetX,offsetY,w,h)
 

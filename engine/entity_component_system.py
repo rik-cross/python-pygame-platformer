@@ -23,7 +23,7 @@ class Entity:
         self.effect = None
         self.reset = resetEntity
         self.trauma = 0
-        self.rigidBody = None
+        self.collider = None
 
 class System():
     def __init__(self):

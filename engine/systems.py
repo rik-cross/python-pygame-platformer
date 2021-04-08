@@ -19,7 +19,7 @@ class AnimationSystem(System):
 
 class PhysicsSystem(System):
     def check(self, entity):
-        return entity.position is not None and entity.rigidBody is not None
+        return entity.position is not None and entity.collider is not None
     def updateEntity(self, screen, inputStream, entity):
 
         new_x = entity.position.rect.x
@@ -44,10 +44,10 @@ class PhysicsSystem(System):
         # horizontal movement
 
         new_x_rect = pygame.Rect(
-            int(new_x + entity.rigidBody.rect.x),
-            int(entity.position.rect.y+entity.rigidBody.rect.y-1),
-            entity.rigidBody.rect.width,
-            entity.rigidBody.rect.height)
+            int(new_x + entity.collider.rect.x),
+            int(entity.position.rect.y+entity.collider.rect.y-1),
+            entity.collider.rect.width,
+            entity.collider.rect.height)
         
         x_collision = False
 
@@ -68,10 +68,10 @@ class PhysicsSystem(System):
         new_y += entity.speed
 
         new_y_rect = pygame.Rect(
-            int(entity.position.rect.x+entity.rigidBody.rect.x),
-            int(new_y + entity.rigidBody.rect.y),
-            entity.rigidBody.rect.width,
-            entity.rigidBody.rect.height)
+            int(entity.position.rect.x+entity.collider.rect.x),
+            int(new_y + entity.collider.rect.y),
+            entity.collider.rect.width,
+            entity.collider.rect.height)
         
         y_collision = False
         entity.on_ground = False
@@ -206,13 +206,13 @@ class CameraSystem(System):
                 (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
                 e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
 
-            # draw rigidBody component
-            #if e.rigidBody is not None:
+            # draw collider component
+            #if e.collider is not None:
             #    offsetRect = pygame.Rect(
-            #        ( (e.position.rect.x + e.rigidBody.rect.x) * entity.camera.zoomLevel) + offsetX,
-            #        ( (e.position.rect.y + e.rigidBody.rect.y) * entity.camera.zoomLevel) + offsetY,
-            #        e.rigidBody.rect.w * entity.camera.zoomLevel,
-            #        e.rigidBody.rect.h * entity.camera.zoomLevel)
+            #        ( (e.position.rect.x + e.collider.rect.x) * entity.camera.zoomLevel) + offsetX,
+            #        ( (e.position.rect.y + e.collider.rect.y) * entity.camera.zoomLevel) + offsetY,
+            #        e.collider.rect.w * entity.camera.zoomLevel,
+            #        e.collider.rect.h * entity.camera.zoomLevel)
             #    pygame.draw.rect(screen, WHITE, offsetRect)
 
         # entity HUD
