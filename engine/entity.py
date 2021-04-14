@@ -23,3 +23,4 @@ class Entity:
         self.reset = resetEntity
         self.trauma = 0
         self.collider = None
+        self.transform = engine.Transform()

@@ -205,6 +205,7 @@ def resetPlayer(entity):
     entity.state = 'idle'
     if entity.camera is not None:
         entity.camera.zoomLevel = 1
+    entity.transform = engine.Transform()
 
 def makePlayer(x,y):
     entity = engine.Entity()
