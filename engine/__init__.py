@@ -16,8 +16,10 @@ from .component_imagegroup import *
 from .component_imagegroups import *
 from .component_input import *
 from .component_intention import *
+
 from .component_position import *
 from .component_transform import *
+from .component_motion import *
 
 
 from .soundmanager import *

@@ -1,6 +1,11 @@
 import pygame
 
 class Transform:
-    def __init__(self, motion=pygame.math.Vector2(), acceleration=pygame.math.Vector2()):
-        self.motion = motion
-        self.acceleration = acceleration
+    def __init__(self, position=pygame.math.Vector2(), rotationn=90):
+        self.position = position
+        self.initialPosition = position
+        self.rotation = rotation
+        self.initialRotation = rotation
+    def reset(self):
+        self.position = self.initialPosition
+        self.rotation = self.initialRotation
