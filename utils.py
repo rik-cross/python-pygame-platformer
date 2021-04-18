@@ -208,6 +208,33 @@ def resetPlayer(entity):
     entity.transform.reset()
     entity.motion.reset()
 
+def playerInput(inputStream, entity):
+    # up = jump
+    if inputStream.isDown(entity.input.up):
+        entity.intention.jump = True
+    else:
+        entity.intention.jump = False
+    # left = moveLeft
+    if inputStream.isDown(entity.input.left):
+        entity.intention.moveLeft = True
+    else:
+        entity.intention.moveLeft = False
+    # right = moveRight    
+    if inputStream.isDown(entity.input.right):
+        entity.intention.moveRight = True
+    else:
+        entity.intention.moveRight = False
+    # b1 = zoom out
+    if inputStream.isDown(entity.input.b1):
+        entity.intention.zoomOut = True
+    else:
+        entity.intention.zoomOut = False        
+    # b2 = zoom in
+    if inputStream.isDown(entity.input.b2):
+        entity.intention.zoomIn = True
+    else:
+        entity.intention.zoomIn = False
+
 def makePlayer(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,45,51)
