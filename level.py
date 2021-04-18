@@ -23,7 +23,7 @@ class Level:
 def lostLevel(level):
     # level isn't lost if any player has a life left
     for entity in level.entities:
-        if entity.type == 'player':
+        if entity.tags.has('player'):
             if entity.battle is not None:
                 if entity.battle.lives > 0:
                     return False
@@ -34,7 +34,7 @@ def lostLevel(level):
 def wonLevel(level):
     # level isn't won if any collectable exists
     for entity in level.entities:
-        if entity.type == 'collectable':
+        if entity.tags.has('collectable'):
             return False
     # level isn't won otherwise
     return True

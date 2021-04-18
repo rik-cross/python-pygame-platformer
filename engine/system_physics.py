@@ -91,10 +91,11 @@ class PhysicsSystem(System):
                 if abs(entity.motion.velocity.x) > 10:
                     entity.trauma += 0.5
                 break
+
         if x_collision == False:
             entity.position.rect.x = entity.transform.position.x
 
-        if entity.type == 'player' and not entity.on_ground:
+        if entity.tags.has('player') and not entity.on_ground:
             entity.state = 'jumping'
         
         # reset intentions

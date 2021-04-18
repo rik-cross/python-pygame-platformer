@@ -98,7 +98,7 @@ def makeCoin(x,y):
     entity.position = engine.Position(x,y,23,23)
     entityAnimation = engine.ImageGroup([coin1, coin2, coin3, coin4, coin5], delay=12)
     entity.imageGroups.add('idle', entityAnimation)
-    entity.type = 'collectable'
+    entity.tags.add('collectable')
     return entity
 
 enemy0 = pygame.image.load('images/spike_monster.png')
@@ -108,7 +108,7 @@ def makeEnemy(x,y):
     entity.position = engine.Position(x,y,50,26)
     entityAnimation = engine.ImageGroup([enemy0])
     entity.imageGroups.add('idle', entityAnimation)
-    entity.type = 'dangerous'
+    entity.tags.add('dangerous')
     return entity
 
 playing = pygame.image.load('images/player/playing.png')
@@ -222,7 +222,6 @@ def makePlayer(x,y):
     entity.intention = engine.Intention()
     entity.acceleration = 0.3
     entity.initialAcceleration = entity.acceleration
-    entity.type = 'player'
     entity.reset = resetPlayer
     entity.collider = engine.Collider(10,1,25,50)
     entity.tags.add('player')

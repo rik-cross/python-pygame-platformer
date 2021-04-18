@@ -14,7 +14,7 @@ class PowerupSystem(engine.System):
         # count the number of powerups in the world
         count = 0
         for entity in globals.world.entities:
-            if entity.type != 'player':
+            if entity.tags.has('player'):
                 if entity.effect:
                     count += 1
 
@@ -39,7 +39,7 @@ class PowerupSystem(engine.System):
 
         # player collection of powerups
         for otherEntity in globals.world.entities:
-            if otherEntity is not entity and otherEntity.type == 'player' and entity.type != 'player':
+            if otherEntity is not entity and otherEntity.tags.has('player') and not entity.tags.has('player'):
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     # give the effect component to the player
                     otherEntity.effect = entity.effect
@@ -48,7 +48,7 @@ class PowerupSystem(engine.System):
                     globals.world.entities.remove(entity)
         
         # apply powerup effects for players
-        if entity.type == 'player':
+        if entity.tags.has('player'):
             entity.effect.apply(entity)
             entity.effect.timer -= 1
             # if the effect has run out
@@ -61,10 +61,10 @@ class PowerupSystem(engine.System):
 
 class CollectionSystem(engine.System):
     def check(self, entity):
-        return entity.type == 'player' and entity.score is not None   
+        return entity.tags.has('player') and entity.score is not None   
     def updateEntity(self, screen, inputStream, entity):
         for otherEntity in globals.world.entities:
-            if otherEntity is not entity and otherEntity.type == 'collectable':
+            if otherEntity is not entity and otherEntity.tags.has('collectable'):
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     # entity.collectable.onCollide(entity, otherEntity)
                     engine.soundManager.playSound('coin')
@@ -73,10 +73,10 @@ class CollectionSystem(engine.System):
 
 class BattleSystem(engine.System):
     def check(self, entity):
-        return entity.type == 'player' and entity.battle is not None   
+        return entity.tags.has('player') and entity.battle is not None   
     def updateEntity(self, screen, inputStream, entity):
         for otherEntity in globals.world.entities:
-            if otherEntity is not entity and otherEntity.type == 'dangerous':
+            if otherEntity is not entity and otherEntity.tags.has('dangerous'):
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     # entity.battle.onCollide(entity, otherEntity)
                     entity.battle.lives -= 1
