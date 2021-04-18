@@ -70,6 +70,10 @@ class CameraSystem(System):
                 p.h * entity.camera.zoomLevel)
             pygame.draw.rect(screen, MUSTARD, newPosRect)
 
+        # render map (to replace platforms)
+        if globals.world.map is not None:
+            globals.world.map.draw(screen, offsetX, offsetY, entity.camera.zoomLevel)
+
         # render entities
         for e in globals.world.entities:
             s = e.state

@@ -1,15 +1,17 @@
 import pygame
 import globals
 import utils
+import engine
 
 class Level:
-    def __init__(self, size, platforms=None, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None):
+    def __init__(self, size, platforms=None, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
         self.size = size
         self.platforms = platforms
         self.entities = entities
         self.winFunc = winFunc
         self.loseFunc = loseFunc
         self.powerupSpawnPoints = powerupSpawnPoints
+        self.map = map
     def isWon(self):
         if self.winFunc is None:
             return False
@@ -60,7 +62,13 @@ def loadLevel(levelNumber):
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
-            powerupSpawnPoints = [(900,350),(200,500)]
+            powerupSpawnPoints = [(900,350),(200,500)],
+            map = engine.Map(3,5, [ [engine.material_platform, engine.material_platform, engine.material_platform], 
+                                    [engine.material_platform, None, None],
+                                    [engine.material_platform, None, None],
+                                    [engine.material_platform, None, None],
+                                    [engine.material_platform, engine.material_platform, engine.material_platform]
+                                  ] )
         )
     if levelNumber == 2:
         # load level 2
@@ -75,7 +83,8 @@ def loadLevel(levelNumber):
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
-            powerupSpawnPoints = [(400,260),(300,100)]
+            powerupSpawnPoints = [(400,260),(300,100)],
+            map = engine.Map(3,5)
         )
 
     # add players
