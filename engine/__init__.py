@@ -21,6 +21,7 @@ from .component_position import *
 from .component_transform import *
 from .component_motion import *
 
+from .component_tag import *
 
 from .soundmanager import *
 from .inputmanager import *

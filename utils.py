@@ -205,7 +205,8 @@ def resetPlayer(entity):
     entity.state = 'idle'
     if entity.camera is not None:
         entity.camera.zoomLevel = 1
-    entity.transform = engine.Transform()
+    entity.transform.reset()
+    entity.motion.reset()
 
 def makePlayer(x,y):
     entity = engine.Entity()
@@ -224,4 +225,6 @@ def makePlayer(x,y):
     entity.type = 'player'
     entity.reset = resetPlayer
     entity.collider = engine.Collider(10,1,25,50)
+    entity.tags.add('player')
+    entity.motion = engine.Motion(acceleration=pygame.math.Vector2(0,0.3))
     return entity

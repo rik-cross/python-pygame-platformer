@@ -13,7 +13,6 @@ class Entity:
         self.camera = None
         self.score = None
         self.battle = None
-        self.speed = 0
         self.input = None
         self.intention = None
         self.on_ground = False
@@ -24,3 +23,5 @@ class Entity:
         self.trauma = 0
         self.collider = None
         self.transform = engine.Transform()
+        self.motion = None
+        self.tags = engine.Tag()
