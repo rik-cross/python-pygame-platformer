@@ -28,6 +28,6 @@ from .inputmanager import *
 from .scenemanager import *
 
 from .colours import *
-from .materials import *
+from .tiles import *
 
 from .map import *

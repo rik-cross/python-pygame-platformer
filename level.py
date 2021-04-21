@@ -4,19 +4,6 @@ import utils
 import engine
 import pickle
 
-def loadMap(filename):
-    filename = 'levels/' + filename + '.lvl'
-    mapToLoad = pickle.load( open( filename, "rb" ) )
-
-    map = []
-    for r in range(len(mapToLoad)):
-        row = []
-        for c in mapToLoad[r]:
-            row.append(engine.stringToMaterial[c])
-        map.append(row)
-    
-    return map
-
 class Level:
     def __init__(self, size, platforms=None, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
         self.size = size
@@ -77,7 +64,7 @@ def loadLevel(levelNumber):
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(900,350),(200,500)],
-            map = engine.Map(64,64,loadMap('l1'))
+            map = engine.Map(64,64,'l1')
         )
     if levelNumber == 2:
         # load level 2
