@@ -8,3 +8,13 @@ class Material:
 
 texture_platform = pygame.image.load('images/textures/platform.png')
 material_platform = Material(texture_platform)
+
+materialToString = {
+    material_platform : 'platform',
+    None : 'none'
+}
+
+stringToMaterial = {
+    'platform' : material_platform,
+    'none': None
+}
