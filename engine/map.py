@@ -8,7 +8,7 @@ class Map:
         self.w = w
         self.h = h
         if map is None:
-            self.map = [ [ None for w in range(self.w) ] for h in range(self.h) ]
+            self.map = [ [ tile_empty for w in range(self.w) ] for h in range(self.h) ]
         elif isinstance(map, str):
             self.loadFromFile(map)
         else:
@@ -31,18 +31,25 @@ class Map:
         for r in range(len(self.map)):
             rowToSave = []
             for c in self.map[r]:
-                if c is None:
-                    rowToSave.append('none')
-                else:
-                    rowToSave.append(c.textString)
+                #if c is None:
+                #    rowToSave.append('none')
+                #else:
+                rowToSave.append(c.textString)
             mapToSave.append(rowToSave)
         pickle.dump( mapToSave, open( filename, "wb" ) )
     
+    def getTileAtPosition(self, x, y):
+        xTile = x // 32
+        yTile = y // 32
+        #if self.map[yTile][xTile] is None:
+        #    return None
+        return self.map[yTile][xTile]
+
     def draw(self, screen, x, y, z):
         for r in range(self.h):
             for c in range(self.w):
                 tile = self.map[r][c]
-                if tile is not None: 
+                if tile.texture is not None: 
                     newX = x + c*(32*z)
                     newY = y + r*(32*z)
                     newWidth = int(tile.texture.get_rect().w * z)

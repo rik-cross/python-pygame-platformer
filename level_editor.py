@@ -37,7 +37,7 @@ while running:
             pos = pygame.mouse.get_pos()
             mapPos = convertToMapCoords(pos)
             
-            if map.map[mapPos[1]][mapPos[0]] is None:
+            if map.map[mapPos[1]][mapPos[0]] is engine.tile_empty:
                 map.map[mapPos[1]][mapPos[0]] = engine.tile_platform
 
         # right-click = remove
@@ -45,8 +45,8 @@ while running:
             pos = pygame.mouse.get_pos()
             mapPos = convertToMapCoords(pos)
             
-            if map.map[mapPos[1]][mapPos[0]] is not None:
-                map.map[mapPos[1]][mapPos[0]] = None
+            if map.map[mapPos[1]][mapPos[0]] is not engine.tile_empty:
+                map.map[mapPos[1]][mapPos[0]] = engine.tile_empty
 
         if event.type == pygame.KEYUP:
 
