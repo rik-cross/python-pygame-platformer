@@ -112,15 +112,15 @@ class PhysicsSystem(System):
         #            entity.trauma += 0.5
         #        break
 
-        topLeftTile = globals.world.map.map[int((new_x_rect.y) // 32)][int((new_x_rect.x) // 32)]
-        topRightTile = globals.world.map.map[int((new_x_rect.y) // 32)][int((new_x_rect.x + new_x_rect.w) // 32)]
-        bottomLeftTile = globals.world.map.map[int((new_x_rect.y + new_x_rect.h - 2) // 32)][int((new_x_rect.x) // 32)]
-        bottomRightTile = globals.world.map.map[int((new_x_rect.y + new_x_rect.h - 2) // 32)][int((new_x_rect.x + new_x_rect.w) // 32)]
+        topLeftTile = globals.world.map.getTileAtPosition(new_x_rect.x, new_x_rect.y)
+        topRightTile = globals.world.map.getTileAtPosition(new_x_rect.x + new_x_rect.w, new_x_rect.y)
+        bottomLeftTile = globals.world.map.getTileAtPosition(new_x_rect.x, new_x_rect.y + new_x_rect.h - 2)
+        bottomRightTile = globals.world.map.getTileAtPosition(new_x_rect.x + new_x_rect.w, new_x_rect.y + new_x_rect.h - 2)
 
         # check in the middle of the player too?
         # need a better way that this -- for larger entities
-        middleLeftTile = globals.world.map.map[int((new_x_rect.y + (new_x_rect.h / 2) - 1) // 32)][int((new_x_rect.x) // 32)]
-        middleRightTile = globals.world.map.map[int((new_x_rect.y + (new_x_rect.h / 2) - 1) // 32)][int((new_x_rect.x + new_x_rect.w) // 32)]
+        middleLeftTile = globals.world.map.getTileAtPosition(new_x_rect.x, new_x_rect.y + (new_x_rect.h / 2) - 1)
+        middleRightTile = globals.world.map.getTileAtPosition(new_x_rect.x + new_x_rect.w, new_x_rect.y + (new_x_rect.h / 2) - 1)
 
         if topLeftTile.solid or topRightTile.solid or bottomLeftTile.solid or bottomRightTile.solid or middleLeftTile.solid or middleRightTile.solid:
 

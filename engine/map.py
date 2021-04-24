@@ -5,9 +5,10 @@ from .tiles import *
 
 class Map:
 
-    def __init__(self, w, h, map=None):
+    def __init__(self, w, h, map=None, tileSize=32):
         self.w = w
         self.h = h
+        self.tileSize = tileSize
         if map is None:
             self.map = [ [ tile_empty for w in range(self.w) ] for h in range(self.h) ]
         elif isinstance(map, str):
@@ -32,18 +33,13 @@ class Map:
         for r in range(len(self.map)):
             rowToSave = []
             for c in self.map[r]:
-                #if c is None:
-                #    rowToSave.append('none')
-                #else:
                 rowToSave.append(c.textString)
             mapToSave.append(rowToSave)
         pickle.dump( mapToSave, open( filename, "wb" ) )
     
     def getTileAtPosition(self, x, y):
-        xTile = x // 32
-        yTile = y // 32
-        #if self.map[yTile][xTile] is None:
-        #    return None
+        xTile = int(x // self.tileSize)
+        yTile = int(y // self.tileSize)
         return self.map[yTile][xTile]
 
     def draw(self, screen, x, y, z):
@@ -51,8 +47,8 @@ class Map:
             for c in range(self.w):
                 tile = self.map[r][c]
                 if tile.texture is not None: 
-                    newX = x + c*(32*z)
-                    newY = y + r*(32*z)
+                    newX = x + c*(self.tileSize*z)
+                    newY = y + r*(self.tileSize*z)
                     newWidth = math.ceil(tile.texture.get_rect().w * z)
                     newHeight = math.ceil(tile.texture.get_rect().h * z)
                     tile.draw(screen, newX, newY, newWidth, newHeight)
