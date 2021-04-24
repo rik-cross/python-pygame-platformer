@@ -22,7 +22,7 @@ class CameraSystem(System):
             if entity.intention.zoomOut:
                 # only zoom out if there's more of the world to see
                 newZoomLevel = entity.camera.zoomLevel-0.01
-                if (globals.world.size[0] * newZoomLevel >= cameraRect.w) or (globals.world.size[1] * newZoomLevel >= cameraRect.h):
+                if (globals.world.size[0] * newZoomLevel >= cameraRect.w - 10) or (globals.world.size[1] * newZoomLevel >= cameraRect.h - 10):
                     entity.camera.zoomLevel = newZoomLevel
 
         # update camera if tracking an entity
