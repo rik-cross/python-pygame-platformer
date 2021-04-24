@@ -1,5 +1,6 @@
 import pygame
 import pickle
+import math
 from .tiles import *
 
 class Map:
@@ -52,6 +53,6 @@ class Map:
                 if tile.texture is not None: 
                     newX = x + c*(32*z)
                     newY = y + r*(32*z)
-                    newWidth = int(tile.texture.get_rect().w * z)
-                    newHeight = int(tile.texture.get_rect().h * z)
+                    newWidth = math.ceil(tile.texture.get_rect().w * z)
+                    newHeight = math.ceil(tile.texture.get_rect().h * z)
                     tile.draw(screen, newX, newY, newWidth, newHeight)
