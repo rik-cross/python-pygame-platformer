@@ -49,6 +49,6 @@ class Map:
                 if tile.texture is not None: 
                     newX = x + c*(self.tileSize*z)
                     newY = y + r*(self.tileSize*z)
-                    newWidth = math.ceil(tile.texture.get_rect().w * z)
-                    newHeight = math.ceil(tile.texture.get_rect().h * z)
+                    newWidth = math.ceil(self.tileSize * z)
+                    newHeight = math.ceil(self.tileSize * z)
                     tile.draw(screen, newX, newY, newWidth, newHeight)
