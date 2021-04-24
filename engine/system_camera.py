@@ -61,15 +61,6 @@ class CameraSystem(System):
                 globals.world.size[1] * entity.camera.zoomLevel)
             pygame.draw.rect(screen, DARK_GREY, worldRect)
 
-        # render platforms
-        for p in globals.world.platforms:
-            newPosRect = pygame.Rect(
-                (p.x * entity.camera.zoomLevel) + offsetX,
-                (p.y * entity.camera.zoomLevel) + offsetY,
-                p.w * entity.camera.zoomLevel,
-                p.h * entity.camera.zoomLevel)
-            pygame.draw.rect(screen, MUSTARD, newPosRect)
-
         # render map (to replace platforms)
         if globals.world.map is not None:
             globals.world.map.draw(screen, offsetX, offsetY, entity.camera.zoomLevel)

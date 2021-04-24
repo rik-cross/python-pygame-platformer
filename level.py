@@ -5,9 +5,8 @@ import engine
 import pickle
 
 class Level:
-    def __init__(self, size, platforms=None, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
+    def __init__(self, size, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
         self.size = size
-        self.platforms = platforms
         self.entities = entities
         self.winFunc = winFunc
         self.loseFunc = loseFunc
@@ -47,14 +46,6 @@ def loadLevel(levelNumber):
         # load level 1
         globals.world = Level(
             size=(40*32, 20*32),
-            platforms = [
-                pygame.Rect(0,580,3000,20),
-                pygame.Rect(0,400,100,200),
-                pygame.Rect(2900,400,100,200),
-                pygame.Rect(500,500,100,20),
-                pygame.Rect(600,450,100,20),
-                pygame.Rect(800,450,200,20)
-            ],
             entities = [
                 utils.makeCoin(520,450),
                 utils.makeCoin(120,530),
@@ -70,10 +61,6 @@ def loadLevel(levelNumber):
         # load level 2
         globals.world = Level(
             size=(1200,1200),
-            platforms = [
-                # middle
-                pygame.Rect(0,300,1200,20)
-            ],
             entities = [
                 utils.makeCoin(100,200)
             ],
