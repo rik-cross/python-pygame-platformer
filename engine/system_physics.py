@@ -20,6 +20,8 @@ class PhysicsSystem(System):
             if entity.intention.jump and entity.on_ground:
                 engine.soundManager.playSound('jump')
                 entity.state = 'jumping'
+                # unstick the player from the tile map (why?)
+                #entity.position.rect.y -= 2
                 entity.motion.velocity.y = -7
 
         entity.motion.velocity.y += entity.motion.acceleration.y
@@ -57,21 +59,37 @@ class PhysicsSystem(System):
         entity.on_ground = False
 
         #...check against every platform
-        for platform in globals.world.platforms:
-            if platform.colliderect(new_y_rect):
-                y_collision = True
-                if abs(entity.motion.velocity.y) > 10:
-                    entity.trauma += 0.5 # TODO -- set max
+        #for platform in globals.world.platforms:
+        #    if platform.colliderect(new_y_rect):
+        #        y_collision = True
+        #        if abs(entity.motion.velocity.y) > 10:
+        #            entity.trauma += 0.5 # TODO -- set max
 
-                entity.motion.velocity.y = 0
-                # if the platform is below the player
-                if platform[1] > entity.transform.position.y:
-                    # stick the player to the platform
-                    entity.position.rect.y = platform[1] - entity.position.rect.height + 1 # TODO -- include collider??
-                    entity.on_ground = True
-                break
+        #        entity.motion.velocity.y = 0
+        #        # if the platform is below the player
+        #        if platform[1] > entity.transform.position.y:
+        #            # stick the player to the platform
+        #            entity.position.rect.y = platform[1] - entity.position.rect.height + 1 # TODO -- include collider??
+        #            entity.on_ground = True
+        #        break
 
+        #...check against tile map
+        
+        topLeftTile = globals.world.map.map[int((new_y_rect.y) // 32)][int((new_y_rect.x) // 32)]
+        topRightTile = globals.world.map.map[int((new_y_rect.y) // 32)][int((new_y_rect.x + new_y_rect.w) // 32)]
+        bottomLeftTile = globals.world.map.map[int((new_y_rect.y + new_y_rect.h) // 32)][int((new_y_rect.x) // 32)]
+        bottomRightTile = globals.world.map.map[int((new_y_rect.y + new_y_rect.h) // 32)][int((new_y_rect.x + new_y_rect.w) // 32)]
 
+        if topLeftTile.solid or topRightTile.solid or bottomLeftTile.solid or bottomRightTile.solid:
+
+            entity.motion.velocity.y = 0
+            y_collision = True
+            if abs(entity.motion.velocity.y) > 10:
+                entity.trauma += 0.5 # TODO -- set max
+            
+            if bottomLeftTile.solid or bottomRightTile.solid:
+                entity.position.rect.y = ((int((entity.transform.position.y + entity.collider.rect.y + entity.collider.rect.h) // 32))*32) - entity.position.rect.height + 2 # TODO -- include collider??
+                entity.on_ground = True
 
         if y_collision == False:
             entity.position.rect.y = int(entity.transform.position.y)
@@ -87,12 +105,28 @@ class PhysicsSystem(System):
         x_collision = False
 
         #...check against every platform
-        for platform in globals.world.platforms:
-            if platform.colliderect(new_x_rect):
-                x_collision = True
-                if abs(entity.motion.velocity.x) > 10:
-                    entity.trauma += 0.5
-                break
+        #for platform in globals.world.platforms:
+        #    if platform.colliderect(new_x_rect):
+        #        x_collision = True
+        #        if abs(entity.motion.velocity.x) > 10:
+        #            entity.trauma += 0.5
+        #        break
+
+        topLeftTile = globals.world.map.map[int((new_x_rect.y) // 32)][int((new_x_rect.x) // 32)]
+        topRightTile = globals.world.map.map[int((new_x_rect.y) // 32)][int((new_x_rect.x + new_x_rect.w) // 32)]
+        bottomLeftTile = globals.world.map.map[int((new_x_rect.y + new_x_rect.h - 2) // 32)][int((new_x_rect.x) // 32)]
+        bottomRightTile = globals.world.map.map[int((new_x_rect.y + new_x_rect.h - 2) // 32)][int((new_x_rect.x + new_x_rect.w) // 32)]
+
+        # check in the middle of the player too?
+        # need a better way that this -- for larger entities
+        middleLeftTile = globals.world.map.map[int((new_x_rect.y + (new_x_rect.h / 2) - 1) // 32)][int((new_x_rect.x) // 32)]
+        middleRightTile = globals.world.map.map[int((new_x_rect.y + (new_x_rect.h / 2) - 1) // 32)][int((new_x_rect.x + new_x_rect.w) // 32)]
+
+        if topLeftTile.solid or topRightTile.solid or bottomLeftTile.solid or bottomRightTile.solid or middleLeftTile.solid or middleRightTile.solid:
+
+            x_collision = True
+            if abs(entity.motion.velocity.x) > 10:
+                entity.trauma += 0.5 # TODO -- set max
 
         if x_collision == False:
             entity.position.rect.x = entity.transform.position.x
