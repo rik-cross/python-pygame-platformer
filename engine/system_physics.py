@@ -75,10 +75,10 @@ class PhysicsSystem(System):
 
         #...check against tile map
         
-        topLeftTile = globals.world.map.map[int((new_y_rect.y) // 32)][int((new_y_rect.x) // 32)]
-        topRightTile = globals.world.map.map[int((new_y_rect.y) // 32)][int((new_y_rect.x + new_y_rect.w) // 32)]
-        bottomLeftTile = globals.world.map.map[int((new_y_rect.y + new_y_rect.h) // 32)][int((new_y_rect.x) // 32)]
-        bottomRightTile = globals.world.map.map[int((new_y_rect.y + new_y_rect.h) // 32)][int((new_y_rect.x + new_y_rect.w) // 32)]
+        topLeftTile = globals.world.map.getTileAtPosition(new_y_rect.x, new_y_rect.y)
+        topRightTile = globals.world.map.getTileAtPosition(new_y_rect.x + new_y_rect.w, new_y_rect.y)
+        bottomLeftTile = globals.world.map.getTileAtPosition(new_y_rect.x, new_y_rect.y + new_y_rect.h)
+        bottomRightTile = globals.world.map.getTileAtPosition(new_y_rect.x + new_y_rect.w, new_y_rect.y + new_y_rect.h)
 
         if topLeftTile.solid or topRightTile.solid or bottomLeftTile.solid or bottomRightTile.solid:
 
@@ -88,7 +88,7 @@ class PhysicsSystem(System):
                 entity.trauma += 0.5 # TODO -- set max
             
             if bottomLeftTile.solid or bottomRightTile.solid:
-                entity.position.rect.y = ((int((entity.transform.position.y + entity.collider.rect.y + entity.collider.rect.h) // 32))*32) - entity.position.rect.height + 2 # TODO -- include collider??
+                entity.position.rect.y = ((int((entity.transform.position.y + entity.collider.rect.y + entity.collider.rect.h) // globals.world.map.tileSize))*globals.world.map.tileSize) - entity.position.rect.height + 2 # TODO -- include collider??
                 entity.on_ground = True
 
         if y_collision == False:
