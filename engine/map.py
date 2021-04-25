@@ -10,7 +10,7 @@ class Map:
         self.h = h
         self.tileSize = tileSize
         if map is None:
-            self.map = [ [ tile_empty for w in range(self.w) ] for h in range(self.h) ]
+            self.map = [ [ Tile.tiles['none'] for w in range(self.w) ] for h in range(self.h) ]
         elif isinstance(map, str):
             self.loadFromFile(map)
         else:
@@ -23,7 +23,7 @@ class Map:
         for r in range(len(mapToLoad)):
             row = []
             for c in mapToLoad[r]:
-                row.append(stringToTile[c])
+                row.append(Tile.tiles[c])
             nmap.append(row)
         self.map = nmap
     

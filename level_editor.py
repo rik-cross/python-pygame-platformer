@@ -18,6 +18,9 @@ def convertToMapCoords(pos):
 
 map = engine.Map(64,64)
 
+# add tiles
+engine.Tile.addTile('platform', engine.Tile(pygame.image.load('images/textures/platform.png'), 'platform', True))
+
 running = True
 while running:
 # game loop
@@ -37,16 +40,16 @@ while running:
             pos = pygame.mouse.get_pos()
             mapPos = convertToMapCoords(pos)
             
-            if map.map[mapPos[1]][mapPos[0]] is engine.tile_empty:
-                map.map[mapPos[1]][mapPos[0]] = engine.tile_platform
+            if map.map[mapPos[1]][mapPos[0]] is engine.Tile.tiles['none']:
+                map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['platform']
 
         # right-click = remove
         if ms[2]:
             pos = pygame.mouse.get_pos()
             mapPos = convertToMapCoords(pos)
             
-            if map.map[mapPos[1]][mapPos[0]] is not engine.tile_empty:
-                map.map[mapPos[1]][mapPos[0]] = engine.tile_empty
+            if map.map[mapPos[1]][mapPos[0]] is not engine.Tile.tiles['none']:
+                map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['none']
 
         if event.type == pygame.KEYUP:
 

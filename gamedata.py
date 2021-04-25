@@ -5,9 +5,12 @@ import utils
 import level
 import scene
 
-
+# add scene
 mainMenu = scene.MainMenuScene()
 engine.sceneManager.push(mainMenu)
+
+# add tiles
+engine.Tile.addTile('platform', engine.Tile(pygame.image.load('images/textures/platform.png'), 'platform', True))
 
 # create players
 
