@@ -17,20 +17,20 @@ class Camera:
             # calculate x value
 
             # if world narrower than camera:
-            if (self.rect.w) > (globals.world.size[0]*self.zoomLevel):
-                newX = (globals.world.size[0] / 2)
+            if (self.rect.w) > (globals.world.map.w_real*self.zoomLevel):
+                newX = (globals.world.map.w_real / 2)
             else:
                 newX = max(newX, (self.rect.w/self.zoomLevel)/2)
-                newX = min(newX, ( ((globals.world.size[0]) - (self.rect.w/2/self.zoomLevel)) ) )
+                newX = min(newX, ( ((globals.world.map.w_real) - (self.rect.w/2/self.zoomLevel)) ) )
 
             # calculate y value
 
             # if world narrower than camera:
-            if self.rect.h > (globals.world.size[1]*self.zoomLevel):
-                newY = (globals.world.size[1] / 2)
+            if self.rect.h > (globals.world.map.h_real*self.zoomLevel):
+                newY = (globals.world.map.h_real / 2)
             else:
                 newY = max(newY, (self.rect.h/self.zoomLevel/2))
-                newY = min(newY, ( ((globals.world.size[1]) - (self.rect.h/2/self.zoomLevel)) ) )
+                newY = min(newY, ( ((globals.world.map.h_real) - (self.rect.h/2/self.zoomLevel)) ) )
 
         self.worldX = newX
         self.worldY = newY

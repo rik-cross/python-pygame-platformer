@@ -5,8 +5,8 @@ import engine
 import pickle
 
 class Level:
-    def __init__(self, size, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
-        self.size = size
+    def __init__(self, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
+        #self.size = size
         self.entities = entities
         self.winFunc = winFunc
         self.loseFunc = loseFunc
@@ -45,7 +45,6 @@ def loadLevel(levelNumber):
     if levelNumber == 1:
         # load level 1
         globals.world = Level(
-            size=(40*32, 20*32),
             entities = [
                 utils.makeCoin(520,450),
                 utils.makeCoin(120,530),
@@ -55,19 +54,18 @@ def loadLevel(levelNumber):
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(900,350),(200,500)],
-            map = engine.Map(64,64,'l1')
+            map = engine.Map(map='l1', mapWidth=40, mapHeight=20)
         )
     if levelNumber == 2:
         # load level 2
         globals.world = Level(
-            size=(1200,1200),
             entities = [
                 utils.makeCoin(100,200)
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(400,260),(300,100)],
-            map = engine.Map(64,64,'l1')
+            map = engine.Map(map='l1', mapWidth=40, mapHeight=20)
         )
 
     # add players

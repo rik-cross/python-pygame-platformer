@@ -16,7 +16,7 @@ clock = pygame.time.Clock()
 def convertToMapCoords(pos):
     return (pos[0]//32 + offsetX, pos[1]//32 + offsetY)
 
-map = engine.Map(64,64)
+map = engine.Map()
 
 # add tiles
 engine.Tile.addTile('platform', engine.Tile(pygame.image.load('images/textures/platform.png'), 'platform', True))
