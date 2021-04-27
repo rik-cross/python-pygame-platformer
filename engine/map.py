@@ -32,7 +32,7 @@ class Map:
         for row in self.map:
             for tileNumber in range(len(row)):
                 if row[tileNumber] is not Tile.tiles['none']:
-                    if tileNumber > longestRow:
+                    if tileNumber + 1 > longestRow:
                         longestRow = tileNumber + 1
 
         # set dimensions

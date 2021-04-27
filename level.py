@@ -54,7 +54,7 @@ def loadLevel(levelNumber):
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(900,350),(200,500)],
-            map = engine.Map(map='l1', mapWidth=40, mapHeight=20)
+            map = engine.Map(map='l1')
         )
     if levelNumber == 2:
         # load level 2
@@ -65,7 +65,7 @@ def loadLevel(levelNumber):
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(400,260),(300,100)],
-            map = engine.Map(map='l1', mapWidth=40, mapHeight=20)
+            map = engine.Map(map='l1')
         )
 
     # add players
