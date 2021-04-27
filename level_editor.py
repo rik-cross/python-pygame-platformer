@@ -21,7 +21,7 @@ clock = pygame.time.Clock()
 def convertToMapCoords(pos):
     return ((pos[0] - offsetX*map.tileSize)//map.tileSize, (pos[1] - offsetY*map.tileSize)//map.tileSize)
 
-map = engine.Map(tileSize=64)
+map = engine.Map()
 
 tiles = []
 y = 50
@@ -54,8 +54,8 @@ while running:
                 mapPos = convertToMapCoords(pos)
 
                 if mapPos[0] >= 0 and mapPos[1] >= 0:                
-                    if map.map[mapPos[1]][mapPos[0]] is engine.Tile.tiles['none']:
-                        map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['platform']
+                    if map.map[mapPos[1]][mapPos[0]] == 'none':
+                        map.map[mapPos[1]][mapPos[0]] = 'platform'
                         map.setDimensions()
 
         # right click
@@ -66,19 +66,33 @@ while running:
                 mapPos = convertToMapCoords(pos)
                 
                 if mapPos[0] >= 0 and mapPos[1] >= 0:
-                    if map.map[mapPos[1]][mapPos[0]] is not engine.Tile.tiles['none']:
-                        map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['none']
+                    if map.map[mapPos[1]][mapPos[0]] != 'none':
+                        map.map[mapPos[1]][mapPos[0]] = 'none'
                         map.setDimensions()
 
         if event.type == pygame.KEYUP:
 
             # save map
             if event.key==pygame.K_s:
-                map.saveToFile(input('Enter filename to save to: '))
+                filename = input('Enter filename to save to: ')
+                filename = 'levels/' + filename + '.lvl'
+                pickle.dump( map, open( filename, "wb" ) )
             
             # load map
             if event.key==pygame.K_l:
-                map.loadFromFile(input('Enter file to load: '))
+                filename = input('Enter file to load: ')
+                filename = 'levels/' + filename + '.lvl'
+                map = pickle.load( open( filename, "rb" ) )
+
+            # smaller tiles
+            if event.key==pygame.K_MINUS:
+                map.tileSize = max(8, int(map.tileSize/2))
+                map.setDimensions()
+
+            # larger tiles
+            if event.key==pygame.K_EQUALS:
+                map.tileSize = min(64, int(map.tileSize*2))
+                map.setDimensions()
 
             # up
             if event.key==pygame.K_UP:

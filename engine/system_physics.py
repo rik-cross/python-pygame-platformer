@@ -58,21 +58,6 @@ class PhysicsSystem(System):
         y_collision = False
         entity.on_ground = False
 
-        #...check against every platform
-        #for platform in globals.world.platforms:
-        #    if platform.colliderect(new_y_rect):
-        #        y_collision = True
-        #        if abs(entity.motion.velocity.y) > 10:
-        #            entity.trauma += 0.5 # TODO -- set max
-
-        #        entity.motion.velocity.y = 0
-        #        # if the platform is below the player
-        #        if platform[1] > entity.transform.position.y:
-        #            # stick the player to the platform
-        #            entity.position.rect.y = platform[1] - entity.position.rect.height + 1 # TODO -- include collider??
-        #            entity.on_ground = True
-        #        break
-
         #...check against tile map
         
         topLeftTile = globals.world.map.getTileAtPosition(new_y_rect.x, new_y_rect.y)
