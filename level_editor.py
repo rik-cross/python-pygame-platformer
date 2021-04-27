@@ -91,7 +91,7 @@ while running:
 
             # larger tiles
             if event.key==pygame.K_EQUALS:
-                map.tileSize = min(64, int(map.tileSize*2))
+                map.tileSize = min(128, int(map.tileSize*2))
                 map.setDimensions()
 
             # up
@@ -136,6 +136,9 @@ while running:
         pygame.draw.rect(screen, (40,40,40), pygame.rect.Rect(t[2],t[3],32,32))
         t[1].draw(screen, t[2], t[3], 32, 32)
         utils.drawText(screen, t[0], t[2]+50, t[3], (255,255,255), 255)
+    
+    # print info
+    utils.drawText(screen, 'tilesize=' + str(map.tileSize), MAPWIDTH+10, MAPHEIGHT-20, (255,255,255), 255)
 
     pygame.display.flip()
     clock.tick(60)
