@@ -74,14 +74,12 @@ class CameraSystem(System):
                 (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
                 e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
 
-            # draw collider component
-            #if e.collider is not None:
-            #    offsetRect = pygame.Rect(
-            #        ( (e.position.rect.x + e.collider.rect.x) * entity.camera.zoomLevel) + offsetX,
-            #        ( (e.position.rect.y + e.collider.rect.y) * entity.camera.zoomLevel) + offsetY,
-            #        e.collider.rect.w * entity.camera.zoomLevel,
-            #        e.collider.rect.h * entity.camera.zoomLevel)
-            #    pygame.draw.rect(screen, WHITE, offsetRect)
+        # render map images
+        for img in globals.world.map.mapImages:
+            img.draw(screen,
+                (img.x * entity.camera.zoomLevel) + offsetX,
+                (img.y * entity.camera.zoomLevel) + offsetY,
+                entity.camera.zoomLevel)
 
         # entity HUD
 

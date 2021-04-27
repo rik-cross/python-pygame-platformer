@@ -1,13 +1,17 @@
 import pygame
 import math
 from .tiles import *
+from .map_image import *
 import pickle
 
 MAPSIZE = 256
 
-def loadMap(filename):
+def loadMap(filename, mapImages=[]):
     filename = 'levels/' + filename + '.lvl'
-    return pickle.load( open( filename, "rb" ) )
+    map =  pickle.load( open( filename, "rb" ) )
+    for img in mapImages:
+        map.mapImages.append(img)
+    return map
 
 def saveMap(map, filename):
     filename = 'levels/' + filename + '.lvl'
@@ -17,6 +21,7 @@ class Map:
 
     def __init__(self, map=None, tileSize=32):
         self.tileSize = tileSize
+        self.mapImages = []
         if map is None:
             self.map = [ [ 'none' for w in range(MAPSIZE) ] for h in range(MAPSIZE) ]
         elif isinstance(map, str):
@@ -55,8 +60,6 @@ class Map:
         return Tile.tiles[self.map[yTile][xTile]]
 
     def draw(self, screen, x, y, z):
-        if self.map is None:
-            return
         for r in range(self.h_map):
             for c in range(self.w_map):
                 tile = self.map[r][c]

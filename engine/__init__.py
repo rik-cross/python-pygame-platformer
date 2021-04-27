@@ -31,3 +31,4 @@ from .colours import *
 from .tiles import *
 
 from .map import *
+from .map_image import *
