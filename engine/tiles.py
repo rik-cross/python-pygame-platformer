@@ -8,9 +8,8 @@ class Tile:
     def addTile(cls, tileString, tile):
         cls.tiles[tileString] = tile
 
-    def __init__(self, texture=None, textString='none', solid=False):
+    def __init__(self, texture=None, solid=False):
         self.texture = texture
-        self.textString = textString
         self.solid = solid
     
     def draw(self, screen, x, y, w, h):
