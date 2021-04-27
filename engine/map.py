@@ -5,12 +5,10 @@ from .tiles import *
 
 class Map:
 
-    def __init__(self, map=None, mapWidth=64, mapHeight=64, tileSize=32):
+    def __init__(self, map=None, tileSize=32):
         self.tileSize = tileSize
-        self.mapWidth = mapWidth
-        self.mapHeight = mapHeight
         if map is None:
-            self.map = [ [ Tile.tiles['none'] for w in range(self.mapWidth) ] for h in range(self.mapHeight) ]
+            self.map = [ [ Tile.tiles['none'] for w in range(256) ] for h in range(256) ]
         elif isinstance(map, str):
             self.loadFromFile(map)
         else:
@@ -18,10 +16,28 @@ class Map:
         self.setDimensions() 
 
     def setDimensions(self):
-        self.h_map = self.mapHeight
-        self.w_map = self.mapWidth
-        self.h_real = self.mapHeight * self.tileSize
-        self.w_real = self.mapWidth * self.tileSize
+
+        # calculate height
+        lastNonEmptyRow = 0
+        for row in range(len(self.map)):
+            for column in self.map[row]:
+                if column is not Tile.tiles['none']:
+                    lastNonEmptyRow = row + 1
+                    break
+
+        # calculate width
+        longestRow = 0
+        for row in self.map:
+            for tileNumber in range(len(row)):
+                if row[tileNumber] is not Tile.tiles['none']:
+                    if tileNumber > longestRow:
+                        longestRow = tileNumber + 1
+
+        # set dimensions
+        self.h_map = lastNonEmptyRow
+        self.w_map = longestRow
+        self.h_real = self.h_map * self.tileSize
+        self.w_real = self.w_map * self.tileSize
 
     def loadFromFile(self, filename):
         filename = 'levels/' + filename + '.lvl'
@@ -44,6 +60,7 @@ class Map:
                 rowToSave.append(c.textString)
             mapToSave.append(rowToSave)
         pickle.dump( mapToSave, open( filename, "wb" ) )
+        self.setDimensions()
     
     def getTileAtPosition(self, x, y):
         if self.map is None:
