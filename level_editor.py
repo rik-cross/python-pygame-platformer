@@ -1,6 +1,7 @@
 import pygame
 import engine
 import pickle
+import game_tiles
 
 WIDTH = 32*40
 HEIGHT = 32*20
@@ -17,9 +18,6 @@ def convertToMapCoords(pos):
     return (pos[0]//32 + offsetX, pos[1]//32 + offsetY)
 
 map = engine.Map()
-
-# add tiles
-engine.Tile.addTile('platform', engine.Tile(pygame.image.load('images/textures/platform.png'), 'platform', True))
 
 running = True
 while running:
