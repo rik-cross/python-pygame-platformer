@@ -2,9 +2,13 @@ import pygame
 import engine
 import pickle
 import game_tiles
+import utils
 
-WIDTH = 32*40
-HEIGHT = 32*20
+WIDTH = 32*32 + 250
+HEIGHT = 32*16
+
+MAPWIDTH = 32*32
+MAPHEIGHT = 32*16
 
 offsetX = 0
 offsetY = 0
@@ -15,9 +19,16 @@ pygame.display.set_caption('Level Editor')
 clock = pygame.time.Clock()
 
 def convertToMapCoords(pos):
-    return (pos[0]//32 + offsetX, pos[1]//32 + offsetY)
+    return ((pos[0] - offsetX*map.tileSize)//map.tileSize, (pos[1] - offsetY*map.tileSize)//map.tileSize)
 
-map = engine.Map()
+map = engine.Map(tileSize=64)
+
+tiles = []
+y = 50
+x = MAPWIDTH + 50
+for t in engine.Tile.tiles:
+    tiles.append([t, engine.Tile.tiles[t], x, y])
+    y += 50
 
 running = True
 while running:
@@ -29,27 +40,35 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        # get mouse
+        # get mouse click position
         ms = pygame.mouse.get_pressed()
-        #print(ms)
-        
-        # left click = place
-        if ms[0]:
-            pos = pygame.mouse.get_pos()
-            mapPos = convertToMapCoords(pos)
-            
-            if map.map[mapPos[1]][mapPos[0]] is engine.Tile.tiles['none']:
-                map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['platform']
-                map.setDimensions()
+        pos = pygame.mouse.get_pos()
 
-        # right-click = remove
-        if ms[2]:
-            pos = pygame.mouse.get_pos()
-            mapPos = convertToMapCoords(pos)
+        
+        # left click
+        if ms[0]:
             
-            if map.map[mapPos[1]][mapPos[0]] is not engine.Tile.tiles['none']:
-                map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['none']
-                map.setDimensions()
+            # place tile
+            if pos[0] < MAPWIDTH and pos[1] < MAPHEIGHT:
+
+                mapPos = convertToMapCoords(pos)
+
+                if mapPos[0] >= 0 and mapPos[1] >= 0:                
+                    if map.map[mapPos[1]][mapPos[0]] is engine.Tile.tiles['none']:
+                        map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['platform']
+                        map.setDimensions()
+
+        # right click
+        if ms[2]:
+            
+            # remove tile
+            if pos[0] < MAPWIDTH and pos[1] < MAPHEIGHT:
+                mapPos = convertToMapCoords(pos)
+                
+                if mapPos[0] >= 0 and mapPos[1] >= 0:
+                    if map.map[mapPos[1]][mapPos[0]] is not engine.Tile.tiles['none']:
+                        map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['none']
+                        map.setDimensions()
 
         if event.type == pygame.KEYUP:
 
@@ -61,6 +80,19 @@ while running:
             if event.key==pygame.K_l:
                 map.loadFromFile(input('Enter file to load: '))
 
+            # up
+            if event.key==pygame.K_UP:
+                offsetY = min(0, offsetY+1)
+            # down
+            if event.key==pygame.K_DOWN:
+                offsetY -= 1
+            # left
+            if event.key==pygame.K_LEFT:
+                offsetX = min(0, offsetX+1)
+            # right
+            if event.key==pygame.K_RIGHT:
+                offsetX -= 1
+
     #
     # draw
     #
@@ -68,14 +100,28 @@ while running:
     # clear screen
     screen.fill((0,0,0))
 
+    # set clip
+    screen.set_clip(pygame.rect.Rect(0,0,MAPWIDTH,MAPHEIGHT))
+
+    # draw map background
+    pygame.draw.rect(screen, (20,20,20), pygame.rect.Rect(offsetX*map.tileSize,offsetY*map.tileSize,map.w_real,map.h_real))
+
     # draw map
-    map.draw(screen, offsetX*32, offsetY*32, 1)
+    map.draw(screen, offsetX*map.tileSize, offsetY*map.tileSize, 1)
+
+    screen.set_clip(None)
 
     # draw grid lines
-    for r in range(32,HEIGHT,32):
-        pygame.draw.line(screen, engine.DARK_GREY, (0,r), (WIDTH,r), 1)
-    for c in range(32,WIDTH,32):
-        pygame.draw.line(screen, engine.DARK_GREY, (c,0), (c,HEIGHT), 1)
+    for r in range(map.tileSize, MAPHEIGHT+map.tileSize, map.tileSize):
+        pygame.draw.line(screen, (engine.DARK_GREY), (0,r), (MAPWIDTH, r), 1)
+    for c in range(map.tileSize, MAPWIDTH+map.tileSize, map.tileSize):
+        pygame.draw.line(screen, engine.DARK_GREY, (c,0), (c,MAPHEIGHT), 1)
+
+    # draw tiles
+    for t in tiles:
+        pygame.draw.rect(screen, (40,40,40), pygame.rect.Rect(t[2],t[3],32,32))
+        t[1].draw(screen, t[2], t[3], 32, 32)
+        utils.drawText(screen, t[0], t[2]+50, t[3], (255,255,255), 255)
 
     pygame.display.flip()
     clock.tick(60)
