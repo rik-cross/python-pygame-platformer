@@ -6,6 +6,8 @@ import ui
 import level
 import gamesystems
 
+hues = [0, 30, 50, 90, 190, 300]
+
 class MainMenuScene(engine.Scene):
     def __init__(self):
         self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 200)
@@ -101,14 +103,14 @@ class PlayerSelectScene(engine.Scene):
                 if player in globals.players:
 
                     colourClash = True
-                    currentHuePos = engine.hues.index(player.imageGroups.hue)
+                    currentHuePos = hues.index(player.imageGroups.hue)
                     nextHuePos = currentHuePos
 
                     # dont allow two player to be the same colour
                     while colourClash:
                         colourClash = False
-                        nextHuePos = (nextHuePos+1)%(len(engine.hues))
-                        nextHue = engine.hues[nextHuePos]
+                        nextHuePos = (nextHuePos+1)%(len(hues))
+                        nextHue = hues[nextHuePos]
                         for otherPlayer in [globals.player1, globals.player2, globals.player3, globals.player4]:
                             if otherPlayer.imageGroups.hue == nextHue:
                                 colourClash = True
@@ -119,14 +121,14 @@ class PlayerSelectScene(engine.Scene):
                 if player in globals.players:
 
                     colourClash = True
-                    currentHuePos = engine.hues.index(player.imageGroups.hue)
+                    currentHuePos = hues.index(player.imageGroups.hue)
                     nextHuePos = currentHuePos
 
                     # dont allow two player to be the same colour
                     while colourClash:
                         colourClash = False
-                        nextHuePos = (nextHuePos-1)%(len(engine.hues))
-                        nextHue = engine.hues[nextHuePos]
+                        nextHuePos = (nextHuePos-1)%(len(hues))
+                        nextHue = hues[nextHuePos]
                         for otherPlayer in [globals.player1, globals.player2, globals.player3, globals.player4]:
                             if otherPlayer.imageGroups.hue == nextHue:
                                 colourClash = True
