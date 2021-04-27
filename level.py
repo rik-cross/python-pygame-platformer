@@ -53,6 +53,7 @@ def loadLevel(levelNumber):
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(900,350),(200,500)],
+            # TODO -- store strings and not image to allow pickling
             map = engine.loadMap('l1', [engine.MapImage(pygame.image.load('images/heart.png'), 300, 400, 10)])
         )
     if levelNumber == 2:
