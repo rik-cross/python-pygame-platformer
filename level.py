@@ -2,7 +2,6 @@ import pygame
 import globals
 import utils
 import engine
-import pickle
 
 class Level:
     def __init__(self, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
@@ -54,7 +53,7 @@ def loadLevel(levelNumber):
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(900,350),(200,500)],
-            map = pickle.load( open( 'levels/l1.lvl', "rb" ) )
+            map = engine.loadMap('l1')
         )
     if levelNumber == 2:
         # load level 2
@@ -65,7 +64,7 @@ def loadLevel(levelNumber):
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(400,260),(300,100)],
-            map = pickle.load( open( 'levels/l1.lvl', "rb" ) )
+            map = engine.loadMap('l1')
         )
 
     # add players

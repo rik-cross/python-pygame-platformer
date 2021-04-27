@@ -74,15 +74,11 @@ while running:
 
             # save map
             if event.key==pygame.K_s:
-                filename = input('Enter filename to save to: ')
-                filename = 'levels/' + filename + '.lvl'
-                pickle.dump( map, open( filename, "wb" ) )
+                engine.saveMap(map, input('Enter a file to save: '))
             
             # load map
             if event.key==pygame.K_l:
-                filename = input('Enter file to load: ')
-                filename = 'levels/' + filename + '.lvl'
-                map = pickle.load( open( filename, "rb" ) )
+                map = engine.loadMap(input('Enter file to load: '))
 
             # smaller tiles
             if event.key==pygame.K_MINUS:

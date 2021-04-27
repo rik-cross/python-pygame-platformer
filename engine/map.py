@@ -1,8 +1,17 @@
 import pygame
 import math
 from .tiles import *
+import pickle
 
 MAPSIZE = 256
+
+def loadMap(filename):
+    filename = 'levels/' + filename + '.lvl'
+    return pickle.load( open( filename, "rb" ) )
+
+def saveMap(map, filename):
+    filename = 'levels/' + filename + '.lvl'
+    pickle.dump( map, open( filename, "wb" ) )
 
 class Map:
 
