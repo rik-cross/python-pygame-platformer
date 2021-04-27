@@ -42,6 +42,7 @@ while running:
             
             if map.map[mapPos[1]][mapPos[0]] is engine.Tile.tiles['none']:
                 map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['platform']
+                map.setDimensions()
 
         # right-click = remove
         if ms[2]:
@@ -50,6 +51,7 @@ while running:
             
             if map.map[mapPos[1]][mapPos[0]] is not engine.Tile.tiles['none']:
                 map.map[mapPos[1]][mapPos[0]] = engine.Tile.tiles['none']
+                map.setDimensions()
 
         if event.type == pygame.KEYUP:
 

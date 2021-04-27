@@ -3,12 +3,14 @@ import pickle
 import math
 from .tiles import *
 
+MAPSIZE = 256
+
 class Map:
 
     def __init__(self, map=None, tileSize=32):
         self.tileSize = tileSize
         if map is None:
-            self.map = [ [ Tile.tiles['none'] for w in range(256) ] for h in range(256) ]
+            self.map = [ [ Tile.tiles['none'] for w in range(MAPSIZE) ] for h in range(MAPSIZE) ]
         elif isinstance(map, str):
             self.loadFromFile(map)
         else:
