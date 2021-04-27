@@ -4,7 +4,7 @@ import pickle
 import game_tiles
 import utils
 
-WIDTH = 32*32 + 250
+WIDTH = 32*32 + 500
 HEIGHT = 32*16
 
 MAPWIDTH = 32*32
@@ -18,9 +18,6 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Level Editor')
 clock = pygame.time.Clock()
 
-def convertToMapCoords(pos):
-    return ((pos[0] - offsetX*map.tileSize)//map.tileSize, (pos[1] - offsetY*map.tileSize)//map.tileSize)
-
 map = engine.Map()
 
 tiles = []
@@ -29,6 +26,18 @@ x = MAPWIDTH + 50
 for t in engine.Tile.tiles:
     tiles.append([t, engine.Tile.tiles[t], x, y])
     y += 50
+
+currentTile = 0
+
+def convertToMapCoords(pos):
+    return ((pos[0] - offsetX*map.tileSize)//map.tileSize, (pos[1] - offsetY*map.tileSize)//map.tileSize)
+
+def convertToTile(pos):
+    for i in range(len(tiles)):
+        if pos[0] >= tiles[i][2] and pos[0] <= tiles[i][2] + 32:
+            if pos[1] >= tiles[i][3] and pos[1] <= tiles[i][3] + 32:
+                return i
+    return currentTile
 
 running = True
 while running:
@@ -54,9 +63,13 @@ while running:
                 mapPos = convertToMapCoords(pos)
 
                 if mapPos[0] >= 0 and mapPos[1] >= 0:                
-                    if map.map[mapPos[1]][mapPos[0]] == 'none':
-                        map.map[mapPos[1]][mapPos[0]] = 'platform'
+                    if map.map[mapPos[1]][mapPos[0]] != tiles[currentTile][0]:
+                        map.map[mapPos[1]][mapPos[0]] = tiles[currentTile][0]
                         map.setDimensions()
+            
+            # set tile
+            if pos[0] > MAPWIDTH:
+                currentTile = convertToTile(pos)
 
         # right click
         if ms[2]:
@@ -82,7 +95,7 @@ while running:
 
             # smaller tiles
             if event.key==pygame.K_MINUS:
-                map.tileSize = max(8, int(map.tileSize/2))
+                map.tileSize = max(16, int(map.tileSize/2))
                 map.setDimensions()
 
             # larger tiles
@@ -128,13 +141,15 @@ while running:
         pygame.draw.line(screen, engine.DARK_GREY, (c,0), (c,MAPHEIGHT), 1)
 
     # draw tiles
-    for t in tiles:
-        pygame.draw.rect(screen, (40,40,40), pygame.rect.Rect(t[2],t[3],32,32))
-        t[1].draw(screen, t[2], t[3], 32, 32)
-        utils.drawText(screen, t[0], t[2]+50, t[3], (255,255,255), 255)
+    for i in range(len(tiles)):
+        if i == currentTile:
+            pygame.draw.rect(screen, (engine.WHITE), pygame.rect.Rect(tiles[i][2]-2,tiles[i][3]-2,36,36))
+        pygame.draw.rect(screen, (40,40,40), pygame.rect.Rect(tiles[i][2],tiles[i][3],32,32))
+        tiles[i][1].draw(screen, tiles[i][2], tiles[i][3], 32, 32)
+        utils.drawText(screen, tiles[i][0], tiles[i][2]+50, tiles[i][3], (255,255,255), 255)
     
     # print info
-    utils.drawText(screen, 'tilesize=' + str(map.tileSize), MAPWIDTH+10, MAPHEIGHT-20, (255,255,255), 255)
+    utils.drawText(screen, 'tilesize=' + str(map.tileSize), MAPWIDTH+50, MAPHEIGHT-50, (255,255,255), 255)
 
     pygame.display.flip()
     clock.tick(60)
