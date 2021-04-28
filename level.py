@@ -54,7 +54,11 @@ def loadLevel(levelNumber):
             loseFunc = lostLevel,
             powerupSpawnPoints = [(900,350),(200,500)],
             # TODO -- store strings and not image to allow pickling
-            map = engine.loadMap('l1', [engine.MapImage(pygame.image.load('images/heart.png'), 300, 400, 10)])
+            map = engine.loadMap('l1', [
+                    engine.MapImage(pygame.image.load('images/sun.png'), 400, 50, -1, parallaxY=False),
+                    engine.MapImage(pygame.image.load('images/tree_close.png'), 500, 0, 5, parallaxY=False),
+                    engine.MapImage(pygame.image.load('images/bush.png'), 150, 380, 1, parallaxY=False)
+                ])
         )
     if levelNumber == 2:
         # load level 2

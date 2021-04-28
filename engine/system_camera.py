@@ -61,6 +61,18 @@ class CameraSystem(System):
                 globals.world.map.h_real * entity.camera.zoomLevel)
             pygame.draw.rect(screen, DARK_GREY, worldRect)
 
+        # render map images behind map
+        for img in globals.world.map.mapImages:
+
+            if img.z < 0:
+
+                # there's no parallax for images behind the map
+
+                img.draw(screen,
+                    (img.x * entity.camera.zoomLevel) + offsetX,
+                    (img.y * entity.camera.zoomLevel) + offsetY,
+                    entity.camera.zoomLevel) 
+
         # render map (to replace platforms)
         if globals.world.map is not None:
             globals.world.map.draw(screen, offsetX, offsetY, entity.camera.zoomLevel)
@@ -74,12 +86,25 @@ class CameraSystem(System):
                 (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
                 e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
 
-        # render map images
+        # render map images infront of map
         for img in globals.world.map.mapImages:
-            img.draw(screen,
-                (img.x * entity.camera.zoomLevel) + offsetX,
-                (img.y * entity.camera.zoomLevel) + offsetY,
-                entity.camera.zoomLevel)
+
+            if img.z > 0:
+
+                if img.parallaxX:
+                    parallaxOffsetX = ((entity.camera.worldX - img.x) * ( (img.z*-1) * 0.2))
+                else:
+                    parallaxOffsetX = 0
+                
+                if img.parallaxY:
+                    parallaxOffsetY = ((entity.camera.worldY - img.y) * ( (img.z*-1) * 0.2))
+                else:
+                    parallaxOffsetY = 0
+
+                img.draw(screen,
+                    (img.x * entity.camera.zoomLevel) + offsetX + parallaxOffsetX,
+                    (img.y * entity.camera.zoomLevel) + offsetY + parallaxOffsetY,
+                    entity.camera.zoomLevel)          
 
         # entity HUD
 
