@@ -3,10 +3,13 @@ import pygame
 from .soundmanager import *
 from .inputmanager import *
 from .scenemanager import *
+from .entity_factory import *
 
 sceneManager = SceneManager()
 inputManager = InputManager()
 soundManager = SoundManager()
+
+entityFactory = EntityFactory()
 
 clock = pygame.time.Clock()
 

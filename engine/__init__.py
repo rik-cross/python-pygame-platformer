@@ -1,6 +1,7 @@
 from .engine import *
 
 from .entity import *
+from .entity_factory import *
 
 from .system import *
 from .system_animation import *

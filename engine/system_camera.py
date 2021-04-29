@@ -89,7 +89,7 @@ class CameraSystem(System):
         # render map images infront of map
         for img in globals.world.map.mapImages:
 
-            if img.z > 0:
+            if img.z >= 0:
 
                 if img.parallaxX:
                     parallaxOffsetX = ((entity.camera.worldX - img.x) * ( (img.z*-1) * 0.2))
