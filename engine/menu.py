@@ -14,7 +14,7 @@ class Menu:
         self.y = y
         self.direction = direction
         self.spacing = spacing
-    
+
     def addButton(self, button):
         self.buttons.append(button)
     
