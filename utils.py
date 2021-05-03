@@ -3,9 +3,6 @@ import engine
 import globals
 import gamecomponents
 
-pygame.font.init()
-font = pygame.font.Font(pygame.font.get_default_font(), 24)
-
 def changeColour(image, colour):
     colouredImage = pygame.Surface(image.get_size())
     colouredImage.fill(colour)
@@ -24,14 +21,6 @@ def blit_alpha(target, source, location, opacity):
     temp.blit(source, (0, 0))
     temp.set_alpha(opacity)        
     target.blit(temp, location)
-
-def drawText(screen, t, x, y, fg, alpha):
-    t = str(t)
-    text = font.render(t, True, fg)
-    text_rectangle = text.get_rect()
-    text_rectangle.topleft = (x,y)
-
-    blit_alpha(screen, text, (x,y), alpha)
 
 heart_image = pygame.image.load('images/heart.png')
 

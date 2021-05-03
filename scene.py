@@ -9,25 +9,30 @@ import gamesystems
 hues = [0, 30, 50, 90, 190, 300]
 
 class MainMenuScene(engine.Scene):
+
     def __init__(self):
-        self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 200)
-        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 250)
+
+        def loadNext():
+            engine.sceneManager.push(FadeTransitionScene([self], [PlayerSelectScene()]))
+
+        def quitGame():
+            engine.sceneManager.pop()
+
+        self.mainMenu = engine.Menu(1500/2, 250)
+        self.mainMenu.addButton(engine.ButtonUI('New game', actionListener=engine.ActionListener(loadNext)))
+        self.mainMenu.addButton(engine.ButtonUI('Quit', actionListener=engine.ActionListener(quitGame)))
+
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
     def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.keys.enter):
-            sm.push(FadeTransitionScene([self], [PlayerSelectScene()]))
-        if inputStream.isPressed(engine.keys.esc):
-            sm.pop()
+        pass
     def update(self, sm, inputStream):
-        self.enter.update(inputStream)
-        self.esc.update(inputStream)
+        self.mainMenu.update(inputStream)
     def draw(self, sm, screen):
         # background
         screen.fill(engine.DARK_GREY)
-        utils.drawText(screen, 'Main Menu', 50, 50, engine.WHITE, 255)
-        self.enter.draw(screen)
-        self.esc.draw(screen)
+        self.mainMenu.draw(screen)
+        engine.drawText(screen, 'Main Menu', 50, 50, engine.WHITE, 255)
 
 class LevelSelectScene(engine.Scene):
     def __init__(self):
@@ -55,7 +60,7 @@ class LevelSelectScene(engine.Scene):
     def draw(self, sm, screen):
         # background
         screen.fill(engine.DARK_GREY)
-        utils.drawText(screen, 'Level Select', 50, 50, engine.WHITE, 255)
+        engine.drawText(screen, 'Level Select', 50, 50, engine.WHITE, 255)
         self.esc.draw(screen)
 
         # draw level select menu
@@ -66,7 +71,7 @@ class LevelSelectScene(engine.Scene):
             a = 255
             if levelNumber > globals.lastCompletedLevel:
                 a = 100
-            utils.drawText(screen, str(levelNumber), levelNumber*100, 100, c, a)
+            engine.drawText(screen, str(levelNumber), levelNumber*100, 100, c, a)
 
 class PlayerSelectScene(engine.Scene):
     def __init__(self):
@@ -146,7 +151,7 @@ class PlayerSelectScene(engine.Scene):
     def draw(self, sm, screen):
         # background
         screen.fill(engine.DARK_GREY)
-        utils.drawText(screen, 'Player Select', 50, 50, engine.WHITE, 255)
+        engine.drawText(screen, 'Player Select', 50, 50, engine.WHITE, 255)
 
         self.esc.draw(screen)
         self.enter.draw(screen)
@@ -233,7 +238,7 @@ class WinScene(engine.Scene):
         bgSurf.fill((engine.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        utils.drawText(screen, 'You win!', 50, 50, engine.WHITE, self.alpha)
+        engine.drawText(screen, 'You win!', 50, 50, engine.WHITE, self.alpha)
         self.esc.draw(screen, alpha=self.alpha)
 
 class LoseScene(engine.Scene):
@@ -255,7 +260,7 @@ class LoseScene(engine.Scene):
         bgSurf.fill((engine.BLACK))
         utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        utils.drawText(screen, 'You lose!', 150, 150, engine.WHITE, self.alpha)
+        engine.drawText(screen, 'You lose!', 150, 150, engine.WHITE, self.alpha)
         self.esc.draw(screen, alpha=self.alpha)
 
 class FadeTransitionScene(engine.TransitionScene):

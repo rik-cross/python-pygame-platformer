@@ -25,4 +25,4 @@ class ButtonUI:
             colour = engine.GREEN
         else:
             colour = engine.WHITE
-        utils.drawText(screen, self.text, self.x, self.y, colour, alpha)
+        engine.drawText(screen, self.text, self.x, self.y, colour, alpha)
