@@ -3,8 +3,12 @@ from .inputmanager import *
 
 class Menu:
     
-    def __init__(self, x, y, buttons=[], direction='vertical', spacing=50):
-        self.buttons = buttons
+    def __init__(self, x, y, buttons=None, direction='vertical', spacing=50):
+        
+        if buttons is None:
+            self.buttons = []
+        else:
+            self.buttons = buttons
         self.activeButtonIndex = 0
         self.x = x
         self.y = y
@@ -22,7 +26,7 @@ class Menu:
             self.activeButtonIndex = min(len(self.buttons)-1, self.activeButtonIndex + 1)
         # update buttons in the button group    
         for i in range(len(self.buttons)):
-            self.buttons[i].update(self.activeButtonIndex == i, self.activeButtonIndex == i and inputStream.isDown(keys.enter))
+            self.buttons[i].update(self.activeButtonIndex == i, self.activeButtonIndex == i and inputStream.isPressed(keys.enter))
 
     def draw(self, screen):
         bX = self.x

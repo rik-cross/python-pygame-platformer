@@ -7,6 +7,7 @@ import pygame
 class ButtonUI:
 
     def __init__(self, text, actionListener=None):
+
         self.actionListener = actionListener
 
         self.activeCurrent = False
@@ -14,8 +15,11 @@ class ButtonUI:
         
         self.pressedCurrent = False
         self.pressedPrevious = False
+
         self.activeLength = 15
         self.pressedTimer = 0
+
+        self.execNextFrame = False
 
         self.normalColour = LIGHT_GREY
         self.activeColour = WHITE
@@ -38,12 +42,16 @@ class ButtonUI:
         self.pressedCurrent = pressed
         pressedThisFrame = self.pressedCurrent and not self.pressedPrevious
         releasedThisFrame = self.pressedPrevious and not self.pressedCurrent
-        
+
+        if self.execNextFrame:
+            self.execNextFrame = False
+            self.actionListener.execute()
+
         if pressed:
             self.pressedTimer = self.activeLength
         
         if pressedThisFrame:
-            self.actionListener.execute()
+            self.execNextFrame = True
 
         if self.pressedTimer > 0:
             self.colour = self.pressedColour

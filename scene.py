@@ -18,11 +18,11 @@ class MainMenuScene(engine.Scene):
         def quitGame():
             engine.sceneManager.pop()
 
-        self.mainMenu = engine.Menu(1500/2, 250)
+        self.mainMenu = engine.Menu(1500/2, 650)
         self.mainMenu.addButton(engine.ButtonUI('New game', actionListener=engine.ActionListener(loadNext)))
         self.mainMenu.addButton(engine.ButtonUI('Quit', actionListener=engine.ActionListener(quitGame)))
 
-    def onEnter(self):
+    def onEnter(self):       
         engine.soundManager.playMusicFade('solace')
     def input(self, sm, inputStream):
         pass
@@ -32,7 +32,6 @@ class MainMenuScene(engine.Scene):
         # background
         screen.fill(engine.DARK_GREY)
         self.mainMenu.draw(screen)
-        engine.drawText(screen, 'Main Menu', 50, 50, engine.WHITE, 255)
 
 class LevelSelectScene(engine.Scene):
     def __init__(self):
@@ -75,20 +74,36 @@ class LevelSelectScene(engine.Scene):
 
 class PlayerSelectScene(engine.Scene):
     def __init__(self):
-        self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 600)
-        self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 650)
+
+        def pushNextScene():
+            if len(globals.players) > 0:
+                engine.sceneManager.push(FadeTransitionScene([self], [LevelSelectScene()]))
+
+        def popScene():
+            engine.sceneManager.pop()
+            #engine.sceneManager.pop()
+            engine.sceneManager.push(FadeTransitionScene([self], []))
+
+        self.mainMenu = engine.Menu(1500/2, 650)
+        self.mainMenu.addButton(engine.ButtonUI('Choose level', actionListener=engine.ActionListener(pushNextScene)))
+        self.mainMenu.addButton(engine.ButtonUI('Back to main menu', actionListener=engine.ActionListener(popScene)))
+
+        #self.enter = ui.ButtonUI(engine.keys.enter, '[Enter=next]', 50, 600)
+        #self.esc = ui.ButtonUI(engine.keys.esc, '[Esc=quit]', 50, 650)
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
         #for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
         #    player.imageGroups.animationList['idle'].imageIndex = 0
     def update(self, sm, inputStream):
-        self.esc.update(inputStream)
-        self.enter.update(inputStream)
+        #self.esc.update(inputStream)
+        #self.enter.update(inputStream)
 
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
             player.imageGroups.animationList['idle'].update()
 
     def input(self, sm, inputStream):
+
+        self.mainMenu.update(inputStream)
 
         # handle each player
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
@@ -140,21 +155,21 @@ class PlayerSelectScene(engine.Scene):
                     
                     player.imageGroups.hue = nextHue
 
-        if inputStream.isPressed(engine.keys.enter):
-            if len(globals.players) > 0:
-                sm.push(FadeTransitionScene([self], [LevelSelectScene()]))
+        #if inputStream.isPressed(engine.keys.enter):
+        #    if len(globals.players) > 0:
+        #        sm.push(FadeTransitionScene([self], [LevelSelectScene()]))
 
-        if inputStream.isPressed(engine.keys.esc):
-            sm.pop()
-            sm.push(FadeTransitionScene([self], []))
+        #if inputStream.isPressed(engine.keys.esc):
+        #    sm.pop()
+        #    sm.push(FadeTransitionScene([self], []))
 
     def draw(self, sm, screen):
         # background
         screen.fill(engine.DARK_GREY)
-        engine.drawText(screen, 'Player Select', 50, 50, engine.WHITE, 255)
+        #engine.drawText(screen, 'Player Select', 50, 50, engine.WHITE, 255)
 
-        self.esc.draw(screen)
-        self.enter.draw(screen)
+        #self.esc.draw(screen)
+        #self.enter.draw(screen)
 
         screenWidth, screenHeight = pygame.display.get_surface().get_size()
         spacing = screenWidth/4
@@ -177,7 +192,9 @@ class PlayerSelectScene(engine.Scene):
                 img = utils.not_playing
             #screen.blit(pygame.transform.scale(utils.player_shadow, (144*2,144*2)), (positions[players.index(player)]-53,200)) 
             screen.blit(pygame.transform.scale(utils.changeColour(img, colour), (45*4,51*4)), (positions[players.index(player)],250))
-            
+
+        self.mainMenu.draw(screen)            
+
 
 class GameScene(engine.Scene):
     def __init__(self):
