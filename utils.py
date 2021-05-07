@@ -187,6 +187,7 @@ def resetPlayer(entity):
     entity.position.rect.x = entity.position.initial.x
     entity.position.rect.y = entity.position.initial.y
     entity.speed = 0
+    entity.velocity = pygame.math.Vector2()
     entity.acceleration = entity.initialAcceleration
     entity.camera.setWorldPos(entity.position.initial.x, entity.position.initial.y)
     entity.direction = 'right'
@@ -243,4 +244,11 @@ def makePlayer(x,y):
     entity.collider = engine.Collider(10,1,25,50)
     entity.tags.add('player')
     entity.motion = engine.Motion(acceleration=pygame.math.Vector2(0,0.3))
+    return entity
+
+def makeExplosion(x,y):
+    entity = engine.Entity()
+    entity.position = engine.Position(x,y,1,1)
+    entity.particle_emitter = engine.ParticleEmitter()
+    entity.imageGroups = None
     return entity

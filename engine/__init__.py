@@ -9,6 +9,7 @@ from .system_camera import *
 from .system_input import *
 from .system_physics import *
 from .system_trauma import *
+from .system_particle import *
 
 from .component import *
 from .component_camera import *
@@ -39,3 +40,6 @@ from .button_ui import *
 from .action_listener import *
 
 from .text import *
+
+from .particle import *
+from .component_particle_emitter import *

@@ -66,12 +66,13 @@ class PhysicsSystem(System):
         bottomRightTile = globals.world.map.getTileAtPosition(new_y_rect.x + new_y_rect.w, new_y_rect.y + new_y_rect.h)
 
         if topLeftTile.solid or topRightTile.solid or bottomLeftTile.solid or bottomRightTile.solid:
-
-            entity.motion.velocity.y = 0
+            
             y_collision = True
             if abs(entity.motion.velocity.y) > 10:
-                entity.trauma += 0.5 # TODO -- set max
-            
+                entity.trauma += 0.7 # TODO -- set max
+                globals.world.entities.append(engine.entityFactory.create('explosion', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
+            entity.motion.velocity.y = 0
+
             if bottomLeftTile.solid or bottomRightTile.solid:
                 entity.position.rect.y = ((int((entity.transform.position.y + entity.collider.rect.y + entity.collider.rect.h) // globals.world.map.tileSize))*globals.world.map.tileSize) - entity.position.rect.height + 2 # TODO -- include collider??
                 entity.on_ground = True
@@ -111,7 +112,7 @@ class PhysicsSystem(System):
 
             x_collision = True
             if abs(entity.motion.velocity.x) > 10:
-                entity.trauma += 0.5 # TODO -- set max
+                entity.trauma += 0.7 # TODO -- set max
 
         if x_collision == False:
             entity.position.rect.x = entity.transform.position.x

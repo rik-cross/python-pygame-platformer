@@ -13,6 +13,7 @@ engine.sceneManager.push(mainMenu)
 engine.entityFactory.addEntity('player', utils.makePlayer)
 engine.entityFactory.addEntity('coin', utils.makeCoin)
 engine.entityFactory.addEntity('enemy', utils.makeEnemy)
+engine.entityFactory.addEntity('explosion', utils.makeExplosion)
 
 # create players
 

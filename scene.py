@@ -39,6 +39,8 @@ class LevelSelectScene(engine.Scene):
             # resize player cameras, depending on the number playing
             utils.setPlayerCameras()
             level.loadLevel(globals.curentLevel)
+            for entity in globals.world.entities:
+                entity.reset(entity)
             engine.sceneManager.push(FadeTransitionScene([self], [GameScene()]))
 
         def popScene():
@@ -190,6 +192,7 @@ class GameScene(engine.Scene):
         self.animationSystem = engine.AnimationSystem()
         self.powerupSystem = gamesystems.PowerupSystem()
         self.traumaSystem = engine.TraumaSystem()
+        self.particleSystem = engine.ParticleSystem()
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
@@ -219,6 +222,7 @@ class GameScene(engine.Scene):
         # background
         screen.fill(engine.BLACK)
         self.cameraSystem.update(screen)
+        self.particleSystem.update(screen)
 
 class WinScene(engine.Scene):
     def __init__(self):

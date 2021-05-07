@@ -79,12 +79,19 @@ class CameraSystem(System):
 
         # render entities
         for e in globals.world.entities:
-            s = e.state
-            a = e.imageGroups.animationList[s]
-            a.draw(screen,
-                (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
-                (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
-                e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
+            if e.imageGroups is not None:
+                s = e.state
+                a = e.imageGroups.animationList[s]
+                a.draw(screen,
+                    (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
+                    (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
+                    e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
+
+        # particle emitter particles
+        for e in globals.world.entities:
+            if e.particle_emitter:
+                for p in e.particle_emitter.particles:
+                    pygame.draw.circle(screen, p.colour, ((p.pos[0]*entity.camera.zoomLevel)+offsetX, (p.pos[1]*entity.camera.zoomLevel)+offsetY), p.size * entity.camera.zoomLevel)
 
         # render map images infront of map
         for img in globals.world.map.mapImages:

@@ -2,6 +2,7 @@ import engine
 import globals
 import random
 import utils
+import pygame
 
 class PowerupSystem(engine.System):
     def __init__(self):
@@ -81,10 +82,19 @@ class BattleSystem(engine.System):
                     # entity.battle.onCollide(entity, otherEntity)
                     entity.battle.lives -= 1
                     
+                    if entity.motion is not None:
+                        entity.motion.reset()
+                    
+                    entity.motion.velocity.y = -2
+
                     # reset player position
+                    if entity.transform is not None:
+                        entity.transform.reset()
                     entity.position.rect.x = entity.position.initial.x
                     entity.position.rect.y = entity.position.initial.y
+                    # TODO -- should this be in the physics system?
                     entity.speed = 0
+                
 
                     # remove player if no lives left
                     if entity.battle.lives <= 0:
