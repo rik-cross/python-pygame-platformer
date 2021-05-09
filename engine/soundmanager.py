@@ -3,9 +3,9 @@ import pygame
 class SoundManager:
     def __init__(self):
         pygame.mixer.init()
-        self.soundVolume = 0.4
-        self.musicVolume = 0.2
-        self.targetMusicVolume = 0.2
+        self.soundVolume = 1.0
+        self.musicVolume = 1.0
+        self.targetMusicVolume = 1.0
         self.nextMusic = None
         self.currentMusic = None
         self.sounds = {}
@@ -14,8 +14,10 @@ class SoundManager:
         self.sounds[soundName] = pygame.mixer.Sound(soundURL)
     def addMusic(self, musicName, musicURL):
         self.music[musicName] = musicURL
-    def playSound(self, soundName):
-        self.sounds[soundName].set_volume(self.soundVolume)
+    def playSound(self, soundName, volume=None):
+        if volume is None:
+            volume = self.soundVolume
+        self.sounds[soundName].set_volume(volume)
         self.sounds[soundName].play()
     def playMusic(self, musicName):
 

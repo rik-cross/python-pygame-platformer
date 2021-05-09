@@ -17,8 +17,6 @@ class Entity:
         self.input = None
         self.intention = None
         self.on_ground = False
-        #self.motionacceleration = pygame.math.Vector2()
-        #self.initialAcceleration = self.acceleration
         self.effect = None
         self.reset = resetEntity
         self.trauma = 0
@@ -27,3 +25,5 @@ class Entity:
         self.motion = None
         self.tags = engine.Tag()
         self.particle_emitter = None
+        self.emote = None
+        self.text = None

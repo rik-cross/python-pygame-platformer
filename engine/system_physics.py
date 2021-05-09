@@ -70,6 +70,7 @@ class PhysicsSystem(System):
             y_collision = True
             if abs(entity.motion.velocity.y) > 10:
                 entity.trauma += 0.7 # TODO -- set max
+                #entity.emote = engine.Emote(pygame.image.load('images/sad.png'))
                 globals.world.entities.append(engine.entityFactory.create('explosion', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
             entity.motion.velocity.y = 0
 

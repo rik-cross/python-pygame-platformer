@@ -16,6 +16,7 @@ clock = pygame.time.Clock()
 def init(size, caption):
     global screen
     pygame.init()
+    
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption(caption)
 

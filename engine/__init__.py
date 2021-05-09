@@ -10,6 +10,8 @@ from .system_input import *
 from .system_physics import *
 from .system_trauma import *
 from .system_particle import *
+from .system_emote import *
+from .system_text import *
 
 from .component import *
 from .component_camera import *
@@ -18,6 +20,8 @@ from .component_imagegroup import *
 from .component_imagegroups import *
 from .component_input import *
 from .component_intention import *
+from .component_emote import *
+from .component_text import *
 
 from .component_position import *
 from .component_transform import *

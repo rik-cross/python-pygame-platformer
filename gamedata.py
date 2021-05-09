@@ -22,6 +22,7 @@ globals.player1 = utils.makePlayer(300,50)
 globals.player1.input = engine.Input(engine.keys.w, engine.keys.d, engine.keys.a, engine.keys.d, engine.keys.q, engine.keys.e)
 globals.player1.input.inputFunc = utils.playerInput
 globals.player1.imageGroups.hue = 90
+globals.player1.text = engine.Text('this is a test, including hopefully a few lines of text!')
 # player 2
 globals.player2 = utils.makePlayer(350,50)
 globals.player2.input = engine.Input(engine.controller[0].dpad_up, engine.controller[0].dpad_down, engine.controller[0].dpad_left, engine.controller[0].dpad_right, engine.controller[0].a, engine.controller[0].b)
@@ -43,3 +44,5 @@ engine.soundManager.addMusic('dawn', 'music/03 Before the Dawn.ogg')
 
 engine.soundManager.addSound('jump', 'sounds/03_Jump_v2.ogg')
 engine.soundManager.addSound('coin', 'sounds/01_Coin Pickup_v2.ogg')
+
+engine.soundManager.addSound('blip', 'sounds/blip.wav')

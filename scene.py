@@ -193,6 +193,8 @@ class GameScene(engine.Scene):
         self.powerupSystem = gamesystems.PowerupSystem()
         self.traumaSystem = engine.TraumaSystem()
         self.particleSystem = engine.ParticleSystem()
+        self.emoteSystem = engine.EmoteSystem()
+        self.textSystem = engine.TextSystem()
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
@@ -218,6 +220,8 @@ class GameScene(engine.Scene):
         self.animationSystem.update()
         self.powerupSystem.update()
         self.traumaSystem.update()
+        self.emoteSystem.update()
+        self.textSystem.update()
     def draw(self, sm, screen):
         # background
         screen.fill(engine.BLACK)

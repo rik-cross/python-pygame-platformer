@@ -87,6 +87,31 @@ class CameraSystem(System):
                     (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
                     e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
 
+        # render emotes
+        for e in globals.world.entities:
+            if e.emote is not None:
+                eMidPoint = (e.position.rect.w / 2) * entity.camera.zoomLevel
+                iMidPoint = (e.emote.image.get_rect().w / 2) * entity.camera.zoomLevel
+                xx = e.position.rect.x * entity.camera.zoomLevel + offsetX + eMidPoint - iMidPoint
+                
+                yy = e.position.rect.y * entity.camera.zoomLevel + offsetY - (e.emote.image.get_rect().h * entity.camera.zoomLevel) - (20 * entity.camera.zoomLevel)
+                newWidth = int(e.emote.image.get_rect().w * entity.camera.zoomLevel)
+                newHeight = int(e.emote.image.get_rect().h * entity.camera.zoomLevel)
+                
+                pygame.draw.rect(screen, WHITE, pygame.rect.Rect(xx - (5*entity.camera.zoomLevel), yy - (5*entity.camera.zoomLevel), e.emote.image.get_rect().w * entity.camera.zoomLevel + (10*entity.camera.zoomLevel), e.emote.image.get_rect().h * entity.camera.zoomLevel + (10*entity.camera.zoomLevel)))
+                
+                bottomOfBox = yy - (5*entity.camera.zoomLevel) + e.emote.image.get_rect().h * entity.camera.zoomLevel + (10*entity.camera.zoomLevel) - 1 
+                middleOfBox = e.position.rect.x * entity.camera.zoomLevel + offsetX + eMidPoint
+                
+                pygame.draw.polygon(screen, WHITE, ((middleOfBox - (10*entity.camera.zoomLevel),bottomOfBox),(middleOfBox + (10*entity.camera.zoomLevel),bottomOfBox),(middleOfBox,bottomOfBox+(10*entity.camera.zoomLevel))))
+
+                screen.blit(pygame.transform.scale(e.emote.image, (newWidth, newHeight)), (xx, yy))
+
+        # render text
+        for e in globals.world.entities:
+            if e.text is not None:
+                e.text.draw(screen, (e.position.rect.x * entity.camera.zoomLevel) + offsetX, (e.position.rect.y * entity.camera.zoomLevel)+ offsetY)
+
         # particle emitter particles
         for e in globals.world.entities:
             if e.particle_emitter:
@@ -112,6 +137,11 @@ class CameraSystem(System):
                     (img.x * entity.camera.zoomLevel) + offsetX + parallaxOffsetX,
                     (img.y * entity.camera.zoomLevel) + offsetY + parallaxOffsetY,
                     entity.camera.zoomLevel)          
+
+        # render text
+        for e in globals.world.entities:
+            if e.text is not None:
+                e.text.draw(screen, (e.position.rect.x * entity.camera.zoomLevel) + offsetX, (e.position.rect.y * entity.camera.zoomLevel)+ offsetY)
 
         # entity HUD
 
