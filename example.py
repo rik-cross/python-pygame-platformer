@@ -11,7 +11,7 @@ class MainScene(engine.Scene):
         self.cameraSystem = engine.CameraSystem()
     def draw(self, sm, screen):
         screen.fill(engine.BLUE)
-        #self.cameraSystem.update(screen)
+        self.cameraSystem.update(screen)
 
 mainGameScene = MainScene()
 
@@ -32,12 +32,12 @@ player.imageGroups.add('idle', engine.ImageGroup([playerImage]))
 camera = engine.Entity()
 camera.camera = engine.Camera(100,100,1300,600)
 
-# hmmmm
-# TODO -- don't use globals file
-# instead, have engine.entities, engine.map, etc.
+#
+# Add entities to world
+#
 
-#globals.world
-#globals.world.entities = [camera]
+engine.world.entities.append(player)
+engine.world.entities.append(camera)
 
 #
 # Add scene to the engine and start

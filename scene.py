@@ -198,6 +198,8 @@ class GameScene(engine.Scene):
         self.textSystem = engine.TextSystem()
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
+        engine.world.entities = globals.world.entities
+        engine.world.map = globals.world.map
     def input(self, sm, inputStream):
         if inputStream.isPressed(engine.keys.esc):
             sm.pop()

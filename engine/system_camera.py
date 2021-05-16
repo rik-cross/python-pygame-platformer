@@ -22,7 +22,7 @@ class CameraSystem(System):
             if entity.intention.zoomOut:
                 # only zoom out if there's more of the world to see
                 newZoomLevel = entity.camera.zoomLevel-0.01
-                if (globals.world.map.w_real * newZoomLevel >= cameraRect.w - 10) or (globals.world.map.h_real * newZoomLevel >= cameraRect.h - 10):
+                if (engine.world.map.w_real * newZoomLevel >= cameraRect.w - 10) or (engine.world.map.h_real * newZoomLevel >= cameraRect.h - 10):
                     entity.camera.zoomLevel = newZoomLevel
 
         # update camera if tracking an entity
@@ -53,42 +53,44 @@ class CameraSystem(System):
         screen.fill(BLACK)
 
         # draw level background
-        if globals.world is not None:
+        if engine.world.map is not None:
+
             worldRect = pygame.Rect(
                 0 + offsetX,
                 0 + offsetY,
-                globals.world.map.w_real * entity.camera.zoomLevel,
-                globals.world.map.h_real * entity.camera.zoomLevel)
+                engine.world.map.w_real * entity.camera.zoomLevel,
+                engine.world.map.h_real * entity.camera.zoomLevel)
             pygame.draw.rect(screen, DARK_GREY, worldRect)
 
-        # render map images behind map
-        for img in globals.world.map.mapImages:
+            # render map images behind map
+            for img in engine.world.map.mapImages:
 
-            if img.z < 0:
+                if img.z < 0:
 
-                # there's no parallax for images behind the map
+                    # there's no parallax for images behind the map
 
-                img.draw(screen,
-                    (img.x * entity.camera.zoomLevel) + offsetX,
-                    (img.y * entity.camera.zoomLevel) + offsetY,
-                    entity.camera.zoomLevel) 
+                    img.draw(screen,
+                        (img.x * entity.camera.zoomLevel) + offsetX,
+                        (img.y * entity.camera.zoomLevel) + offsetY,
+                        entity.camera.zoomLevel) 
 
         # render map (to replace platforms)
-        if globals.world.map is not None:
-            globals.world.map.draw(screen, offsetX, offsetY, entity.camera.zoomLevel)
+        if engine.world.map is not None:
+            engine.world.map.draw(screen, offsetX, offsetY, entity.camera.zoomLevel)
 
         # render entities
-        for e in globals.world.entities:
+        for e in engine.world.entities:
             if e.imageGroups is not None:
-                s = e.state
-                a = e.imageGroups.animationList[s]
-                a.draw(screen,
-                    (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
-                    (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
-                    e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
+                if e.state in e.imageGroups.animationList:
+                    s = e.state
+                    a = e.imageGroups.animationList[s]
+                    a.draw(screen,
+                        (e.position.rect.x * entity.camera.zoomLevel) + offsetX,
+                        (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
+                        e.direction == 'left', False, entity.camera.zoomLevel, e.imageGroups.alpha, e.imageGroups.hue)
 
         # render emotes
-        for e in globals.world.entities:
+        for e in engine.world.entities:
             if e.emote is not None:
                 eMidPoint = (e.position.rect.w / 2) * entity.camera.zoomLevel
                 iMidPoint = (e.emote.image.get_rect().w / 2) * entity.camera.zoomLevel
@@ -108,38 +110,39 @@ class CameraSystem(System):
                 screen.blit(pygame.transform.scale(e.emote.image, (newWidth, newHeight)), (xx, yy))
 
         # render text
-        for e in globals.world.entities:
+        for e in engine.world.entities:
             if e.text is not None:
                 e.text.draw(screen, (e.position.rect.x * entity.camera.zoomLevel) + offsetX, (e.position.rect.y * entity.camera.zoomLevel)+ offsetY)
 
         # particle emitter particles
-        for e in globals.world.entities:
+        for e in engine.world.entities:
             if e.particle_emitter:
                 for p in e.particle_emitter.particles:
                     pygame.draw.circle(screen, p.colour, ((p.pos[0]*entity.camera.zoomLevel)+offsetX, (p.pos[1]*entity.camera.zoomLevel)+offsetY), p.size * entity.camera.zoomLevel)
 
         # render map images infront of map
-        for img in globals.world.map.mapImages:
+        if engine.world.map is not None:
+            for img in engine.world.map.mapImages:
 
-            if img.z >= 0:
+                if img.z >= 0:
 
-                if img.parallaxX:
-                    parallaxOffsetX = ((entity.camera.worldX - img.x) * ( (img.z*-1) * 0.2))
-                else:
-                    parallaxOffsetX = 0
-                
-                if img.parallaxY:
-                    parallaxOffsetY = ((entity.camera.worldY - img.y) * ( (img.z*-1) * 0.2))
-                else:
-                    parallaxOffsetY = 0
+                    if img.parallaxX:
+                        parallaxOffsetX = ((entity.camera.worldX - img.x) * ( (img.z*-1) * 0.2))
+                    else:
+                        parallaxOffsetX = 0
+                    
+                    if img.parallaxY:
+                        parallaxOffsetY = ((entity.camera.worldY - img.y) * ( (img.z*-1) * 0.2))
+                    else:
+                        parallaxOffsetY = 0
 
-                img.draw(screen,
-                    (img.x * entity.camera.zoomLevel) + offsetX + parallaxOffsetX,
-                    (img.y * entity.camera.zoomLevel) + offsetY + parallaxOffsetY,
-                    entity.camera.zoomLevel)          
+                    img.draw(screen,
+                        (img.x * entity.camera.zoomLevel) + offsetX + parallaxOffsetX,
+                        (img.y * entity.camera.zoomLevel) + offsetY + parallaxOffsetY,
+                        entity.camera.zoomLevel)          
 
         # render text
-        for e in globals.world.entities:
+        for e in engine.world.entities:
             if e.text is not None:
                 e.text.draw(screen, (e.position.rect.x * entity.camera.zoomLevel) + offsetX, (e.position.rect.y * entity.camera.zoomLevel)+ offsetY)
 

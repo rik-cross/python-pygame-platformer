@@ -47,3 +47,5 @@ from .text import *
 
 from .particle import *
 from .component_particle_emitter import *
+
+from .world import *

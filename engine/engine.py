@@ -1,3 +1,4 @@
+from engine.world import World
 import pygame
 
 from .soundmanager import *
@@ -10,6 +11,8 @@ inputManager = InputManager()
 soundManager = SoundManager()
 
 entityFactory = EntityFactory()
+
+world = World()
 
 clock = pygame.time.Clock()
 
