@@ -44,8 +44,8 @@ powerupImages = {
 }
 
 powerupSound = {
-    'health' : 'coin',
-    'invisible' : 'coin'
+    'health' : 'powerup_get',
+    'invisible' : 'powerup_get'
 }
 
 powerupApply = {
@@ -65,7 +65,7 @@ powerupEffectTimer = {
 
 def makePowerup(type, x, y):
     entity = engine.Entity()
-    entity.position = engine.Position(x,y,40,40)
+    entity.position = engine.Position(x,y,32,32)
     entityAnimation = engine.ImageGroup(powerupImages[type])
     entity.imageGroups.add('idle', entityAnimation)
     entity.effect = gamecomponents.Effect(
@@ -74,6 +74,7 @@ def makePowerup(type, x, y):
         powerupSound[type],
         powerupEnd[type]
     )
+    entity.tags.add('powerup')
     return entity    
 
 coin0 = pygame.image.load('images/coin/coin_0.png')

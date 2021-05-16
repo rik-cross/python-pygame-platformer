@@ -59,6 +59,17 @@ class Map:
         yTile = int(y // self.tileSize)
         return Tile.tiles[self.map[yTile][xTile]]
 
+    def getAllTilesOfType(self, type):
+        tilePos = []
+
+        for r in range(self.h_map):
+            for c in range(self.w_map):
+                tile = self.map[r][c]
+                if tile == type:
+                    tilePos.append((c*self.tileSize, r*self.tileSize))       
+
+        return tilePos
+
     def draw(self, screen, x, y, z):
         for r in range(self.h_map):
             for c in range(self.w_map):

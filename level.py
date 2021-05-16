@@ -4,13 +4,18 @@ import utils
 import engine
 
 class Level:
-    def __init__(self, entities=None, winFunc=None, loseFunc=None, powerupSpawnPoints=None, map=None):
+    def __init__(self, entities=None, winFunc=None, loseFunc=None, map=None):
         #self.size = size
         self.entities = entities
         self.winFunc = winFunc
         self.loseFunc = loseFunc
-        self.powerupSpawnPoints = powerupSpawnPoints
         self.map = map
+
+        # get spawn points
+        sp = self.map.getAllTilesOfType('powerup_spawn_point')
+        self.powerupSpawnPoints = sp
+        
+        
     def isWon(self):
         if self.winFunc is None:
             return False
@@ -50,7 +55,6 @@ def loadLevel(levelNumber):
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
-            powerupSpawnPoints = [(900,350),(200,500)],
             # TODO -- store strings and not image to allow pickling
             map = engine.loadMap('l1', [
                     #engine.MapImage(pygame.image.load('images/sun.png'), 400, 50, -1, parallaxY=False),
@@ -66,7 +70,6 @@ def loadLevel(levelNumber):
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
-            powerupSpawnPoints = [(400,260),(300,100)],
             map = engine.loadMap('l1')
         )
 

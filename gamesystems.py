@@ -15,7 +15,7 @@ class PowerupSystem(engine.System):
         # count the number of powerups in the world
         count = 0
         for entity in globals.world.entities:
-            if entity.tags.has('player'):
+            if entity.tags.has('powerup'):
                 if entity.effect:
                     count += 1
 
@@ -35,6 +35,7 @@ class PowerupSystem(engine.System):
                         globals.world.entities.append(
                             utils.makePowerup(random.choice(utils.powerups), spawnPos[0], spawnPos[1])
                         )
+                        engine.soundManager.playSound('powerup_appear', engine.soundManager.soundVolume / 2)
 
     def updateEntity(self, screen, inputStream, entity):
 
