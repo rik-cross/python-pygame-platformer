@@ -98,7 +98,9 @@ class BattleSystem(engine.System):
 
         # balloon collision
         for otherEntity in globals.world.entities:
-            if otherEntity is not entity and otherEntity.tags.has('balloon'):
+
+            # against other players
+            if otherEntity is not entity and entity.tags.has('player') and otherEntity.tags.has('balloon'):
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     globals.world.entities.append(engine.entityFactory.create('explosion', otherEntity.position.rect.x, otherEntity.position.rect.y))
                     explosion_direction = 1

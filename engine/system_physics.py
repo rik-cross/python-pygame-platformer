@@ -70,7 +70,8 @@ class PhysicsSystem(System):
             y_collision = True
             if abs(entity.motion.velocity.y) > 10:
                 entity.trauma += 0.7 # TODO -- set max
-                globals.world.entities.append(engine.entityFactory.create('collision', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
+                if entity.tags.has('player'):
+                    globals.world.entities.append(engine.entityFactory.create('collision', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
             entity.motion.velocity.y = 0
 
             if bottomLeftTile.solid or bottomRightTile.solid:
@@ -113,6 +114,8 @@ class PhysicsSystem(System):
             x_collision = True
             if abs(entity.motion.velocity.x) > 10:
                 entity.trauma += 0.7 # TODO -- set max
+                if entity.tags.has('player'):
+                    globals.world.entities.append(engine.entityFactory.create('collision', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
 
         if x_collision == False:
             entity.position.rect.x = entity.transform.position.x
@@ -123,6 +126,10 @@ class PhysicsSystem(System):
         # TODO -- replace this with horizontal friction
         if x_collision or y_collision:
             entity.motion.velocity.x = 0
+
+            if entity.tags.has('balloon'):
+                globals.world.entities.append(engine.entityFactory.create('explosion', entity.position.rect.x, entity.position.rect.y))
+                globals.world.entities.remove(entity)
 
         # reset intentions
         if entity.intention is not None:
