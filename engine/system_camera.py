@@ -157,3 +157,24 @@ class CameraSystem(System):
 
         # unset clipping rectangle
         screen.set_clip(None)
+
+        # update zoom
+        if entity.camera.zoomPerFrame != 0:
+            entity.camera.zoomLevel += entity.camera.zoomPerFrame
+            if abs(entity.camera.zoomLevel - entity.camera.targetZoom) < 0.01 :
+                entity.camera.zoomPerFrame = 0
+        
+        # update position
+        # x
+        if entity.camera.movementPerFrameX != 0:
+            entity.camera.worldX += entity.camera.movementPerFrameX
+            if abs(entity.camera.worldX - entity.camera.targetX) < 0.1 :
+                entity.camera.movementPerFrameX = 0
+        # y
+        if entity.camera.movementPerFrameY != 0:
+            entity.camera.worldY += entity.camera.movementPerFrameY
+            if abs(entity.camera.worldY - entity.camera.targetY) < 0.1 :
+                entity.camera.movementPerFrameY = 0
+
+
+

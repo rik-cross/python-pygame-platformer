@@ -1,3 +1,4 @@
+from engine import entity
 import pygame
 import utils
 import globals

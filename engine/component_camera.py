@@ -8,6 +8,29 @@ class Camera:
         self.worldY = 0
         self.entityToTrack = None
         self.zoomLevel = 1
+
+        self.zoomPerFrame = 0
+        self.targetZoom = self.zoomLevel
+
+        self.targetX = 0
+        self.targetY = 0
+        self.movementPerFrameX = 0
+        self.movementPerFrameY = 0
+    
+    def setZoomLevel(self, level):
+        self.zoomLevel = level
+    
+    def zoomTo(self, level, overFrames=60):
+        self.targetZoom = level
+        self.zoomPerFrame = (self.targetZoom - self.zoomLevel) / overFrames
+
+    def moveTo(self, x, y, overFrames=60):
+        self.entityToTrack = None
+        self.targetX = x
+        self.targetY = y
+        self.movementPerFrameX = (self.targetX - self.worldX) / overFrames
+        self.movementPerFrameY = (self.targetY - self.worldY) / overFrames
+
     def setWorldPos(self, x, y):
         newX = x
         newY = y

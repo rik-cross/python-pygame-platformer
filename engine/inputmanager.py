@@ -77,6 +77,8 @@ class KeyInput:
         self.o = PlayerInput(0,pygame.K_o,'key',1)
 
         self.n1 = PlayerInput(0,pygame.K_1,'key',1)
+        self.n2 = PlayerInput(0,pygame.K_2,'key',1)
+        self.n3 = PlayerInput(0,pygame.K_3,'key',1)
 
 keys = KeyInput()
 
