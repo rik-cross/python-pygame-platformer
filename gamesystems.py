@@ -76,6 +76,40 @@ class BattleSystem(engine.System):
     def check(self, entity):
         return entity.tags.has('player') and entity.battle is not None   
     def updateEntity(self, screen, inputStream, entity):
+        
+         # throwing balloons
+
+        if entity.intention is not None:
+            if entity.intention.fire == True:
+
+                # point in the right direction
+                if entity.direction == 'right':
+                    xx = entity.position.rect.x + 20 + entity.position.rect.w
+                    yy = entity.position.rect.y + entity.position.rect.h // 2
+                    aa = engine.Motion(velocity=pygame.math.Vector2(4,-6), acceleration=pygame.math.Vector2(0,0.3))
+                elif entity.direction == 'left':
+                    xx = entity.position.rect.x - 20
+                    yy = entity.position.rect.y + entity.position.rect.h // 2
+                    aa = engine.Motion(velocity=pygame.math.Vector2(-4,-6), acceleration=pygame.math.Vector2(0,0.3))
+                balloon = engine.entityFactory.create('balloon', xx, yy)
+                balloon.motion = aa
+                balloon.owner = entity
+                globals.world.entities.append(balloon)
+
+        # balloon collision
+        for otherEntity in globals.world.entities:
+            if otherEntity is not entity and otherEntity.tags.has('balloon'):
+                if entity.position.rect.colliderect(otherEntity.position.rect):
+                    globals.world.entities.append(engine.entityFactory.create('explosion', otherEntity.position.rect.x, otherEntity.position.rect.y))
+                    explosion_direction = 1
+                    if otherEntity.motion.velocity.x < 0:
+                        explosion_direction = -1
+                    entity.motion.velocity += pygame.math.Vector2(7 * explosion_direction,-7)
+                    globals.world.entities.remove(otherEntity)
+
+
+        # static enemies
+
         for otherEntity in globals.world.entities:
             if otherEntity is not entity and otherEntity.tags.has('dangerous'):
                 if entity.position.rect.colliderect(otherEntity.position.rect):

@@ -4,12 +4,14 @@ import random
 
 class ParticleEmitter:
     
-    def __init__(self):
+    def __init__(self, size=20, colour=LIGHT_GREY):
         self.particles = []
-        self.timer = 10
+        self.timer = 0
         self.lifetime = 30
         self.destroy = False
         self.finished = False
+        self.size = size
+        self.colour = colour
     
     def update(self, parentPosX, parentPosY):
  
@@ -24,7 +26,7 @@ class ParticleEmitter:
             self.timer = 10
             x = round(random.uniform(-2,2), 3)
             y = round(random.uniform(-2,2), 3)
-            self.particles.append(Particle(pygame.math.Vector2(parentPosX,parentPosY), pygame.math.Vector2(x,y), 25, LIGHT_GREY))
+            self.particles.append(Particle(pygame.math.Vector2(parentPosX,parentPosY), pygame.math.Vector2(x,y), self.size, self.colour))
         
         # update all particles
         for p in self.particles:

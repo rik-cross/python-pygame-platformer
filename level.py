@@ -46,16 +46,16 @@ def loadLevel(levelNumber):
         globals.world = Level(
             entities = [
                 engine.entityFactory.create('coin', 150, 300),
-                engine.entityFactory.create('enemy', 200, 430)
+                engine.entityFactory.create('enemy', 200, 530)
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
             powerupSpawnPoints = [(900,350),(200,500)],
             # TODO -- store strings and not image to allow pickling
             map = engine.loadMap('l1', [
-                    engine.MapImage(pygame.image.load('images/sun.png'), 400, 50, -1, parallaxY=False),
-                    engine.MapImage(pygame.image.load('images/tree_close.png'), 500, 0, 5, parallaxY=False),
-                    engine.MapImage(pygame.image.load('images/bush.png'), 50, 380, 0, parallaxY=False)
+                    #engine.MapImage(pygame.image.load('images/sun.png'), 400, 50, -1, parallaxY=False),
+                    #engine.MapImage(pygame.image.load('images/tree_close.png'), 500, 0, 5, parallaxY=False),
+                    #engine.MapImage(pygame.image.load('images/bush.png'), 50, 380, 0, parallaxY=False)
                 ])
         )
     if levelNumber == 2:

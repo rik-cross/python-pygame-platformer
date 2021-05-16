@@ -3,9 +3,11 @@ class Intention:
         self.moveLeft = False
         self.moveRight = False
         self.jump = False
+        self.fire = False
         self.zoomIn = False
         self.zoomOut = False
     def reset(self):
         self.moveLeft = False
         self.moveRight = False
         self.jump = False
+        self.fire = False

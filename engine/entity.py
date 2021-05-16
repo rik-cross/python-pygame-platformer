@@ -27,3 +27,4 @@ class Entity:
         self.particle_emitter = None
         self.emote = None
         self.text = None
+        self.owner = self

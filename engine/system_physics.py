@@ -29,7 +29,7 @@ class PhysicsSystem(System):
 
         # horizontal transform
 
-        entity.transform.position.x = entity.position.rect.x
+        entity.transform.position.x = entity.position.rect.x + entity.motion.velocity.x
 
         if entity.intention is not None:
             if entity.intention.moveLeft:
@@ -70,8 +70,7 @@ class PhysicsSystem(System):
             y_collision = True
             if abs(entity.motion.velocity.y) > 10:
                 entity.trauma += 0.7 # TODO -- set max
-                #entity.emote = engine.Emote(pygame.image.load('images/sad.png'))
-                globals.world.entities.append(engine.entityFactory.create('explosion', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
+                globals.world.entities.append(engine.entityFactory.create('collision', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
             entity.motion.velocity.y = 0
 
             if bottomLeftTile.solid or bottomRightTile.solid:
@@ -121,6 +120,10 @@ class PhysicsSystem(System):
         if entity.tags.has('player') and not entity.on_ground:
             entity.state = 'jumping'
         
+        # TODO -- replace this with horizontal friction
+        if x_collision or y_collision:
+            entity.motion.velocity.x = 0
+
         # reset intentions
         if entity.intention is not None:
             entity.intention.reset()

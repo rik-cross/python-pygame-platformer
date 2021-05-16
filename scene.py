@@ -198,8 +198,6 @@ class GameScene(engine.Scene):
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
     def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.keys.n1):
-            globals.player1.trauma = 1 #min(1, globals.player1.trauma + 0.2)
         if inputStream.isPressed(engine.keys.esc):
             sm.pop()
             sm.push(FadeTransitionScene([self], []))

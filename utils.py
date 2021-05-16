@@ -215,6 +215,11 @@ def playerInput(inputStream, entity):
         entity.intention.moveRight = True
     else:
         entity.intention.moveRight = False
+    # down = balloon
+    if inputStream.isPressed(entity.input.down):
+        entity.intention.fire = True
+    else:
+        entity.intention.fire = False
     # b1 = zoom out
     if inputStream.isDown(entity.input.b1):
         entity.intention.zoomOut = True
@@ -246,9 +251,30 @@ def makePlayer(x,y):
     entity.motion = engine.Motion(acceleration=pygame.math.Vector2(0,0.3))
     return entity
 
-def makeExplosion(x,y):
+def makeCollision(x,y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,1,1)
     entity.particle_emitter = engine.ParticleEmitter()
     entity.imageGroups = None
+    return entity
+
+def makeExplosion(x,y):
+    entity = engine.Entity()
+    entity.position = engine.Position(x,y,1,1)
+    entity.particle_emitter = engine.ParticleEmitter(size=40, colour=engine.colours.BLUE)
+    entity.imageGroups = None
+    return entity
+
+balloon = pygame.image.load('images/balloon.png')
+
+def makeBalloon(x,y):
+    entity = engine.Entity()
+    entity.position = engine.Position(x,y,16,16)
+    entityIdleImage = engine.ImageGroup([balloon])
+    entity.imageGroups.add('idle', entityIdleImage)
+    entity.acceleration = 0.3
+    entity.initialAcceleration = entity.acceleration
+    entity.collider = engine.Collider(2,2,12,12)
+    entity.tags.add('balloon')
+    entity.motion = engine.Motion(acceleration=pygame.math.Vector2(0,0.3))
     return entity
