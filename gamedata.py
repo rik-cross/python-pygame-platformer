@@ -47,3 +47,5 @@ engine.soundManager.addSound('jump', 'sounds/03_Jump_v2.ogg')
 engine.soundManager.addSound('coin', 'sounds/01_Coin Pickup_v2.ogg')
 
 engine.soundManager.addSound('blip', 'sounds/blip.wav')
+engine.soundManager.addSound('explosion', 'sounds/explosion.wav')
+engine.soundManager.addSound('explosion_small', 'sounds/explosion_small.wav')

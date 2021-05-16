@@ -72,6 +72,7 @@ class PhysicsSystem(System):
                 entity.trauma += 0.7 # TODO -- set max
                 if entity.tags.has('player'):
                     globals.world.entities.append(engine.entityFactory.create('collision', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
+                    engine.soundManager.playSound('explosion_small', engine.soundManager.soundVolume / 2)
             entity.motion.velocity.y = 0
 
             if bottomLeftTile.solid or bottomRightTile.solid:
@@ -116,7 +117,7 @@ class PhysicsSystem(System):
                 entity.trauma += 0.7 # TODO -- set max
                 if entity.tags.has('player'):
                     globals.world.entities.append(engine.entityFactory.create('collision', entity.position.rect.x+(entity.position.rect.w/2), entity.position.rect.y + entity.collider.rect.h))
-
+                    engine.soundManager.playSound('explosion_small', engine.soundManager.soundVolume / 2)
         if x_collision == False:
             entity.position.rect.x = entity.transform.position.x
 
@@ -129,6 +130,7 @@ class PhysicsSystem(System):
 
             if entity.tags.has('balloon'):
                 globals.world.entities.append(engine.entityFactory.create('explosion', entity.position.rect.x, entity.position.rect.y))
+                engine.soundManager.playSound('explosion_small', engine.soundManager.soundVolume / 2)
                 globals.world.entities.remove(entity)
 
         # reset intentions

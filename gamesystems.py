@@ -103,6 +103,7 @@ class BattleSystem(engine.System):
             if otherEntity is not entity and entity.tags.has('player') and otherEntity.tags.has('balloon'):
                 if entity.position.rect.colliderect(otherEntity.position.rect):
                     globals.world.entities.append(engine.entityFactory.create('explosion', otherEntity.position.rect.x, otherEntity.position.rect.y))
+                    engine.soundManager.playSound('explosion', engine.soundManager.soundVolume / 2)
                     explosion_direction = 1
                     if otherEntity.motion.velocity.x < 0:
                         explosion_direction = -1
