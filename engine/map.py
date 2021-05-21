@@ -54,6 +54,9 @@ class Map:
         self.h_real = self.h_map * self.tileSize
         self.w_real = self.w_map * self.tileSize
     
+    def setTile(self, x, y, tileString):
+        self.map[y][x] = tileString
+
     def getTileAtPosition(self, x, y):
         xTile = int(x // self.tileSize)
         yTile = int(y // self.tileSize)
@@ -69,6 +72,9 @@ class Map:
                     tilePos.append((c*self.tileSize, r*self.tileSize))       
 
         return tilePos
+
+    def getMapCenter(self):
+        return (self.h_real//2,self.w_real//2)
 
     def draw(self, screen, x, y, z):
         for r in range(self.h_map):

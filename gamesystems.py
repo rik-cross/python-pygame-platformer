@@ -85,11 +85,11 @@ class BattleSystem(engine.System):
 
                 # point in the right direction
                 if entity.direction == 'right':
-                    xx = entity.position.rect.x + 20 + entity.position.rect.w
+                    xx = entity.position.rect.x + 10 + entity.position.rect.w
                     yy = entity.position.rect.y + entity.position.rect.h // 2
                     aa = engine.Motion(velocity=pygame.math.Vector2(4,-6), acceleration=pygame.math.Vector2(0,0.3))
                 elif entity.direction == 'left':
-                    xx = entity.position.rect.x - 20
+                    xx = entity.position.rect.x - 10 - 16 # 16 = balloon width
                     yy = entity.position.rect.y + entity.position.rect.h // 2
                     aa = engine.Motion(velocity=pygame.math.Vector2(-4,-6), acceleration=pygame.math.Vector2(0,0.3))
                 balloon = engine.entityFactory.create('balloon', xx, yy)

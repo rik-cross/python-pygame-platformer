@@ -29,6 +29,7 @@ from .component_motion import *
 
 from .component_tag import *
 
+from .imagemanager import *
 from .soundmanager import *
 from .inputmanager import *
 from .scenemanager import *
