@@ -8,6 +8,7 @@ from .system_animation import *
 from .system_camera import *
 from .system_input import *
 from .system_physics import *
+from .system_trigger import *
 from .system_trauma import *
 from .system_particle import *
 from .system_emote import *
@@ -22,6 +23,7 @@ from .component_input import *
 from .component_intention import *
 from .component_emote import *
 from .component_text import *
+from .component_triggers import *
 
 from .component_position import *
 from .component_transform import *

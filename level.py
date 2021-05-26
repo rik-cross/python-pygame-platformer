@@ -47,22 +47,32 @@ def wonLevel(level):
 
 def loadLevel(levelNumber):
     if levelNumber == 1:
+        engine.world.map = engine.loadMap('l1')
+
+        # TODO -- populate engine.world.entities not globals.world.entities
+
         # load level 1
         globals.world = Level(
             entities = [
-                engine.entityFactory.create('coin', 150, 300),
-                engine.entityFactory.create('enemy', 200, 530)
+                engine.entityFactory.create('coin', 50, 650),
+                engine.entityFactory.create('enemy', 200, 530),
+                engine.entityFactory.create('sign', 150, 600)
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
             # TODO -- store strings and not image to allow pickling
-            map = engine.loadMap('l1', [
-                    #engine.MapImage(pygame.image.load('images/sun.png'), 400, 50, -1, parallaxY=False),
-                    #engine.MapImage(pygame.image.load('images/tree_close.png'), 500, 0, 5, parallaxY=False),
-                    #engine.MapImage(pygame.image.load('images/bush.png'), 50, 380, 0, parallaxY=False)
-                ])
+            #map = engine.world.map
+            map = engine.loadMap('l1') #, [
+            #        engine.MapImage(pygame.image.load('images/sun.png'), 400, 50, -1, parallaxY=False),
+            #        engine.MapImage(pygame.image.load('images/tree_close.png'), 500, 0, 5, parallaxY=False),
+            #        engine.MapImage(pygame.image.load('images/bush.png'), 50, 380, 0, parallaxY=False)
+            #    ])
         )
+
     if levelNumber == 2:
+
+        engine.world.map = engine.loadMap('l1')
+
         # load level 2
         globals.world = Level(
             entities = [
@@ -70,8 +80,9 @@ def loadLevel(levelNumber):
             ],
             winFunc = wonLevel,
             loseFunc = lostLevel,
-            map = engine.loadMap('l1')
+            map = engine.world.map
         )
+        
 
     # add players
     for player in globals.players:

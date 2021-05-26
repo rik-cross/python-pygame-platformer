@@ -92,6 +92,20 @@ def makeCoin(x,y):
     entity.tags.add('collectable')
     return entity
 
+sign = pygame.image.load('images/sign.png')
+
+def makeSign(x,y):
+    entity = engine.Entity()
+    entity.position = engine.Position(x,y,50,55)
+    entityAnimation = engine.ImageGroup([sign])
+    entity.imageGroups.add('idle', entityAnimation)
+
+    entity.triggers = engine.Triggers()
+    signTrigger = engine.SignPlayerTrigger(boundingBox = pygame.rect.Rect(0,0,50,55))
+    entity.triggers.triggerList.append(signTrigger)
+    
+    return entity
+
 enemy0 = pygame.image.load('images/spike_monster.png')
 
 def makeEnemy(x,y):

@@ -5,7 +5,10 @@ def resetEntity(entity):
     pass
 
 class Entity:
+    ID = 0
     def __init__(self):
+        self.ID = Entity.ID
+        Entity.ID += 1
         self.state = 'idle'
         self.type = 'normal'
         self.position = None
@@ -28,3 +31,4 @@ class Entity:
         self.emote = None
         self.text = None
         self.owner = self
+        self.triggers = None

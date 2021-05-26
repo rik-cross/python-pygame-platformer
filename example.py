@@ -4,13 +4,13 @@ import engine
 # Create a simple example game scene
 #
 
-iis = None # should be optional
+im = engine.inputManager
 
 class MainScene(engine.Scene):
     def __init__(self):
         self.cameraSystem = engine.CameraSystem()
         self.physicsSystem = engine.PhysicsSystem()
-    def update(self, sm, iis):
+    def update(self, sm, im):
         self.physicsSystem.update()
     def draw(self, sm, screen):
         screen.fill(engine.BLUE)

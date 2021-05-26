@@ -12,3 +12,9 @@ class World:
                 if e.tags.has(t) and e not in entityList:
                     entityList.append(e)
         return entityList
+    def getEntitiesByIDList(self, entityIDList):
+        entityList = []
+        for e in self.entities:
+            if e.ID in entityIDList:
+                entityList.append(e)
+        return entityList

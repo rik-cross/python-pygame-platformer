@@ -16,6 +16,7 @@ engine.entityFactory.addEntity('enemy', utils.makeEnemy)
 engine.entityFactory.addEntity('collision', utils.makeCollision)
 engine.entityFactory.addEntity('explosion', utils.makeExplosion)
 engine.entityFactory.addEntity('balloon', utils.makeBalloon)
+engine.entityFactory.addEntity('sign', utils.makeSign)
 
 # create players
 
@@ -24,6 +25,7 @@ globals.player1 = utils.makePlayer(300,50)
 globals.player1.input = engine.Input(engine.keys.w, engine.keys.s, engine.keys.a, engine.keys.d, engine.keys.q, engine.keys.e)
 globals.player1.input.inputFunc = utils.playerInput
 globals.player1.imageGroups.hue = 90
+globals.player1.tags.tags.append('player1')
 # player 2
 globals.player2 = utils.makePlayer(350,50)
 globals.player2.input = engine.Input(engine.controller[0].dpad_up, engine.controller[0].dpad_down, engine.controller[0].dpad_left, engine.controller[0].dpad_right, engine.controller[0].a, engine.controller[0].b)
@@ -52,3 +54,5 @@ engine.soundManager.addSound('explosion_small', 'sounds/explosion_small.wav')
 
 engine.soundManager.addSound('powerup_appear', 'sounds/powerup_appear.wav')
 engine.soundManager.addSound('powerup_get', 'sounds/powerup_get.wav')
+
+engine.imageManager.addImage('emoji_sad', 'images/sad.png')
