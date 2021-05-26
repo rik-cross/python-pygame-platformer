@@ -1,5 +1,5 @@
-from .action_listener import *
-from .text import *
+from .ui_action_listener import *
+from .ui_text import *
 from .colours import *
 
 import pygame

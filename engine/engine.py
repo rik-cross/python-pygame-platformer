@@ -1,14 +1,18 @@
-from engine.world import World
 import pygame
 
 from .soundmanager import *
+from .imagemanager import *
 from .inputmanager import *
 from .scenemanager import *
+
 from .entity_factory import *
+
+from .world import *
 
 sceneManager = SceneManager()
 inputManager = InputManager()
 soundManager = SoundManager()
+imageManager = ImageManager()
 
 entityFactory = EntityFactory()
 

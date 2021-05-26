@@ -1,4 +1,4 @@
-from .text import *
+from .ui_text import *
 from .colours import *
 import engine
 import pygame

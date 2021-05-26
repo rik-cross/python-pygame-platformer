@@ -9,5 +9,3 @@ class ImageManager:
         if self.images[tag] is None:
             return None
         return self.images[tag]
-
-imageManager = ImageManager()
