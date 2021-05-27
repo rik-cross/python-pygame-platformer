@@ -1,16 +1,16 @@
 import pygame
+
 from .component import Component
 from .colours import *
 
-class Emote(Component):
+class EmoteComponent(Component):
 
-    def __init__(self, image, timed=False, timer=200, backgroundColour=WHITE, outine=True):
+    def __init__(self, image, timed=True, timer=200, backgroundColour=WHITE):
         self.image = image
         self.backgroundColour = backgroundColour
         self.timed = timed
         self.timer = timer
         self.bottomMargin = 10
-        self.outine = outine
         self.imagePadding = 10
         self.pointerWidth = 10
         self.pointerHeight = 10
@@ -47,11 +47,10 @@ class Emote(Component):
         imageY = int(y - h - (self.bottomMargin * zoom) - (self.imagePadding * zoom) - (self.pointerHeight * zoom))
         
         # draw outine
-        if self.outine:
-            # draw pointer outine
-            pygame.draw.polygon(screen, BLACK, ((triangleLeft - zoom, triangleTop), (triangleRight + zoom, triangleTop), (middleX, triangleBottom + zoom)))
-            # draw rectangle outine
-            pygame.draw.rect(screen, BLACK, bgOutineRect)
+        # draw pointer outine
+        pygame.draw.polygon(screen, BLACK, ((triangleLeft - zoom, triangleTop), (triangleRight + zoom, triangleTop), (middleX, triangleBottom + zoom)))
+        # draw rectangle outine
+        pygame.draw.rect(screen, BLACK, bgOutineRect)
 
         # draw pointer
         pygame.draw.polygon(screen, self.backgroundColour, ((triangleLeft, triangleTop), (triangleRight, triangleTop), (middleX , triangleBottom)))
