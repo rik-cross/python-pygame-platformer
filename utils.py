@@ -152,7 +152,7 @@ def setPlayerCameras():
         cameraHeight = screenHeight - (2*10)
         p = globals.players[0]
         p.camera = engine.Camera(10,10,cameraWidth, cameraHeight)
-        p.camera.setWorldPos(p.position.initial.x, p.position.initial.y)
+        p.camera.setWorldPos(p.position.initialRect.x, p.position.initialRect.y)
         p.camera.trackEntity(p)
     
     # 2 player game
@@ -163,12 +163,12 @@ def setPlayerCameras():
 
         p1 = globals.players[0]
         p1.camera = engine.Camera(10,10,cameraWidth, cameraHeight)
-        p1.camera.setWorldPos(p1.position.initial.x, p1.position.initial.y)
+        p1.camera.setWorldPos(p1.position.initialRect.x, p1.position.initialRect.y)
         p1.camera.trackEntity(p1)
 
         p2 = globals.players[1]
         p2.camera = engine.Camera((2*10)+cameraWidth,10,cameraWidth, cameraHeight)
-        p2.camera.setWorldPos(p2.position.initial.x, p2.position.initial.y)
+        p2.camera.setWorldPos(p2.position.initialRect.x, p2.position.initialRect.y)
         p2.camera.trackEntity(p2)
 
     # 3 or 4 player game
@@ -177,34 +177,33 @@ def setPlayerCameras():
         cameraHeight = (screenHeight - (3*10)) / 2
         p1 = globals.players[0]
         p1.camera = engine.Camera(10,10,cameraWidth, cameraHeight)
-        p1.camera.setWorldPos(p1.position.initial.x, p1.position.initial.y)
+        p1.camera.setWorldPos(p1.position.initialRect.x, p1.position.initialRect.y)
         p1.camera.trackEntity(p1)
 
         p2 = globals.players[1]
         p2.camera = engine.Camera((2*10)+cameraWidth,10,cameraWidth, cameraHeight)
-        p2.camera.setWorldPos(p2.position.initial.x, p2.position.initial.y)
+        p2.camera.setWorldPos(p2.position.initialRect.x, p2.position.initialRect.y)
         p2.camera.trackEntity(p2)
 
         p3 = globals.players[2]
         p3.camera = engine.Camera(10,(2*10)+cameraHeight,cameraWidth, cameraHeight)
-        p3.camera.setWorldPos(p3.position.initial.x, p3.position.initial.y)
+        p3.camera.setWorldPos(p3.position.initialRect.x, p3.position.initialRect.y)
         p3.camera.trackEntity(p3)
 
         if len(globals.players) == 4:
             p4 = globals.players[3]
             p4.camera = engine.Camera((2*10)+cameraWidth,(2*10)+cameraHeight,cameraWidth, cameraHeight)
-            p4.camera.setWorldPos(p4.position.initial.x, p4.position.initial.y)
+            p4.camera.setWorldPos(p4.position.initialRect.x, p4.position.initialRect.y)
             p4.camera.trackEntity(p4)
 
 def resetPlayer(entity):
     entity.score.score = 0
     entity.battle.lives = 3
-    entity.position.rect.x = entity.position.initial.x
-    entity.position.rect.y = entity.position.initial.y
+    entity.position.reset()
     entity.speed = 0
     entity.velocity = pygame.math.Vector2()
     entity.acceleration = entity.initialAcceleration
-    entity.camera.setWorldPos(entity.position.initial.x, entity.position.initial.y)
+    entity.camera.setWorldPos(entity.position.initialRect.x, entity.position.initialRect.y)
     entity.direction = 'right'
     entity.imageGroups.alpha = 255
     entity.effect = None

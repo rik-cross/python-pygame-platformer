@@ -128,8 +128,9 @@ class BattleSystem(engine.System):
                     # reset player position
                     if entity.transform is not None:
                         entity.transform.reset()
-                    entity.position.rect.x = entity.position.initial.x
-                    entity.position.rect.y = entity.position.initial.y
+                    # reset player position
+                    if entity.position is not None:
+                        entity.position.reset()
                     # TODO -- should this be in the physics system?
                     entity.speed = 0
                 

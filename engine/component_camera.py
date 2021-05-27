@@ -58,5 +58,5 @@ class Camera:
         self.worldX = newX
         self.worldY = newY
 
-    def trackEntity(self, e):
-        self.entityToTrack = e
+    def trackEntity(self, entity):
+        self.entityToTrack = entity

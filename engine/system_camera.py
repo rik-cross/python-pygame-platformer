@@ -92,22 +92,10 @@ class CameraSystem(System):
         # render emotes
         for e in engine.world.entities:
             if e.emote is not None:
-                eMidPoint = (e.position.rect.w / 2) * entity.camera.zoomLevel
-                iMidPoint = (e.emote.image.get_rect().w / 2) * entity.camera.zoomLevel
-                xx = e.position.rect.x * entity.camera.zoomLevel + offsetX + eMidPoint - iMidPoint
-                
-                yy = e.position.rect.y * entity.camera.zoomLevel + offsetY - (e.emote.image.get_rect().h * entity.camera.zoomLevel) - (20 * entity.camera.zoomLevel)
-                newWidth = int(e.emote.image.get_rect().w * entity.camera.zoomLevel)
-                newHeight = int(e.emote.image.get_rect().h * entity.camera.zoomLevel)
-                
-                pygame.draw.rect(screen, WHITE, pygame.rect.Rect(xx - (5*entity.camera.zoomLevel), yy - (5*entity.camera.zoomLevel), e.emote.image.get_rect().w * entity.camera.zoomLevel + (10*entity.camera.zoomLevel), e.emote.image.get_rect().h * entity.camera.zoomLevel + (10*entity.camera.zoomLevel)))
-                
-                bottomOfBox = yy - (5*entity.camera.zoomLevel) + e.emote.image.get_rect().h * entity.camera.zoomLevel + (10*entity.camera.zoomLevel) - 1 
-                middleOfBox = e.position.rect.x * entity.camera.zoomLevel + offsetX + eMidPoint
-                
-                pygame.draw.polygon(screen, WHITE, ((middleOfBox - (10*entity.camera.zoomLevel),bottomOfBox),(middleOfBox + (10*entity.camera.zoomLevel),bottomOfBox),(middleOfBox,bottomOfBox+(10*entity.camera.zoomLevel))))
-
-                screen.blit(pygame.transform.scale(e.emote.image, (newWidth, newHeight)), (xx, yy))
+                e.emote.draw(screen,
+                    ((e.position.rect.x + (e.position.rect.w/2)) * entity.camera.zoomLevel) + offsetX,
+                    (e.position.rect.y * entity.camera.zoomLevel) + offsetY,
+                    entity.camera.zoomLevel)
 
         # render text
         for e in engine.world.entities:
@@ -166,7 +154,7 @@ class CameraSystem(System):
             entity.camera.zoomLevel += entity.camera.zoomPerFrame
             if abs(entity.camera.zoomLevel - entity.camera.targetZoom) < 0.01 :
                 entity.camera.zoomPerFrame = 0
-        
+    
         # update position
         # x
         if entity.camera.movementPerFrameX != 0:
