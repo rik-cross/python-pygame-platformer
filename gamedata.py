@@ -3,11 +3,11 @@ import engine
 import globals
 import utils
 import level
-import scene
+import scene_main_menu
 import game_tiles
 
 # add scene
-mainMenu = scene.MainMenuScene()
+mainMenu = scene_main_menu.MainMenuScene()
 engine.sceneManager.push(mainMenu)
 
 engine.entityFactory.addEntity('player', utils.makePlayer)
