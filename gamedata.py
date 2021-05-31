@@ -59,3 +59,5 @@ engine.soundManager.addSound('powerup_appear', 'sounds/powerup_appear.wav')
 engine.soundManager.addSound('powerup_get', 'sounds/powerup_get.wav')
 
 engine.imageManager.addImage('emoji_sad', 'images/sad.png')
+
+engine.resourceManager.addFont('munro24', 'fonts/munro.ttf')

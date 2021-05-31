@@ -1,7 +1,8 @@
 import pygame
+import engine
 
 pygame.font.init()
-font = pygame.font.Font(pygame.font.get_default_font(), 24)
+#font = pygame.font.Font(pygame.font.get_default_font(), 24)
 
 # function from:
 # https://nerdparadise.com/programming/pygameblitopacity
@@ -14,7 +15,8 @@ def blit_alpha(target, source, location, opacity):
     temp.set_alpha(opacity)        
     target.blit(temp, location)
 
-def drawText(screen, t, x, y, fg, alpha, align='left'):
+def drawText(screen, t, x, y, fg, alpha, align='left', fontTag='munro24'):
+    font = engine.resourceManager.getFont(fontTag)
     t = str(t)
     text = font.render(t, True, fg)
     text_rectangle = text.get_rect()

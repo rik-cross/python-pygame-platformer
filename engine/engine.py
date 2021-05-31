@@ -4,6 +4,7 @@ from .soundmanager import *
 from .imagemanager import *
 from .inputmanager import *
 from .scenemanager import *
+from .resourcemanager import *
 
 from .entity_factory import *
 
@@ -13,6 +14,7 @@ sceneManager = SceneManager()
 inputManager = InputManager()
 soundManager = SoundManager()
 imageManager = ImageManager()
+resourceManager = ResourceManager()
 
 entityFactory = EntityFactory()
 

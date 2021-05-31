@@ -35,6 +35,7 @@ from .imagemanager import *
 from .soundmanager import *
 from .inputmanager import *
 from .scenemanager import *
+from .resourcemanager import *
 
 from .colours import *
 from .tiles import *
