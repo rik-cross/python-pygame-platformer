@@ -22,16 +22,16 @@ mainGameScene = MainScene()
 # Add some media assets
 #
 
-engine.imageManager.addImage('player', 'images/heart.png')
-engine.imageManager.addImage('grass', 'images/textures/grass.png')
-engine.imageManager.addImage('wall', 'images/textures/dirt.png')
+engine.resourceManager.addImage('player', 'images/heart.png')
+engine.resourceManager.addImage('grass', 'images/textures/grass.png')
+engine.resourceManager.addImage('wall', 'images/textures/dirt.png')
 
 #
 # Create a tilemap
 #
 
-engine.Tile.addTile('grass', engine.Tile(engine.imageManager.getImage('grass'), True))
-engine.Tile.addTile('wall', engine.Tile(engine.imageManager.getImage('wall'), True))
+engine.Tile.addTile('grass', engine.Tile(engine.resourceManager.getImage('grass'), True))
+engine.Tile.addTile('wall', engine.Tile(engine.resourceManager.getImage('wall'), True))
 engine.world.map = engine.Map(map=[ ['grass' for i in range(16)] for j in range(16) ])
 engine.world.map.setTile(8,8,'wall')
 engine.world.map.setTile(9,8,'wall')
@@ -42,7 +42,7 @@ engine.world.map.setTile(9,8,'wall')
 
 player = engine.Entity()
 player.position = engine.Position(0,0,32,32)
-player.imageGroups.add('idle', engine.ImageGroup( [engine.imageManager.getImage('player')] ))
+player.imageGroups.add('idle', engine.ImageGroup( [engine.resourceManager.getImage('player')] ))
 
 #
 # Set camera

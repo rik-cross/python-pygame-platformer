@@ -1,6 +1,7 @@
 import pygame
 from .colours import *
 from .component_emote import EmoteComponent
+import engine
 
 class Triggers:
     def __init__(self):
@@ -25,7 +26,7 @@ class SignPlayerTrigger(Trigger):
         #for entity in engine.world.getEntitiesByIDList(self.current):
         #    pass
         #e.text = engine.Text('Welcome to Level 1. Collect all of the coins.')
-        e.emote = EmoteComponent(pygame.image.load('images/heart_small.png'))
+        e.emote = EmoteComponent(engine.resourceManager.getImage('heart_small'))
     def onStay(self, e):
         pass
     def onExit(self, e):

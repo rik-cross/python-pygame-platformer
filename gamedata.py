@@ -47,17 +47,13 @@ globals.player4.tags.tags.append('player4')
 
 engine.soundManager.addMusic('solace', 'music/23 Solace.ogg')
 engine.soundManager.addMusic('dawn', 'music/03 Before the Dawn.ogg')
-
 engine.soundManager.addSound('jump', 'sounds/03_Jump_v2.ogg')
 engine.soundManager.addSound('coin', 'sounds/01_Coin Pickup_v2.ogg')
-
 engine.soundManager.addSound('blip', 'sounds/blip.wav')
 engine.soundManager.addSound('explosion', 'sounds/explosion.wav')
 engine.soundManager.addSound('explosion_small', 'sounds/explosion_small.wav')
-
 engine.soundManager.addSound('powerup_appear', 'sounds/powerup_appear.wav')
 engine.soundManager.addSound('powerup_get', 'sounds/powerup_get.wav')
 
-engine.imageManager.addImage('emoji_sad', 'images/sad.png')
-
+engine.resourceManager.addImage('heart_small', 'images/heart_small.png')
 engine.resourceManager.addFont('munro24', 'fonts/munro.ttf')
