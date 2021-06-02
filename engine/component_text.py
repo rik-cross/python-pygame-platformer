@@ -121,10 +121,9 @@ class Text:
                         
 
 
-    def draw(self, screen, x, y):
-        
+    def draw(self, screen, x, y):        
         rows = 30 * len(self.textList)
-        print(self.fadeAmount)
+
         for i,l in enumerate(self.textList):
             if i == self.row:
                 drawText(screen, l[0:self.index], x, y-10-rows+(i*30), self.colour, self.fadeAmount)
