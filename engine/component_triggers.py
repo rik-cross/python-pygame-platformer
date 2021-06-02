@@ -32,4 +32,5 @@ class SignPlayerTrigger(Trigger):
         pass
     def onExit(self, e):
         if not self.current:
-            e.text = None
+            #e.text = None
+            e.text.startExit()

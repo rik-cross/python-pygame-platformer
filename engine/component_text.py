@@ -37,6 +37,8 @@ class Text:
 
         self.overhead = True
 
+        self.enterOrExit = 'enter'
+
         row = ''
         for char in self.text:
             row = row + char
@@ -48,7 +50,10 @@ class Text:
 
         # set for 'appear' initially
         self.setType('appear')
-        
+    
+    def startExit(self):
+        self.enterOrExit = 'exit'
+
     def setType(self, type):
         # types are 'appear', 'tick' or 'fade'
         self.type = type
@@ -76,7 +81,7 @@ class Text:
         if self.type == 'appear':
             pass
 
-        if self.type == 'tick':
+        if self.type == 'tick' and self.enterOrExit == 'enter':
             if not self.finished:
                 self.delayTimer -= 1
                 if self.delayTimer <= 0:
@@ -94,12 +99,12 @@ class Text:
                             #    # if button pressed for entity:
                             #    pass
 
-        if self.type == 'fade':
+        if self.type == 'fade' and self.enterOrExit == 'enter':
             self.fadeAmount = min(self.fadeAmount+2, 255)
             if self.fadeAmount == 255:
                 self.finished = True
 
-        if self.finished:
+        if self.finished and self.enterOrExit == 'enter':
 
             if self.lifetime == 'always':
                 pass
@@ -110,16 +115,21 @@ class Text:
                 if self.finalTimer <= 0:
                     
                     #todo -- don't destroy, instead should fade out again! -- use inOut var?
-                    self.destroy = True
+                    #self.destroy = True
+                    self.enterOrExit = 'exit'
 
-        # can press whether finished or not
+        # can press regardless of progress
         if self.lifetime == 'press':
             if self.button is not None:
                 if engine.inputManager.isPressed(self.button):
-                    print('pressed')
-                    self.destroy = True
+                    #self.destroy = True
+                    self.enterOrExit = 'exit'
                         
+        if self.enterOrExit == 'exit':
 
+            self.fadeAmount = max(self.fadeAmount - 2, 0)
+            if self.fadeAmount == 0:
+                self.destroy = True
 
     def draw(self, screen, x, y):        
         rows = 30 * len(self.textList)

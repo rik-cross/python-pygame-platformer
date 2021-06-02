@@ -48,7 +48,7 @@ player = engine.Entity()
 player.position = engine.Position(100,100,32,32)
 player.imageGroups.add('idle', engine.ImageGroup( [engine.resourceManager.getImage('player')] ))
 player.text = engine.Text('this is a test, hopefully over a few different lines to check everything works')
-player.text.setType('fade')
+player.text.setType('tick')
 player.text.button = engine.keys.i
 player.text.setLifetime('press')
 
