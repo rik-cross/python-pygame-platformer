@@ -10,11 +10,13 @@ class MainScene(engine.Scene):
     def __init__(self):
         self.cameraSystem = engine.CameraSystem()
         self.physicsSystem = engine.PhysicsSystem()
+        self.textSystem = engine.TextSystem()
     def update(self, sm, im):
         self.physicsSystem.update()
     def draw(self, sm, screen):
         screen.fill(engine.BLUE)
         self.cameraSystem.update(screen)
+        self.textSystem.update(screen)
 
 mainGameScene = MainScene()
 
@@ -25,6 +27,8 @@ mainGameScene = MainScene()
 engine.resourceManager.addImage('player', 'images/heart.png')
 engine.resourceManager.addImage('grass', 'images/textures/grass.png')
 engine.resourceManager.addImage('wall', 'images/textures/dirt.png')
+engine.resourceManager.addFont('munro24', 'fonts/munro.ttf')
+engine.soundManager.addSound('blip', 'sounds/blip.wav')
 
 #
 # Create a tilemap
@@ -41,8 +45,12 @@ engine.world.map.setTile(9,8,'wall')
 #
 
 player = engine.Entity()
-player.position = engine.Position(0,0,32,32)
+player.position = engine.Position(100,100,32,32)
 player.imageGroups.add('idle', engine.ImageGroup( [engine.resourceManager.getImage('player')] ))
+player.text = engine.Text('this is a test, hopefully over a few different lines to check everything works')
+player.text.setType('fade')
+player.text.button = engine.keys.i
+player.text.setLifetime('press')
 
 #
 # Set camera

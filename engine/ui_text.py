@@ -2,7 +2,6 @@ import pygame
 import engine
 
 pygame.font.init()
-#font = pygame.font.Font(pygame.font.get_default_font(), 24)
 
 # function from:
 # https://nerdparadise.com/programming/pygameblitopacity

@@ -25,8 +25,8 @@ class SignPlayerTrigger(Trigger):
     def onEnter(self, e):
         #for entity in engine.world.getEntitiesByIDList(self.current):
         #    pass
-        #e.text = engine.Text('Welcome to Level 1. Collect all of the coins.')
-        e.emote = EmoteComponent(engine.resourceManager.getImage('heart_small'))
+        e.text = engine.Text('Welcome to Level 1. Collect all of the coins.')
+        #e.emote = EmoteComponent(engine.resourceManager.getImage('heart_small'))
     def onStay(self, e):
         pass
     def onExit(self, e):

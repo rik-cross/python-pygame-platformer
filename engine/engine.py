@@ -11,6 +11,7 @@ from .world import *
 
 sceneManager = SceneManager()
 inputManager = InputManager()
+
 soundManager = SoundManager()
 resourceManager = ResourceManager()
 
