@@ -5,6 +5,7 @@ import random
 class ParticleEmitter:
     
     def __init__(self, size=20, colour=LIGHT_GREY):
+        self.key = 'emitter'
         self.particles = []
         self.timer = 0
         self.lifetime = 30

@@ -8,15 +8,17 @@ im = engine.inputManager
 
 class MainScene(engine.Scene):
     def __init__(self):
+        pass
         self.cameraSystem = engine.CameraSystem()
-        self.physicsSystem = engine.PhysicsSystem()
-        self.textSystem = engine.TextSystem()
+        #self.physicsSystem = engine.PhysicsSystem()
+        #self.textSystem = engine.TextSystem()
     def update(self, sm, im):
-        self.physicsSystem.update()
+        #self.physicsSystem.update()
+        pass
     def draw(self, sm, screen):
         screen.fill(engine.BLUE)
         self.cameraSystem.update(screen)
-        self.textSystem.update(screen)
+        #self.textSystem.update(screen)
 
 mainGameScene = MainScene()
 
@@ -44,22 +46,32 @@ engine.world.map.setTile(9,8,'wall')
 # Create a player entity
 #
 
-player = engine.Entity()
-player.position = engine.Position(100,100,32,32)
-player.imageGroups.add('idle', engine.ImageGroup( [engine.resourceManager.getImage('player')] ))
-player.text = engine.Text('this is a test, hopefully over a few different lines to check everything works')
-player.text.setType('tick')
-player.text.button = engine.keys.i
-player.text.setLifetime('press')
+player = engine.Entity(
+    engine.Position(100,100,32,32),
+    engine.Text('this is a test, hopefully over a few different lines to check everything works')
+)
+#player.position = engine.Position(100,100,32,32)
+#player.imageGroups.add('idle', engine.ImageGroup( [engine.resourceManager.getImage('player')] ))
+player.getComponent('imagegroups').add('idle', engine.ImageGroup( [engine.resourceManager.getImage('player')] ))
+#player.text = engine.Text('this is a test, hopefully over a few different lines to check everything works')
+player.getComponent('text').setType('tick')
+#player.text.setType('tick')
+#player.text.button = engine.keys.i
+player.getComponent('text').button = engine.keys.i
+#player.text.setLifetime('press')
+player.getComponent('text').setLifetime('press')
 
 #
 # Set camera
 #
 
-camera = engine.Entity()
-camera.camera = engine.Camera(100,100,1300,600)
+camera = engine.Entity(
+    engine.CameraComponent(100,100,1300,600)
+)
+#camera.camera = engine.CameraComponent(100,100,1300,600)
 center = engine.world.map.getMapCenter()
-camera.camera.setWorldPos(center[0],center[1])
+camera.getComponent('camera').setWorldPos(center[0],center[1])
+#camera.camera.setWorldPos(center[0],center[1])
 
 #
 # Add entities to world
@@ -72,6 +84,6 @@ engine.world.entities.append(camera)
 # Add scene to the engine and start
 #
 
-engine.init((1500,800), 'Simple Example')
+engine.init((1500,800), caption='Simple Example')
 engine.sceneManager.push(mainGameScene)
 engine.run()

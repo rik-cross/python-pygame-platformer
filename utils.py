@@ -66,15 +66,26 @@ powerupEffectTimer = {
 def makePowerup(type, x, y):
     entity = engine.Entity()
     entity.position = engine.Position(x,y,32,32)
+    entity.addComponent(engine.Position(x,y,32,32))
     entityAnimation = engine.ImageGroup(powerupImages[type])
     entity.imageGroups.add('idle', entityAnimation)
+    entity.getComponent('imagegroups').add('idle', entityAnimation)
     entity.effect = gamecomponents.Effect(
         powerupApply[type], 
         powerupEffectTimer[type],
         powerupSound[type],
         powerupEnd[type]
     )
+    entity.addComponent(
+        gamecomponents.Effect(
+            powerupApply[type], 
+            powerupEffectTimer[type],
+            powerupSound[type],
+            powerupEnd[type]
+        )
+    )
     entity.tags.add('powerup')
+    entity.getComponent('tags').add('powerup')
     return entity    
 
 coin0 = pygame.image.load('images/coin/coin_0.png')
@@ -151,7 +162,7 @@ def setPlayerCameras():
         cameraWidth = screenWidth - (2*10)
         cameraHeight = screenHeight - (2*10)
         p = globals.players[0]
-        p.camera = engine.Camera(10,10,cameraWidth, cameraHeight)
+        p.camera = engine.CameraComponent(10,10,cameraWidth, cameraHeight)
         p.camera.setWorldPos(p.position.initialRect.x, p.position.initialRect.y)
         p.camera.trackEntity(p)
     
@@ -162,12 +173,12 @@ def setPlayerCameras():
         cameraHeight = screenHeight - (2*10)
 
         p1 = globals.players[0]
-        p1.camera = engine.Camera(10,10,cameraWidth, cameraHeight)
+        p1.camera = engine.CameraComponent(10,10,cameraWidth, cameraHeight)
         p1.camera.setWorldPos(p1.position.initialRect.x, p1.position.initialRect.y)
         p1.camera.trackEntity(p1)
 
         p2 = globals.players[1]
-        p2.camera = engine.Camera((2*10)+cameraWidth,10,cameraWidth, cameraHeight)
+        p2.camera = engine.CameraComponent((2*10)+cameraWidth,10,cameraWidth, cameraHeight)
         p2.camera.setWorldPos(p2.position.initialRect.x, p2.position.initialRect.y)
         p2.camera.trackEntity(p2)
 
@@ -176,23 +187,23 @@ def setPlayerCameras():
         cameraWidth = (screenWidth - (3*10)) / 2
         cameraHeight = (screenHeight - (3*10)) / 2
         p1 = globals.players[0]
-        p1.camera = engine.Camera(10,10,cameraWidth, cameraHeight)
+        p1.camera = engine.CameraComponent(10,10,cameraWidth, cameraHeight)
         p1.camera.setWorldPos(p1.position.initialRect.x, p1.position.initialRect.y)
         p1.camera.trackEntity(p1)
 
         p2 = globals.players[1]
-        p2.camera = engine.Camera((2*10)+cameraWidth,10,cameraWidth, cameraHeight)
+        p2.camera = engine.CameraComponent((2*10)+cameraWidth,10,cameraWidth, cameraHeight)
         p2.camera.setWorldPos(p2.position.initialRect.x, p2.position.initialRect.y)
         p2.camera.trackEntity(p2)
 
         p3 = globals.players[2]
-        p3.camera = engine.Camera(10,(2*10)+cameraHeight,cameraWidth, cameraHeight)
+        p3.camera = engine.CameraComponent(10,(2*10)+cameraHeight,cameraWidth, cameraHeight)
         p3.camera.setWorldPos(p3.position.initialRect.x, p3.position.initialRect.y)
         p3.camera.trackEntity(p3)
 
         if len(globals.players) == 4:
             p4 = globals.players[3]
-            p4.camera = engine.Camera((2*10)+cameraWidth,(2*10)+cameraHeight,cameraWidth, cameraHeight)
+            p4.camera = engine.CameraComponent((2*10)+cameraWidth,(2*10)+cameraHeight,cameraWidth, cameraHeight)
             p4.camera.setWorldPos(p4.position.initialRect.x, p4.position.initialRect.y)
             p4.camera.trackEntity(p4)
 
@@ -210,8 +221,10 @@ def resetPlayer(entity):
     entity.state = 'idle'
     if entity.camera is not None:
         entity.camera.zoomLevel = 1
-    entity.transform.reset()
-    entity.motion.reset()
+    if entity.transform is not None:
+        entity.transform.reset()
+    if entity.motion is not None:
+        entity.motion.reset()
 
 def playerInput(inputStream, entity):
     # up = jump

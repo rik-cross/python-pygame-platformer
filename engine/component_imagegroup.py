@@ -10,6 +10,7 @@ def changeColour(image, colour):
     
 class ImageGroup:
     def __init__(self, imageList, delay=8):
+        self.key = 'imagegroup'
         self.imageList = imageList
         self.imageIndex = 0
         self.animationTimer = 0

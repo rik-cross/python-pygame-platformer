@@ -21,7 +21,7 @@ world = World()
 
 clock = pygame.time.Clock()
 
-def init(size, caption):
+def init(size, caption=''):
     global screen
     pygame.init()
     

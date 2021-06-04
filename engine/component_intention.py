@@ -1,5 +1,6 @@
 class Intention:
     def __init__(self):
+        self.key = 'intention'
         self.moveLeft = False
         self.moveRight = False
         self.jump = False

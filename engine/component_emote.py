@@ -6,6 +6,7 @@ from .colours import *
 class EmoteComponent(Component):
 
     def __init__(self, image, timed=True, timer=200, backgroundColour=WHITE):
+        self.key = 'emote'
         self.image = image
         self.backgroundColour = backgroundColour
         self.timed = timed

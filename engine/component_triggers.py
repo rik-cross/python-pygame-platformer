@@ -5,6 +5,7 @@ import engine
 
 class Triggers:
     def __init__(self):
+        self.key = 'triggers'
         # a list of Interaction objects
         self.triggerList = []
 

@@ -7,7 +7,7 @@ from .colours import *
 class Text:
 
     def __init__(self, text):
-        
+        self.key = 'text'
         self.text = text
 
         # lifetimes are 'timed', 'always' and 'press'

@@ -2,6 +2,7 @@
 
 class Input:
     def __init__(self, up, down, left, right, b1, b2, inputFunc=None):
+        self.key = 'input'
         self.up = up
         self.down = down
         self.left = left

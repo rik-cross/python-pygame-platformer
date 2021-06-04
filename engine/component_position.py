@@ -5,6 +5,7 @@ from .component import Component
 class Position(Component):
 
     def __init__(self, x, y, w, h):
+        self.key = 'position'
         self.rect = pygame.Rect(x, y, w, h)
         self.initialRect = pygame.Rect(x, y, w, h)
 
