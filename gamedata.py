@@ -25,25 +25,48 @@ globals.player1 = utils.makePlayer(300,50)
 globals.player1.input = engine.Input(engine.keys.w, engine.keys.s, engine.keys.a, engine.keys.d, engine.keys.q, engine.keys.e)
 globals.player1.input.inputFunc = utils.playerInput
 globals.player1.imageGroups.hue = 90
-globals.player1.tags.tags.append('player1')
+globals.player1.tags.add('player1')
+
+globals.player1.addComponent(engine.Input(engine.keys.w, engine.keys.s, engine.keys.a, engine.keys.d, engine.keys.q, engine.keys.e))
+globals.player1.getComponent('input').inputFunc = utils.playerInput
+globals.player1.getComponent('imagegroups').hue = 90
+globals.player1.getComponent('tags').add('player1')
+
 # player 2
 globals.player2 = utils.makePlayer(350,50)
 globals.player2.input = engine.Input(engine.controller[0].dpad_up, engine.controller[0].dpad_down, engine.controller[0].dpad_left, engine.controller[0].dpad_right, engine.controller[0].a, engine.controller[0].b)
 globals.player2.input.inputFunc = utils.playerInput
 globals.player2.imageGroups.hue = 50
-globals.player2.tags.tags.append('player2')
+globals.player2.tags.add('player2')
+
+globals.player2.addComponent(engine.Input(engine.controller[0].dpad_up, engine.controller[0].dpad_down, engine.controller[0].dpad_left, engine.controller[0].dpad_right, engine.controller[0].a, engine.controller[0].b))
+globals.player2.getComponent('input').inputFunc = utils.playerInput
+globals.player2.getComponent('imagegroups').hue = 50
+globals.player2.getComponent('tags').add('player2')
+
 # player 3
 globals.player3 = utils.makePlayer(400,50)
 globals.player3.input = engine.Input(None, None, None, None, None, None)
 globals.player3.input.inputFunc = utils.playerInput
 globals.player3.imageGroups.hue = 300
-globals.player3.tags.tags.append('player3')
+globals.player3.tags.add('player3')
+
+globals.player3.addComponent(engine.Input(None, None, None, None, None, None))
+globals.player3.getComponent('input').inputFunc = utils.playerInput
+globals.player3.getComponent('imagegroups').hue = 300
+globals.player3.getComponent('tags').add('player3')
+
 # player 4
 globals.player4 = utils.makePlayer(450,50)
 globals.player4.input = engine.Input(None, None, None, None, None, None)
 globals.player4.input.inputFunc = utils.playerInput
 globals.player4.imageGroups.hue = 190
-globals.player4.tags.tags.append('player4')
+globals.player4.tags.add('player4')
+
+globals.player4.addComponent(engine.Input(None, None, None, None, None, None))
+globals.player4.getComponent('input').inputFunc = utils.playerInput
+globals.player4.getComponent('imagegroups').hue = 190
+globals.player4.getComponent('tags').add('player4')
 
 engine.soundManager.addMusic('solace', 'music/23 Solace.ogg')
 engine.soundManager.addMusic('dawn', 'music/03 Before the Dawn.ogg')
