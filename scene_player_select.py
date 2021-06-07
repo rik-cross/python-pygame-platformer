@@ -29,7 +29,7 @@ class PlayerSelectScene(engine.Scene):
         engine.soundManager.playMusicFade('solace')
     def update(self, sm, inputStream):
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
-            player.imageGroups.animationList['idle'].update()
+            player.getComponent('imagegroups').animationList['idle'].update()
 
     def input(self, sm, inputStream):
 
@@ -39,21 +39,21 @@ class PlayerSelectScene(engine.Scene):
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
 
             # add to the game
-            if inputStream.isPressed(player.input.b1):
+            if inputStream.isPressed(player.getComponent('input').b1):
                 if player not in globals.players:
                     globals.players.append(player)
             
             # remove from the game
-            if inputStream.isPressed(player.input.b2):
+            if inputStream.isPressed(player.getComponent('input').b2):
                 if player in globals.players:
                     globals.players.remove(player)
             
             # recolour
-            if inputStream.isPressed(player.input.right):
+            if inputStream.isPressed(player.getComponent('input').right):
                 if player in globals.players:
 
                     colourClash = True
-                    currentHuePos = hues.index(player.imageGroups.hue)
+                    currentHuePos = hues.index(player.getComponent('imagegroups').hue)
                     nextHuePos = currentHuePos
 
                     # dont allow two player to be the same colour
@@ -62,16 +62,16 @@ class PlayerSelectScene(engine.Scene):
                         nextHuePos = (nextHuePos+1)%(len(hues))
                         nextHue = hues[nextHuePos]
                         for otherPlayer in [globals.player1, globals.player2, globals.player3, globals.player4]:
-                            if otherPlayer.imageGroups.hue == nextHue:
+                            if otherPlayer.getComponent('imagegroups').hue == nextHue:
                                 colourClash = True
                     
-                    player.imageGroups.hue = nextHue
+                    player.getComponent('imagegroups').hue = nextHue
             
-            if inputStream.isPressed(player.input.left):
+            if inputStream.isPressed(player.getComponent('input').left):
                 if player in globals.players:
 
                     colourClash = True
-                    currentHuePos = hues.index(player.imageGroups.hue)
+                    currentHuePos = hues.index(player.getComponent('imagegroups').hue)
                     nextHuePos = currentHuePos
 
                     # dont allow two player to be the same colour
@@ -80,10 +80,10 @@ class PlayerSelectScene(engine.Scene):
                         nextHuePos = (nextHuePos-1)%(len(hues))
                         nextHue = hues[nextHuePos]
                         for otherPlayer in [globals.player1, globals.player2, globals.player3, globals.player4]:
-                            if otherPlayer.imageGroups.hue == nextHue:
+                            if otherPlayer.getComponent('imagegroups').hue == nextHue:
                                 colourClash = True
                     
-                    player.imageGroups.hue = nextHue
+                    player.getComponent('imagegroups').hue = nextHue
 
     def draw(self, sm, screen):
         # background
@@ -98,11 +98,11 @@ class PlayerSelectScene(engine.Scene):
         for player in players:
             # draw active players
             colour = pygame.Color(0)
-            colour.hsla = (player.imageGroups.hue, 100, 50, 100)
+            colour.hsla = (player.getComponent('imagegroups').hue, 100, 50, 100)
             #utils.changColour
             if player in globals.players:
                 #img = utils.playing
-                imgGroup = player.imageGroups.animationList['idle']
+                imgGroup = player.getComponent('imagegroups').animationList['idle']
                 imgList = imgGroup.imageList
                 index = imgGroup.imageIndex
                 img = imgList[index]

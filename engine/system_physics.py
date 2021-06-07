@@ -148,5 +148,5 @@ class PhysicsSystem(System):
         #print(entity.getComponent('position').rect.x, entity.getComponent('position').rect.y)
 
         # reset intentions
-        if entity.intention is not None:
-            entity.intention.reset()
+        if entity.hasComponent('intention'):
+            entity.getComponent('intention').reset()

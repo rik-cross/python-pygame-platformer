@@ -32,27 +32,14 @@ class Entity:
 
         self.state = 'idle'
         self.type = 'normal'
-        self.position = None
-        self.imageGroups = ImageGroups()
+        #self.imageGroups = ImageGroups()
         self.direction = 'right'
-        self.camera = None
-        self.score = None
-        self.battle = None
-        self.input = None
-        self.intention = None
         self.on_ground = False
-        self.effect = None
         self.reset = resetEntity
         self.trauma = 0
-        self.collider = None
         self.transform = TransformComponent()
-        self.motion = None
         self.tags = TagsComponent()
-        self.particle_emitter = None
-        self.emote = None
-        self.text = None
         self.owner = self
-        self.triggers = None
     
     def clear(self):
         self.components = {}
