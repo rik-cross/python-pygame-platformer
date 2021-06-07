@@ -12,4 +12,5 @@ class AnimationSystem(System):
     
     def updateEntity(self, screen, inputStream, entity):
         ig = entity.getComponent('imagegroups')
-        ig.animationList[entity.state].update()
+        if entity.state in entity.getComponent('imagegroups').animationList.keys():
+            ig.animationList[entity.state].update()

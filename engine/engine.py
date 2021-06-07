@@ -9,6 +9,8 @@ from .entity_factory import *
 
 from .world import *
 
+pygame.init()
+
 sceneManager = SceneManager()
 inputManager = InputManager()
 
@@ -21,10 +23,10 @@ world = World()
 
 clock = pygame.time.Clock()
 
+screen = pygame.display.set_mode((600,400))
+
 def init(size, caption=''):
     global screen
-    pygame.init()
-    
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption(caption)
 
