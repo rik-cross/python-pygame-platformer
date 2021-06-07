@@ -6,7 +6,10 @@ from .colours import *
 import random
 
 class AnimationSystem(System):
+
     def check(self, entity):
-        return entity.imageGroups is not None
+        return entity.hasComponent('imagegroups') #entity.imageGroups is not None
+    
     def updateEntity(self, screen, inputStream, entity):
-        entity.imageGroups.animationList[entity.state].update()
+        ig = entity.getComponent('imagegroups')
+        ig.animationList[entity.state].update()

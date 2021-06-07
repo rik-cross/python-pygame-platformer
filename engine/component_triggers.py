@@ -26,12 +26,18 @@ class SignPlayerTrigger(Trigger):
     def onEnter(self, e):
         #for entity in engine.world.getEntitiesByIDList(self.current):
         #    pass
-        e.text = engine.Text('Welcome to Level 1. Collect all of the coins.')
-        e.text.setType('fade')
+        
+        #e.text = engine.Text('Welcome to Level 1. Collect all of the coins.')
+        #e.text.setType('fade')
+        
+        tt = engine.Text('Welcome to Level 1. Collect all of the coins.')
+        e.addComponent(tt)
+        tt.setType('fade')
+        
         #e.emote = EmoteComponent(engine.resourceManager.getImage('heart_small'))
     def onStay(self, e):
         pass
     def onExit(self, e):
         if not self.current:
             #e.text = None
-            e.text.startExit()
+            e.getComponent('text').startExit()

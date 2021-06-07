@@ -25,16 +25,16 @@ def blit_alpha(target, source, location, opacity):
 heart_image = pygame.image.load('images/heart.png')
 
 def setHealth(entity):
-    if entity.battle:
-        entity.battle.lives = 3
+    if entity.hasComponent('battle'):
+        entity.getComponent('battle').lives = 3
 
 def setInvisible(entity):
-    if entity.imageGroups:
-        entity.imageGroups.alpha = 50
+    if entity.hasComponent('imagegroups'):
+        entity.getComponent('imagegroups').alpha = 50
 
 def endInvisible(entity):
-    if entity.imageGroups:
-        entity.imageGroups.alpha = 255
+    if entity.hasComponent('imagegroups'):
+        entity.getComponent('imagegroups').alpha = 255
 
 powerups = ['health', 'invisible']
 

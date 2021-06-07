@@ -2,11 +2,16 @@ from .system import *
 from .engine import *
 
 class TriggerSystem(System):
+
     def check(self, entity):
-        return entity.position is not None and entity.triggers is not None
+        return entity.hasComponent('position') and entity.hasComponent('triggers') # position is not None and entity.triggers is not None
+    
     def updateEntity(self, screen, inputStream, entity):
 
-        for trigger in entity.triggers.triggerList:
+        trg = entity.getComponent('triggers')
+        pos = entity.getComponent('position')
+
+        for trigger in trg.triggerList:
 
             trigger.last = trigger.current
             trigger.current = []
@@ -14,20 +19,22 @@ class TriggerSystem(System):
             if trigger.boundingBox is not None:
 
                 adjustedRect = pygame.rect.Rect(
-                    entity.position.rect.x + trigger.boundingBox.x,
-                    entity.position.rect.y + trigger.boundingBox.y,
+                    pos.rect.x + trigger.boundingBox.x,
+                    pos.rect.y + trigger.boundingBox.y,
                     trigger.boundingBox.w,
                     trigger.boundingBox.h
                 )
 
                 for otherEntity in engine.world.entities:
 
-                    if otherEntity.position is not None and otherEntity.collider is not None:
+                    if otherEntity.hasComponent('position') and otherEntity.hasComponent('collider'): #position is not None and otherEntity.collider is not None:
+                        op = otherEntity.getComponent('position')
+                        oc = otherEntity.getComponent('collider')
                         otherRect = pygame.rect.Rect(
-                            otherEntity.position.rect.x + otherEntity.collider.rect.x,
-                            otherEntity.position.rect.y + otherEntity.collider.rect.y,
-                            otherEntity.collider.rect.w,
-                            otherEntity.collider.rect.h
+                            op.rect.x + oc.rect.x,
+                            op.rect.y + oc.rect.y,
+                            oc.rect.w,
+                            oc.rect.h
                         )
 
                         if adjustedRect.colliderect(otherRect):

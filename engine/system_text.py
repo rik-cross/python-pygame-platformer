@@ -1,9 +1,12 @@
 from .system import *
 
 class TextSystem(System):
+
     def check(self, entity):
-        return entity.text is not None
+        return entity.hasComponent('text') #entity.text is not None
+    
     def updateEntity(self, screen, inputStream, entity):
-        entity.text.update()
-        if entity.text.destroy:
-            entity.text = None
+        txt = entity.getComponent('text')
+        txt.update()
+        if txt.destroy:
+            txt = None

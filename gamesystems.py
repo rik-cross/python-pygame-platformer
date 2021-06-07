@@ -5,18 +5,21 @@ import utils
 import pygame
 
 class PowerupSystem(engine.System):
+    
     def __init__(self):
         self.timer = 0
+    
     def check(self, entity):
-        return entity.effect is not None
+        return entity.hasComponent('effect') #entity.effect is not None
+    
     def update(self, screen=None, inputStream=None):
         super().update(screen, inputStream)
 
         # count the number of powerups in the world
         count = 0
-        for entity in globals.world.entities:
+        for entity in engine.world.entities:
             if entity.tags.has('powerup'):
-                if entity.effect:
+                if entity.hasComponent('entity'): #entity.effect:
                     count += 1
 
         # if no powerups -- start a timer to create new
@@ -32,7 +35,7 @@ class PowerupSystem(engine.System):
                 if globals.world.powerupSpawnPoints is not None:
                     if len(globals.world.powerupSpawnPoints) > 0:
                         spawnPos = random.choice(globals.world.powerupSpawnPoints)
-                        globals.world.entities.append(
+                        engine.world.entities.append(
                             utils.makePowerup(random.choice(utils.powerups), spawnPos[0], spawnPos[1])
                         )
                         engine.soundManager.playSound('powerup_appear', engine.soundManager.soundVolume / 2)
@@ -42,99 +45,116 @@ class PowerupSystem(engine.System):
         # player collection of powerups
         for otherEntity in globals.world.entities:
             if otherEntity is not entity and otherEntity.tags.has('player') and not entity.tags.has('player'):
-                if entity.position.rect.colliderect(otherEntity.position.rect):
+                ep = entity.getComponent('position')
+                op = otherEntity.getComponent('position')
+                if ep.rect.colliderect(op.rect):
                     # give the effect component to the player
-                    otherEntity.effect = entity.effect
+                    #otherEntity.effect = entity.effect
+                    otherEntity.addComponent(entity.getComponent('effect'))
                     engine.soundManager.playSound(entity.effect.sound)
                     # remove the collected powerup from the world
-                    globals.world.entities.remove(entity)
+                    engine.world.entities.remove(entity)
         
         # apply powerup effects for players
         if entity.tags.has('player'):
-            entity.effect.apply(entity)
-            entity.effect.timer -= 1
+            ee = entity.getComponent('effect')
+            ee.apply(entity)
+            ee.timer -= 1
             # if the effect has run out
-            if entity.effect.timer < 0:
+            if ee.timer < 0:
                 # reset entity if appropriate
-                if entity.effect.end:
-                    entity.effect.end(entity)
+                if ee.end:
+                    ee.end(entity)
                 # destroy the effect
-                entity.effect = None
+                ee = None
 
 class CollectionSystem(engine.System):
     def check(self, entity):
-        return entity.tags.has('player') and entity.score is not None   
+        return entity.tags.has('player') and entity.hasComponent('score') #score is not None   
     def updateEntity(self, screen, inputStream, entity):
-        for otherEntity in globals.world.entities:
+        for otherEntity in engine.world.entities:
             if otherEntity is not entity and otherEntity.tags.has('collectable'):
-                if entity.position.rect.colliderect(otherEntity.position.rect):
+                ep = entity.getComponent('position')
+                op = otherEntity.getComponent('position')
+                if ep.rect.colliderect(op.rect):
                     # entity.collectable.onCollide(entity, otherEntity)
                     engine.soundManager.playSound('coin')
-                    globals.world.entities.remove(otherEntity)
-                    entity.score.score += 1
+                    engine.world.entities.remove(otherEntity)
+                    entity.getComponent('score').score += 1
 
 class BattleSystem(engine.System):
     def check(self, entity):
-        return entity.tags.has('player') and entity.battle is not None   
+        return entity.tags.has('player') and entity.hasComponent('battle') #battle is not None   
     def updateEntity(self, screen, inputStream, entity):
         
          # throwing balloons
 
-        if entity.intention is not None:
-            if entity.intention.fire == True:
+        if entity.hasComponent('intention'): #intention is not None:
+            if entity.getComponent('intention').fire == True:
+            #if entity.intention.fire == True:
+
+                posr = entity.getComponent('position')
 
                 # point in the right direction
                 if entity.direction == 'right':
-                    xx = entity.position.rect.x + 10 + entity.position.rect.w
-                    yy = entity.position.rect.y + entity.position.rect.h // 2
+                    xx = pos.rect.x + 10 + pos.rect.w
+                    yy = pos.rect.y + pos.rect.h // 2
                     aa = engine.Motion(velocity=pygame.math.Vector2(4,-6), acceleration=pygame.math.Vector2(0,0.3))
                 elif entity.direction == 'left':
-                    xx = entity.position.rect.x - 10 - 16 # 16 = balloon width
-                    yy = entity.position.rect.y + entity.position.rect.h // 2
+                    xx = pos.rect.x - 10 - 16 # 16 = balloon width
+                    yy = pos.rect.y + pos.rect.h // 2
                     aa = engine.Motion(velocity=pygame.math.Vector2(-4,-6), acceleration=pygame.math.Vector2(0,0.3))
                 balloon = engine.entityFactory.create('balloon', xx, yy)
-                balloon.motion = aa
+                balloon.addComponent(aa)
                 balloon.owner = entity
-                globals.world.entities.append(balloon)
+                engine.world.entities.append(balloon)
 
         # balloon collision
-        for otherEntity in globals.world.entities:
+        for otherEntity in engine.world.entities:
 
             # against other players
             if otherEntity is not entity and entity.tags.has('player') and otherEntity.tags.has('balloon'):
-                if entity.position.rect.colliderect(otherEntity.position.rect):
-                    globals.world.entities.append(engine.entityFactory.create('explosion', otherEntity.position.rect.x, otherEntity.position.rect.y))
+                pos = entity.getComponent('position')
+                opos = otherEntity.getComponent('position')
+                if pos.rect.colliderect(opos.rect):
+                    engine.world.entities.append(engine.entityFactory.create('explosion', opos.rect.x, opos.rect.y))
                     engine.soundManager.playSound('explosion', engine.soundManager.soundVolume / 2)
                     explosion_direction = 1
-                    if otherEntity.motion.velocity.x < 0:
-                        explosion_direction = -1
-                    entity.motion.velocity += pygame.math.Vector2(7 * explosion_direction,-7)
-                    globals.world.entities.remove(otherEntity)
+                    if otherEntity.hasComponent('motion'):
+                        omot = otherEntity.getComponent('motion')
+                        if omot.velocity.x < 0:
+                            explosion_direction = -1
+                    entity.getComponent('motion').velocity += pygame.math.Vector2(7 * explosion_direction,-7)
+                    engine.world.entities.remove(otherEntity)
 
 
         # static enemies
 
-        for otherEntity in globals.world.entities:
+        for otherEntity in engine.world.entities:
             if otherEntity is not entity and otherEntity.tags.has('dangerous'):
-                if entity.position.rect.colliderect(otherEntity.position.rect):
+
+                pos = entity.getComponent('position')
+                ops = otherEntity.getComponent('position')
+
+                if pos.rect.colliderect(ops.rect):
                     # entity.battle.onCollide(entity, otherEntity)
-                    entity.battle.lives -= 1
+                    if entity.hasComponent('battle'):
+                        entity.getComponent('battle').lives -= 1
                     
-                    if entity.motion is not None:
-                        entity.motion.reset()
+                    if entity.hasComponent('motion'): # motion is not None:
+                        entity.getComponent('motion').reset()
                     
-                    entity.motion.velocity.y = -2
+                    entity.getComponent('motion').velocity.y = -2
 
                     # reset player position
-                    if entity.transform is not None:
-                        entity.transform.reset()
+                    if entity.hasComponent('transform'): #transform is not None:
+                        entity.getComponent('transform').reset()
                     # reset player position
-                    if entity.position is not None:
-                        entity.position.reset()
+                    pos.reset()
                     # TODO -- should this be in the physics system?
                     entity.speed = 0
                 
 
                     # remove player if no lives left
-                    if entity.battle.lives <= 0:
-                        globals.world.entities.remove(entity)
+                    if entity.getComponent('battle').lives <= 0:
+                        engine.world.entities.remove(entity)
