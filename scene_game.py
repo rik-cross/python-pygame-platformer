@@ -21,9 +21,9 @@ class GameScene(engine.Scene):
         self.triggerSystem = engine.TriggerSystem()
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
-    def input(self, sm):
+    def input(self):
         if engine.inputManager.isPressed(engine.keys.esc):
-            sm.pop()
+            engine.sceneManager.pop()
             sm.push(scene_fade_transition.FadeTransitionScene([self], []))
         if globals.world.isWon():
             # update the level select map accessible levels
@@ -31,10 +31,10 @@ class GameScene(engine.Scene):
             levelToUnlock = max(nextLevel, globals.lastCompletedLevel)
             globals.lastCompletedLevel = levelToUnlock
             globals.curentLevel = nextLevel
-            sm.push(scene_win.WinScene())
+            engine.sceneManager.push(scene_win.WinScene())
         if globals.world.isLost():
-            sm.push(scene_lose.LoseScene())
-    def update(self, sm):
+            engine.sceneManager.push(scene_lose.LoseScene())
+    def update(self):
         self.inputSystem.update()
         self.collectionSystem.update()
         self.battleSystem.update()
@@ -45,8 +45,8 @@ class GameScene(engine.Scene):
         self.emoteSystem.update()
         self.textSystem.update()
         self.triggerSystem.update()
-    def draw(self, sm, screen):
+    def draw(self):
         # background
-        screen.fill(engine.BLACK)
-        self.cameraSystem.update(screen)
-        self.particleSystem.update(screen)
+        engine.screen.fill(engine.BLACK)
+        self.cameraSystem.update()
+        self.particleSystem.update()

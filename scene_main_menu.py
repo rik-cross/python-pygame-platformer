@@ -18,9 +18,9 @@ class MainMenuScene(engine.Scene):
 
     def onEnter(self):       
         engine.soundManager.playMusicFade('solace')
-    def update(self, sm):
+    def update(self):
         self.mainMenu.update()
-    def draw(self, sm, screen):
+    def draw(self):
         # background
-        screen.fill(engine.DARK_GREY)
-        self.mainMenu.draw(screen)
+        engine.screen.fill(engine.DARK_GREY)
+        self.mainMenu.draw(engine.screen)

@@ -30,17 +30,17 @@ class LevelSelectScene(engine.Scene):
 
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
-    def update(self, sm):
+    def update(self):
         self.menu.update()
-    def input(self, sm):
+    def input(self):
         if engine.inputManager.isPressed(engine.keys.a):
             globals.curentLevel = max(globals.curentLevel-1, 1)
         if engine.inputManager.isPressed(engine.keys.d):
             globals.curentLevel = min(globals.curentLevel+1, globals.lastCompletedLevel)
             
-    def draw(self, sm, screen):
+    def draw(self):
         # background
-        screen.fill(engine.DARK_GREY)
+        engine.screen.fill(engine.DARK_GREY)
 
         # draw level select menu
         for levelNumber in range(1, globals.maxLevel+1):
@@ -50,6 +50,6 @@ class LevelSelectScene(engine.Scene):
             a = 255
             if levelNumber > globals.lastCompletedLevel:
                 a = 100
-            engine.drawText(screen, str(levelNumber), levelNumber*100, 100, c, a)
+            engine.drawText(engine.screen, str(levelNumber), levelNumber*100, 100, c, a)
 
-        self.menu.draw(screen)
+        self.menu.draw(engine.screen)

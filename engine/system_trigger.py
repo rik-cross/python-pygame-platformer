@@ -6,7 +6,7 @@ class TriggerSystem(System):
     def check(self, entity):
         return entity.hasComponent('position') and entity.hasComponent('triggers') # position is not None and entity.triggers is not None
     
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, entity):
 
         trg = entity.getComponent('triggers')
         pos = entity.getComponent('position')

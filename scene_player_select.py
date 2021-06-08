@@ -27,11 +27,11 @@ class PlayerSelectScene(engine.Scene):
 
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
-    def update(self, sm):
+    def update(self):
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
             player.getComponent('imagegroups').animationList['idle'].update()
 
-    def input(self, sm):
+    def input(self):
 
         self.mainMenu.update()
 
@@ -85,9 +85,9 @@ class PlayerSelectScene(engine.Scene):
                     
                     player.getComponent('imagegroups').hue = nextHue
 
-    def draw(self, sm, screen):
+    def draw(self):
         # background
-        screen.fill(engine.DARK_GREY)
+        engine.screen.fill(engine.DARK_GREY)
 
         screenWidth, screenHeight = pygame.display.get_surface().get_size()
         spacing = screenWidth/4
@@ -109,6 +109,6 @@ class PlayerSelectScene(engine.Scene):
             else:
                 img = utils.not_playing
             #screen.blit(pygame.transform.scale(utils.player_shadow, (144*2,144*2)), (positions[players.index(player)]-53,200)) 
-            screen.blit(pygame.transform.scale(utils.changeColour(img, colour), (45*4,51*4)), (positions[players.index(player)],250))
+            engine.screen.blit(pygame.transform.scale(utils.changeColour(img, colour), (45*4,51*4)), (positions[players.index(player)],250))
 
-        self.mainMenu.draw(screen)            
+        self.mainMenu.draw(engine.screen)            

@@ -13,13 +13,13 @@ class SceneManager:
             self.scenes[-1].onExit()
     def input(self):
         if len(self.scenes) > 0:
-            self.scenes[-1].input(self)
+            self.scenes[-1].input()
     def update(self):
         if len(self.scenes) > 0:
-            self.scenes[-1].update(self)
-    def draw(self, screen):
+            self.scenes[-1].update()
+    def draw(self):
         if len(self.scenes) > 0:
-            self.scenes[-1].draw(self, screen)
+            self.scenes[-1].draw()
         # present screen
         pygame.display.flip()
     def push(self, scene):

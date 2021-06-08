@@ -2,21 +2,21 @@ import pygame
 import engine
 
 class FadeTransitionScene(engine.TransitionScene):
-    def draw(self, sm, screen):
+    def draw(self):
         if self.currentPercentage < 50:
             for s in self.fromScenes:
-                s.draw(sm, screen)
+                s.draw()
         else:
             if len(self.toScenes) == 0:
-                if len(sm.scenes) > 1:
-                    sm.scenes[-2].draw(sm, screen)
+                if len(engine.sceneManager.scenes) > 1:
+                    engine.sceneManager.scenes[-2].draw(engine.sceneManager, screen)
             else:
                 for s in self.toScenes:
-                    s.draw(sm, screen)
+                    s.draw()
 
         # fade overlay
         overlay = pygame.Surface(pygame.display.get_surface().get_size())
         alpha = int(abs((255 - ((255/50)*self.currentPercentage))))
         overlay.set_alpha(255 - alpha)
         overlay.fill(engine.BLACK)
-        screen.blit(overlay, (0,0))
+        engine.screen.blit(overlay, (0,0))

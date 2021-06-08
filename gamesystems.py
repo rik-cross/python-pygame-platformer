@@ -12,14 +12,14 @@ class PowerupSystem(engine.System):
     def check(self, entity):
         return entity.hasComponent('effect') #entity.effect is not None
     
-    def update(self, screen=None):
-        super().update(screen)
+    def update(self):
+        super().update()
 
         # count the number of powerups in the world
         count = 0
         for entity in engine.world.entities:
             if entity.getComponent('tags').has('powerup'):
-                if entity.hasComponent('entity'): #entity.effect:
+                if entity.hasComponent('effect'): #entity.effect:
                     count += 1
 
         # if no powerups -- start a timer to create new
@@ -40,10 +40,10 @@ class PowerupSystem(engine.System):
                         )
                         engine.soundManager.playSound('powerup_appear', engine.soundManager.soundVolume / 2)
 
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, entity):
 
         # player collection of powerups
-        for otherEntity in globals.world.entities:
+        for otherEntity in engine.world.entities:
             if otherEntity is not entity and otherEntity.getComponent('tags').has('player') and not entity.getComponent('tags').has('player'):
                 ep = entity.getComponent('position')
                 op = otherEntity.getComponent('position')
@@ -51,7 +51,7 @@ class PowerupSystem(engine.System):
                     # give the effect component to the player
                     #otherEntity.effect = entity.effect
                     otherEntity.addComponent(entity.getComponent('effect'))
-                    engine.soundManager.playSound(entity.effect.sound)
+                    engine.soundManager.playSound(entity.getComponent('effect').sound)
                     # remove the collected powerup from the world
                     engine.world.entities.remove(entity)
         
@@ -71,7 +71,7 @@ class PowerupSystem(engine.System):
 class CollectionSystem(engine.System):
     def check(self, entity):
         return entity.getComponent('tags').has('player') and entity.hasComponent('score') #score is not None   
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, entity):
         for otherEntity in engine.world.entities:
             if otherEntity is not entity and otherEntity.getComponent('tags').has('collectable'):
                 ep = entity.getComponent('position')
@@ -85,7 +85,7 @@ class CollectionSystem(engine.System):
 class BattleSystem(engine.System):
     def check(self, entity):
         return entity.getComponent('tags').has('player') and entity.hasComponent('battle') #battle is not None   
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, entity):
          # throwing balloons
 
         if entity.hasComponent('intention'): #intention is not None:

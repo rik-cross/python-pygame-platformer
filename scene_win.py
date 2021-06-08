@@ -17,17 +17,17 @@ class WinScene(engine.Scene):
         self.menu = engine.Menu(1500/2, 650)
         self.menu.addButton(engine.ButtonUI('Back', actionListener=engine.ActionListener(back)))
 
-    def update(self, sm):
+    def update(self):
         self.alpha = min(255, self.alpha + 10)
         self.menu.update()
-    def draw(self, sm, screen):
-        if len(sm.scenes) > 1:
-            sm.scenes[-2].draw(sm, screen)
+    def draw(self):
+        if len(engine.sceneManager.scenes) > 1:
+            engine.sceneManager.scenes[-2].draw()
 
         # draw a transparent bg
         bgSurf = pygame.Surface(pygame.display.get_surface().get_size())
         bgSurf.fill((engine.BLACK))
-        utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
+        utils.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        engine.drawText(screen, 'You win!', 50, 50, engine.WHITE, self.alpha)
-        self.menu.draw(screen)
+        engine.drawText(engine.screen, 'You win!', 50, 50, engine.WHITE, self.alpha)
+        self.menu.draw(engine.screen)

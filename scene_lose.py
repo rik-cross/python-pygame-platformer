@@ -20,14 +20,14 @@ class LoseScene(engine.Scene):
     def update(self, sm):
         self.alpha = min(255, self.alpha + 10)
         self.menu.update()
-    def draw(self, sm, screen):
-        if len(sm.scenes) > 1:
-            sm.scenes[-2].draw(sm, screen)
+    def draw(self):
+        if len(engine.sceneManager.scenes) > 1:
+            engine.sceneManager.scenes[-2].draw()
 
         # draw a transparent bg
         bgSurf = pygame.Surface(pygame.display.get_surface().get_size())
         bgSurf.fill((engine.BLACK))
-        utils.blit_alpha(screen, bgSurf, (0,0), self.alpha * 0.7)
+        utils.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
 
-        engine.drawText(screen, 'You lose!', 150, 150, engine.WHITE, self.alpha)
-        self.menu.draw(screen)
+        engine.drawText(engine.screen, 'You lose!', 150, 150, engine.WHITE, self.alpha)
+        self.menu.draw(engine.screen)

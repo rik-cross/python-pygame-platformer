@@ -10,13 +10,13 @@ class CameraSystem(System):
     def check(self, entity):
         return entity.hasComponent('camera')
     
-    def updateEntity(self, screen, entity):
+    def updateEntity(self, entity):
 
         # set clipping rectangle
         cameraComponent = entity.getComponent('camera')
         cameraRect = cameraComponent.rect
         clipRect = pygame.Rect(cameraRect.x, cameraRect.y, cameraRect.w, cameraRect.h)
-        screen.set_clip(clipRect)
+        engine.screen.set_clip(clipRect)
 
         # zoom
         if entity.hasComponent('intention'):
@@ -56,7 +56,7 @@ class CameraSystem(System):
             angle += (entity.trauma ** 3) * (random.random()*2-1) * 30 * cameraComponent.zoomLevel
 
         # fill camera background
-        screen.fill(BLACK)
+        engine.screen.fill(BLACK)
 
         # draw level background
         if engine.world.map is not None:
@@ -66,7 +66,7 @@ class CameraSystem(System):
                 0 + offsetY,
                 engine.world.map.w_real * cameraComponent.zoomLevel,
                 engine.world.map.h_real * cameraComponent.zoomLevel)
-            pygame.draw.rect(screen, DARK_GREY, worldRect)
+            pygame.draw.rect(engine.screen, DARK_GREY, worldRect)
 
             # render map images behind map
             for img in engine.world.map.mapImages:
@@ -75,14 +75,14 @@ class CameraSystem(System):
 
                     # there's no parallax for images behind the map
 
-                    img.draw(screen,
+                    img.draw(engine.screen,
                         (img.x * cameraComponent.zoomLevel) + offsetX,
                         (img.y * cameraComponent.zoomLevel) + offsetY,
                         cameraComponent.zoomLevel) 
 
         # render map (to replace platforms)
         if engine.world.map is not None:
-            engine.world.map.draw(screen, offsetX, offsetY, cameraComponent.zoomLevel)
+            engine.world.map.draw(engine.screen, offsetX, offsetY, cameraComponent.zoomLevel)
 
         # render entities
         for e in engine.world.entities:
@@ -92,7 +92,7 @@ class CameraSystem(System):
                 if e.state in igComp.animationList:
                     s = e.state
                     a = igComp.animationList[s]
-                    a.draw(screen,
+                    a.draw(engine.screen,
                         (p.rect.x * cameraComponent.zoomLevel) + offsetX,
                         (p.rect.y * cameraComponent.zoomLevel) + offsetY,
                         e.direction == 'left', False, cameraComponent.zoomLevel, igComp.alpha, igComp.hue)
@@ -102,7 +102,7 @@ class CameraSystem(System):
             if e.hasComponent('emote'):
                 emote = e.getComponent('emote')
                 pos = e.getComponent('position')
-                emote.draw(screen,
+                emote.draw(engine.screen,
                     ((pos.rect.x + (pos.rect.w/2)) * cameraComponent.zoomLevel) + offsetX,
                     (pos.rect.y * cameraComponent.zoomLevel) + offsetY,
                     cameraComponent.zoomLevel)
@@ -112,14 +112,14 @@ class CameraSystem(System):
             if e.hasComponent('text'):# text is not None:
                 txt = e.getComponent('text')
                 pos = e.getComponent('position')
-                txt.draw(screen, (pos.rect.x * cameraComponent.zoomLevel) + offsetX, (pos.rect.y * cameraComponent.zoomLevel)+ offsetY)
+                txt.draw(engine.screen, (pos.rect.x * cameraComponent.zoomLevel) + offsetX, (pos.rect.y * cameraComponent.zoomLevel)+ offsetY)
 
         # particle emitter particles
         for e in engine.world.entities:
             if e.hasComponent('emitter'): #particle_emitter:
                 prt = e.getComponent('emitter')
                 for p in prt.particles:
-                    pygame.draw.circle(screen, p.colour, ((p.pos[0]*cameraComponent.zoomLevel)+offsetX, (p.pos[1]*cameraComponent.zoomLevel)+offsetY), p.size * cameraComponent.zoomLevel)
+                    pygame.draw.circle(engine.screen, p.colour, ((p.pos[0]*cameraComponent.zoomLevel)+offsetX, (p.pos[1]*cameraComponent.zoomLevel)+offsetY), p.size * cameraComponent.zoomLevel)
 
         # render map images infront of map
         #if engine.world.map is not None:
@@ -160,7 +160,7 @@ class CameraSystem(System):
         #        screen.blit(utils.heart_image, (entity.camera.rect.x + 200 + (l*50),entity.camera.rect.y + 10))
 
         # unset clipping rectangle
-        screen.set_clip(None)
+        engine.screen.set_clip(None)
 
         # update zoom
         if cameraComponent.zoomPerFrame != 0:
