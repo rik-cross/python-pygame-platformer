@@ -24,7 +24,7 @@ class GameScene(engine.Scene):
     def input(self):
         if engine.inputManager.isPressed(engine.keys.esc):
             engine.sceneManager.pop()
-            sm.push(scene_fade_transition.FadeTransitionScene([self], []))
+            engine.sceneManager.push(scene_fade_transition.FadeTransitionScene([self], []))
         if globals.world.isWon():
             # update the level select map accessible levels
             nextLevel = min(globals.curentLevel+1, globals.maxLevel)

@@ -1,6 +1,7 @@
 from .ui_action_listener import *
 from .ui_text import *
 from .colours import *
+import engine
 
 import pygame
 
@@ -65,5 +66,5 @@ class ButtonUI:
         if deactivatedThisFrame:
             self.colour = self.normalColour
         
-    def draw(self, screen, x, y):
-        drawText(screen, self.text, x, y, self.colour, 255, align='center')
+    def draw(self, x, y):
+        drawText(engine.screen, self.text, x, y, self.colour, 255, align='center')

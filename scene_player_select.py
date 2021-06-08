@@ -111,4 +111,4 @@ class PlayerSelectScene(engine.Scene):
             #screen.blit(pygame.transform.scale(utils.player_shadow, (144*2,144*2)), (positions[players.index(player)]-53,200)) 
             engine.screen.blit(pygame.transform.scale(utils.changeColour(img, colour), (45*4,51*4)), (positions[players.index(player)],250))
 
-        self.mainMenu.draw(engine.screen)            
+        self.mainMenu.draw()            

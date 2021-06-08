@@ -30,4 +30,4 @@ class WinScene(engine.Scene):
         utils.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
 
         engine.drawText(engine.screen, 'You win!', 50, 50, engine.WHITE, self.alpha)
-        self.menu.draw(engine.screen)
+        self.menu.draw()

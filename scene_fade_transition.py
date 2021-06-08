@@ -9,7 +9,7 @@ class FadeTransitionScene(engine.TransitionScene):
         else:
             if len(self.toScenes) == 0:
                 if len(engine.sceneManager.scenes) > 1:
-                    engine.sceneManager.scenes[-2].draw(engine.sceneManager, screen)
+                    engine.sceneManager.scenes[-2].draw()
             else:
                 for s in self.toScenes:
                     s.draw()

@@ -29,11 +29,11 @@ class Menu:
         for i in range(len(self.buttons)):
             self.buttons[i].update(self.activeButtonIndex == i, self.activeButtonIndex == i and engine.inputManager.isPressed(keys.enter))
 
-    def draw(self, screen):
+    def draw(self):
         bX = self.x
         bY = self.y
         for i in range(len(self.buttons)):
-            self.buttons[i].draw(screen, bX, bY)
+            self.buttons[i].draw(bX, bY)
             if self.direction == 'vertical':
                 bY += self.spacing
             if self.direction == 'horizontal':

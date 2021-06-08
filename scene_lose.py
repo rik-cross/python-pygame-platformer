@@ -30,4 +30,4 @@ class LoseScene(engine.Scene):
         utils.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
 
         engine.drawText(engine.screen, 'You lose!', 150, 150, engine.WHITE, self.alpha)
-        self.menu.draw(engine.screen)
+        self.menu.draw()

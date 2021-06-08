@@ -23,4 +23,4 @@ class MainMenuScene(engine.Scene):
     def draw(self):
         # background
         engine.screen.fill(engine.DARK_GREY)
-        self.mainMenu.draw(engine.screen)
+        self.mainMenu.draw()

@@ -52,4 +52,4 @@ class LevelSelectScene(engine.Scene):
                 a = 100
             engine.drawText(engine.screen, str(levelNumber), levelNumber*100, 100, c, a)
 
-        self.menu.draw(engine.screen)
+        self.menu.draw()
