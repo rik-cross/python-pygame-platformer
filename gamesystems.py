@@ -18,7 +18,7 @@ class PowerupSystem(engine.System):
         # count the number of powerups in the world
         count = 0
         for entity in engine.world.entities:
-            if entity.tags.has('powerup'):
+            if entity.getComponent('tags').has('powerup'):
                 if entity.hasComponent('entity'): #entity.effect:
                     count += 1
 
@@ -44,7 +44,7 @@ class PowerupSystem(engine.System):
 
         # player collection of powerups
         for otherEntity in globals.world.entities:
-            if otherEntity is not entity and otherEntity.tags.has('player') and not entity.tags.has('player'):
+            if otherEntity is not entity and otherEntity.getComponent('tags').has('player') and not entity.getComponent('tags').has('player'):
                 ep = entity.getComponent('position')
                 op = otherEntity.getComponent('position')
                 if ep.rect.colliderect(op.rect):
@@ -56,7 +56,7 @@ class PowerupSystem(engine.System):
                     engine.world.entities.remove(entity)
         
         # apply powerup effects for players
-        if entity.tags.has('player'):
+        if entity.getComponent('tags').has('player'):
             ee = entity.getComponent('effect')
             ee.apply(entity)
             ee.timer -= 1
@@ -70,10 +70,10 @@ class PowerupSystem(engine.System):
 
 class CollectionSystem(engine.System):
     def check(self, entity):
-        return entity.tags.has('player') and entity.hasComponent('score') #score is not None   
+        return entity.getComponent('tags').has('player') and entity.hasComponent('score') #score is not None   
     def updateEntity(self, screen, entity):
         for otherEntity in engine.world.entities:
-            if otherEntity is not entity and otherEntity.tags.has('collectable'):
+            if otherEntity is not entity and otherEntity.getComponent('tags').has('collectable'):
                 ep = entity.getComponent('position')
                 op = otherEntity.getComponent('position')
                 if ep.rect.colliderect(op.rect):
