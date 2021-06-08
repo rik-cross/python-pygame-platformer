@@ -58,9 +58,9 @@ player.getComponent('imagegroups').add('idle', playerAnimation)
 #
 
 camera = engine.Entity(
-    engine.CameraComponent(0,0,1500,800)
+    engine.CameraComponent(0,0,600,400)
 )
-camera.getComponent('camera').setWorldPos(750,400)
+camera.getComponent('camera').setWorldPos(300,200)
 
 #
 # Add entities to world
@@ -74,6 +74,6 @@ engine.world.entities.append(camera)
 # Add scene to the engine and start
 #
 
-engine.init((1500,800), caption='Engine // Image and Animation Example')
+engine.init((600,400), caption='Engine // Image and Animation Example')
 engine.sceneManager.push(mainGameScene)
 engine.run()

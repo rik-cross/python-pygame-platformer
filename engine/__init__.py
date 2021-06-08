@@ -1,5 +1,8 @@
 from .engine import *
 
+from .scene import *
+from .scene_transition import *
+
 from .entity import *
 from .entity_factory import *
 

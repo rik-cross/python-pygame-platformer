@@ -1,39 +1,5 @@
 import pygame
 
-class Scene:
-    def __init__(self):
-        pass
-    def onEnter(self):
-        pass
-    def onExit(self):
-        pass
-    def input(self, sm, inputStream):
-        pass
-    def update(self, sm, inputStream):
-        pass
-    def draw(self, sm, screen):
-        pass
-
-class TransitionScene(Scene):
-    def __init__(self, fromScenes, toScenes):
-        self.currentPercentage = 0
-        self.fromScenes = fromScenes
-        self.toScenes = toScenes
-    def update(self, sm, inputStream):
-        self.currentPercentage += 2
-        if self.currentPercentage >= 100:
-            sm.pop()
-            for s in self.toScenes:
-                sm.push(s)
-        for scene in self.fromScenes:
-            scene.update(sm, inputStream)
-        if len(self.toScenes) > 0:
-            for scene in self.toScenes:
-                scene.update(sm, inputStream)
-        else:
-            if len(sm.scenes) > 1:
-                sm.scenes[-2].update(sm, inputStream)
-
 class SceneManager:
     def __init__(self):
         self.scenes = []
