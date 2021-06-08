@@ -84,16 +84,16 @@ class CollectionSystem(engine.System):
 
 class BattleSystem(engine.System):
     def check(self, entity):
-        return entity.tags.has('player') and entity.hasComponent('battle') #battle is not None   
+        return entity.getComponent('tags').has('player') and entity.hasComponent('battle') #battle is not None   
     def updateEntity(self, screen, inputStream, entity):
-        
          # throwing balloons
 
         if entity.hasComponent('intention'): #intention is not None:
             if entity.getComponent('intention').fire == True:
-            #if entity.intention.fire == True:
 
-                posr = entity.getComponent('position')
+                #if entity.intention.fire == True:
+
+                pos = entity.getComponent('position')
 
                 # point in the right direction
                 if entity.direction == 'right':
@@ -113,7 +113,7 @@ class BattleSystem(engine.System):
         for otherEntity in engine.world.entities:
 
             # against other players
-            if otherEntity is not entity and entity.tags.has('player') and otherEntity.tags.has('balloon'):
+            if otherEntity is not entity and entity.getComponent('tags').has('player') and otherEntity.getComponent('tags').has('balloon'):
                 pos = entity.getComponent('position')
                 opos = otherEntity.getComponent('position')
                 if pos.rect.colliderect(opos.rect):
@@ -131,7 +131,7 @@ class BattleSystem(engine.System):
         # static enemies
 
         for otherEntity in engine.world.entities:
-            if otherEntity is not entity and otherEntity.tags.has('dangerous'):
+            if otherEntity is not entity and otherEntity.getComponent('tags').has('dangerous'):
 
                 pos = entity.getComponent('position')
                 ops = otherEntity.getComponent('position')
@@ -153,7 +153,6 @@ class BattleSystem(engine.System):
                     pos.reset()
                     # TODO -- should this be in the physics system?
                     entity.speed = 0
-                
 
                     # remove player if no lives left
                     if entity.getComponent('battle').lives <= 0:

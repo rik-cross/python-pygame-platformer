@@ -86,7 +86,7 @@ class PhysicsSystem(System):
             y_collision = True
             if abs(motionComponent.velocity.y) > 10:
                 entity.trauma += 0.7 # TODO -- set max
-                if entity.tags.has('player'):
+                if entity.getComponent('tags').has('player'):
                     engine.world.entities.append(engine.entityFactory.create('collision', positionComponent.rect.x+(positionComponent.rect.w/2), positionComponent.rect.y + colliderComponent.rect.h))
                     engine.soundManager.playSound('explosion_small', engine.soundManager.soundVolume / 2)
             motionComponent.velocity.y = 0
@@ -127,20 +127,20 @@ class PhysicsSystem(System):
             x_collision = True
             if abs(motionComponent.velocity.x) > 10:
                 entity.trauma += 0.7 # TODO -- set max
-                if entity.tags.has('player'):
+                if entity.getComponent('tags').has('player'):
                     engine.world.entities.append(engine.entityFactory.create('collision', positionComponent.rect.x+(positionComponent.rect.w/2), positionComponent.rect.y + colliderComponent.rect.h))
                     engine.soundManager.playSound('explosion_small', engine.soundManager.soundVolume / 2)
         if x_collision == False:
             positionComponent.rect.x = transformComponent.position.x
 
-        if entity.tags.has('player') and not entity.on_ground:
+        if entity.getComponent('tags').has('player') and not entity.on_ground:
             entity.state = 'jumping'
         
         # TODO -- replace this with horizontal friction
         if x_collision or y_collision:
             motionComponent.velocity.x = 0
 
-            if entity.tags.has('balloon'):
+            if entity.getComponent('tags').has('balloon'):
                 engine.world.entities.append(engine.entityFactory.create('explosion', positionComponent.rect.x, positionComponent.rect.y))
                 engine.soundManager.playSound('explosion_small', engine.soundManager.soundVolume / 2)
                 engine.world.entities.remove(entity)

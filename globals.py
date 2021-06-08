@@ -1,4 +1,4 @@
-world = None
+#world = None
 
 maxLevel = 2
 lastCompletedLevel = 1
