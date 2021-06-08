@@ -136,6 +136,6 @@ class Text:
 
         for i,l in enumerate(self.textList):
             if i == self.row:
-                drawText(screen, l[0:self.index], x, y-10-rows+(i*30), self.colour, self.fadeAmount)
+                drawText(l[0:self.index], x, y-10-rows+(i*30), self.colour, self.fadeAmount)
             elif i < self.row:
-                drawText(screen, l, x, y-10-rows+(i*30), self.colour, self.fadeAmount)
+                drawText(l, x, y-10-rows+(i*30), self.colour, self.fadeAmount)

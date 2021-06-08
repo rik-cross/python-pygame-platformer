@@ -67,4 +67,4 @@ class ButtonUI:
             self.colour = self.normalColour
         
     def draw(self, x, y):
-        drawText(engine.screen, self.text, x, y, self.colour, 255, align='center')
+        drawText(self.text, x, y, self.colour, 255, align='center')

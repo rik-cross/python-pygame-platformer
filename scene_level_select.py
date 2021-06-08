@@ -50,6 +50,6 @@ class LevelSelectScene(engine.Scene):
             a = 255
             if levelNumber > globals.lastCompletedLevel:
                 a = 100
-            engine.drawText(engine.screen, str(levelNumber), levelNumber*100, 100, c, a)
+            engine.drawText(str(levelNumber), levelNumber*100, 100, c, a)
 
         self.menu.draw()

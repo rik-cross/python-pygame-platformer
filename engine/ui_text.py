@@ -14,7 +14,7 @@ def blit_alpha(target, source, location, opacity):
     temp.set_alpha(opacity)        
     target.blit(temp, location)
 
-def drawText(screen, t, x, y, fg, alpha, align='left', fontTag='munro24'):
+def drawText(t, x, y, fg, alpha, align='left', fontTag='munro24'):
     font = engine.resourceManager.getFont(fontTag)
     t = str(t)
     text = font.render(t, True, fg)
@@ -25,4 +25,4 @@ def drawText(screen, t, x, y, fg, alpha, align='left', fontTag='munro24'):
 
     text_rectangle.topleft = (x,y)
 
-    blit_alpha(screen, text, (x,y), alpha)
+    blit_alpha(engine.screen, text, (x,y), alpha)

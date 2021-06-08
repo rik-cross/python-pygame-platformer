@@ -146,10 +146,10 @@ while running:
             pygame.draw.rect(screen, (engine.WHITE), pygame.rect.Rect(tiles[i][2]-2,tiles[i][3]-2,36,36))
         pygame.draw.rect(screen, (40,40,40), pygame.rect.Rect(tiles[i][2],tiles[i][3],32,32))
         tiles[i][1].draw(screen, tiles[i][2], tiles[i][3], 32, 32)
-        engine.drawText(screen, tiles[i][0], tiles[i][2]+50, tiles[i][3], (255,255,255), 255)
+        engine.drawText(tiles[i][0], tiles[i][2]+50, tiles[i][3], (255,255,255), 255)
     
     # print info
-    engine.drawText(screen, 'tilesize=' + str(map.tileSize), MAPWIDTH+50, MAPHEIGHT-50, (255,255,255), 255)
+    engine.drawText('tilesize=' + str(map.tileSize), MAPWIDTH+50, MAPHEIGHT-50, (255,255,255), 255)
 
     pygame.display.flip()
     clock.tick(60)
