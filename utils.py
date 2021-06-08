@@ -11,17 +11,6 @@ def changeColour(image, colour):
     finalImage.blit(colouredImage, (0, 0), special_flags = pygame.BLEND_MULT)
     return finalImage
 
-# function from:
-# https://nerdparadise.com/programming/pygameblitopacity
-def blit_alpha(target, source, location, opacity):
-    x = location[0]
-    y = location[1]
-    temp = pygame.Surface((source.get_width(), source.get_height())).convert()
-    temp.blit(target, (-x, -y))
-    temp.blit(source, (0, 0))
-    temp.set_alpha(opacity)        
-    target.blit(temp, location)
-
 heart_image = pygame.image.load('images/heart.png')
 
 def setHealth(entity):
@@ -39,8 +28,8 @@ def endInvisible(entity):
 powerups = ['health', 'invisible']
 
 powerupImages = {
-    'health' : [pygame.image.load('images/powerup_health.png')],
-    'invisible' : [pygame.image.load('images/powerup_invisible.png')]
+    'health' : pygame.image.load('images/powerup_health.png'),
+    'invisible' : pygame.image.load('images/powerup_invisible.png')
 }
 
 powerupSound = {
@@ -67,7 +56,7 @@ def makePowerup(type, x, y):
     entity = engine.Entity()
     #entity.position = engine.Position(x,y,32,32)
     entity.addComponent(engine.Position(x,y,32,32))
-    entityAnimation = engine.ImageGroup(powerupImages[type])
+    entityAnimation = engine.Image(powerupImages[type])
     #entity.imageGroups.add('idle', entityAnimation)
     entity.getComponent('imagegroups').add('idle', entityAnimation)
     #entity.effect = gamecomponents.Effect(
@@ -98,7 +87,7 @@ coin5 = pygame.image.load('images/coin/coin_5.png')
 def makeCoin(x,y):
     entity = engine.Entity()
     #entity.position = engine.Position(x,y,23,23)
-    entityAnimation = engine.ImageGroup([coin1, coin2, coin3, coin4, coin5], delay=12)
+    entityAnimation = engine.Animation(coin1, coin2, coin3, coin4, coin5, delay=12)
     #entity.imageGroups.add('idle', entityAnimation)
     #entity.tags.add('collectable')
 
@@ -113,7 +102,7 @@ sign = pygame.image.load('images/sign.png')
 def makeSign(x,y):
     entity = engine.Entity()
     #entity.position = engine.Position(x,y,50,55)
-    entityAnimation = engine.ImageGroup([sign])
+    entityAnimation = engine.Image(sign)
     #entity.imageGroups.add('idle', entityAnimation)
 
     #entity.triggers = engine.Triggers()
@@ -133,7 +122,7 @@ enemy0 = pygame.image.load('images/spike_monster.png')
 def makeEnemy(x,y):
     entity = engine.Entity()
     #entity.position = engine.Position(x,y,50,26)
-    entityAnimation = engine.ImageGroup([enemy0])
+    entityAnimation = engine.Image(enemy0)
     #entity.imageGroups.add('idle', entityAnimation)
     #entity.tags.add('dangerous')
 
@@ -323,9 +312,9 @@ def playerInput(entity):
 def makePlayer(x,y):
     entity = engine.Entity()
     #entity.position = engine.Position(x,y,45,51)
-    entityIdleAnimation = engine.ImageGroup([idle0, idle1, idle2, idle3])
-    entityWalkingAnimation = engine.ImageGroup([walking0, walking1, walking2, walking3, walking4, walking5], delay=6)
-    entityJumpingAnimation = engine.ImageGroup([jumping])
+    entityIdleAnimation = engine.Animation(idle0, idle1, idle2, idle3)
+    entityWalkingAnimation = engine.Animation(walking0, walking1, walking2, walking3, walking4, walking5, delay=6)
+    entityJumpingAnimation = engine.Image(jumping)
     #entity.imageGroups.add('idle', entityIdleAnimation)
     #entity.imageGroups.add('walking', entityWalkingAnimation)
     #entity.imageGroups.add('jumping', entityJumpingAnimation)
@@ -381,7 +370,7 @@ balloon = pygame.image.load('images/balloon.png')
 def makeBalloon(x,y):
     entity = engine.Entity()
     #entity.position = engine.Position(x,y,16,16)
-    entityIdleImage = engine.ImageGroup([balloon])
+    entityIdleImage = engine.Image(balloon)
     #entity.imageGroups.add('idle', entityIdleImage)
     entity.acceleration = 0.3
     entity.initialAcceleration = entity.acceleration
@@ -390,7 +379,7 @@ def makeBalloon(x,y):
     #entity.motion = engine.Motion(acceleration=pygame.math.Vector2(0,0.3))
 
     entity.addComponent(engine.Position(x,y,16,16))
-    entity.addComponent(engine.ImageGroup([balloon]))
+    #entity.addComponent(engine.ImageGroup([balloon]))
     entity.getComponent('imagegroups').add('idle', entityIdleImage)
     entity.addComponent(engine.Collider(2,2,12,12))
     entity.getComponent('tags').add('balloon')

@@ -56,7 +56,7 @@ class CameraSystem(System):
             angle += (entity.trauma ** 3) * (random.random()*2-1) * 30 * cameraComponent.zoomLevel
 
         # fill camera background
-        engine.screen.fill(BLACK)
+        engine.screen.fill(cameraComponent.bgColour)
 
         # draw level background
         if engine.world.map is not None:
@@ -172,7 +172,7 @@ class CameraSystem(System):
         # x
         if cameraComponent.movementPerFrameX != 0:
             cameraComponent.worldX += cameraComponent.movementPerFrameX
-            if abs(entity.camera.worldX - cameraComponent.targetX) < 0.1 :
+            if abs(cameraComponent.worldX - cameraComponent.targetX) < 0.1 :
                 cameraComponent.movementPerFrameX = 0
         # y
         if cameraComponent.movementPerFrameY != 0:

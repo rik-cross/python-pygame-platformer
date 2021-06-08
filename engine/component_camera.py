@@ -1,11 +1,13 @@
 import pygame
 from .component import Component
 from .engine import *
+from .colours import *
 
 class CameraComponent(Component):
 
-    def __init__(self, x, y, w, h):
+    def __init__(self, x, y, w, h, bgColour=BLACK):
         self.key = 'camera'
+        self.bgColour = bgColour
         self.rect = pygame.Rect(x,y,w,h)
         self.worldX = 0
         self.worldY = 0
@@ -23,11 +25,13 @@ class CameraComponent(Component):
     def setZoomLevel(self, level):
         self.zoomLevel = level
     
-    def zoomTo(self, level, overFrames=60):
+    def zoomTo(self, level, overFrames=1):
         self.targetZoom = level
         self.zoomPerFrame = (self.targetZoom - self.zoomLevel) / overFrames
 
-    def moveTo(self, x, y, overFrames=60):
+    def moveTo(self, x, y, overFrames=1):
+        if overFrames < 1:
+            return
         self.entityToTrack = None
         self.targetX = x
         self.targetY = y
@@ -35,6 +39,7 @@ class CameraComponent(Component):
         self.movementPerFrameY = (self.targetY - self.worldY) / overFrames
 
     def setWorldPos(self, x, y):
+
         newX = x
         newY = y
   
@@ -63,3 +68,9 @@ class CameraComponent(Component):
 
     def trackEntity(self, entity):
         self.entityToTrack = entity
+    
+    def goToEntity(self, entity):
+        self.entityToTrack = None
+        pos = entity.getComponent('position')
+        self.worldX = pos.rect.x + (pos.rect.w / 2)
+        self.worldY = pos.rect.y + (pos.rect.h / 2)

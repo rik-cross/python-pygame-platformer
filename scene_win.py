@@ -1,7 +1,6 @@
 import engine
 import scene_main_menu
 import scene_level_select
-import utils
 import pygame
 import scene_player_select
 import scene_game
@@ -27,7 +26,7 @@ class WinScene(engine.Scene):
         # draw a transparent bg
         bgSurf = pygame.Surface(pygame.display.get_surface().get_size())
         bgSurf.fill((engine.BLACK))
-        utils.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
+        engine.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
 
         engine.drawText('You win!', 50, 50, engine.WHITE, self.alpha)
         self.menu.draw()

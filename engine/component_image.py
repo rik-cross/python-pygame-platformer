@@ -8,28 +8,13 @@ def changeColour(image, colour):
     finalImage.blit(colouredImage, (0, 0), special_flags = pygame.BLEND_MULT)
     return finalImage
     
-class ImageGroup:
-    def __init__(self, imageList, delay=8):
-        self.key = 'imagegroup'
-        self.imageList = imageList
-        self.imageIndex = 0
-        self.animationTimer = 0
-        self.animationDelay = delay
+class Image:
+    def __init__(self, image):
+        self.image = image
     def update(self):
-        # increment the timer
-        self.animationTimer += 1
-        # if the timer gets too high...
-        if self.animationTimer >= self.animationDelay:
-            # reset the timer
-            self.animationTimer = 0
-            # increment the current image
-            self.imageIndex += 1
-            # loop back to the first image in the list
-            # once the index gets too high
-            if self.imageIndex > len(self.imageList) - 1:
-                self.imageIndex = 0
+        pass
     def draw(self, screen, x, y, flipX, flipY, zoomLevel, alpha, hue=None):
-        image = self.imageList[self.imageIndex]
+        image = self.image
         if hue is not None:
             colour = pygame.Color(0)
             colour.hsla = (hue, 100, 50, 100)

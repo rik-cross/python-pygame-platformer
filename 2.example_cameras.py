@@ -31,7 +31,7 @@ engine.resourceManager.addImage('player_idle_4', 'images/player/vita_03.png')
 #
 
 heartEntity = engine.Entity(
-    engine.Position(100,100,27,30)
+    engine.Position(100,200,27,30)
 )
 heartImage = engine.Image(engine.resourceManager.getImage('heart'))
 heartEntity.getComponent('imagegroups').add('idle', heartImage)
@@ -41,7 +41,7 @@ heartEntity.getComponent('imagegroups').add('idle', heartImage)
 #
 
 playerEntity = engine.Entity(
-    engine.Position(300,100,45,51)
+    engine.Position(250,200,45,51)
 )
 playerAnimation = engine.Animation(
         engine.resourceManager.getImage('player_idle_1'),
@@ -52,13 +52,25 @@ playerAnimation = engine.Animation(
 playerEntity.getComponent('imagegroups').add('idle', playerAnimation)
 
 #
-# Create a camera
+# Create some cameras
 #
 
-cameraEntity = engine.Entity(
-    engine.CameraComponent(0,0,600,400,bgColour=engine.BLUE)
+worldCameraEntity = engine.Entity(
+    engine.CameraComponent(0,0,400,400,bgColour=engine.BLUE)
 )
-cameraEntity.getComponent('camera').moveTo(300,200)
+worldCameraEntity.getComponent('camera').moveTo(200,200)
+
+heartCameraEntity = engine.Entity(
+    engine.CameraComponent(400,0,200,200,bgColour=engine.DARK_GREY)
+)
+heartCameraEntity.getComponent('camera').goToEntity(heartEntity)
+heartCameraEntity.getComponent('camera').setZoomLevel(1.5)
+
+playerCameraEntity = engine.Entity(
+    engine.CameraComponent(400,200,200,200,bgColour=engine.LIGHT_GREY)
+)
+playerCameraEntity.getComponent('camera').trackEntity(playerEntity)
+playerCameraEntity.getComponent('camera').setZoomLevel(3)
 
 #
 # Add entities to world
@@ -66,12 +78,16 @@ cameraEntity.getComponent('camera').moveTo(300,200)
 
 engine.world.entities.append(heartEntity)
 engine.world.entities.append(playerEntity)
-engine.world.entities.append(cameraEntity)
+
+engine.world.entities.append(worldCameraEntity)
+engine.world.entities.append(heartCameraEntity)
+engine.world.entities.append(playerCameraEntity)
+
 
 #
 # Add scene to the engine and start
 #
 
-engine.init((600,400), caption='Engine // Image and Animation Example')
+engine.init((600,400), caption='Engine // Camera Example')
 engine.sceneManager.push(mainScene)
 engine.run()

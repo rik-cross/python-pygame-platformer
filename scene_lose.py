@@ -1,5 +1,4 @@
 import engine
-import utils
 import scene_main_menu
 import scene_level_select
 import pygame
@@ -27,7 +26,7 @@ class LoseScene(engine.Scene):
         # draw a transparent bg
         bgSurf = pygame.Surface(pygame.display.get_surface().get_size())
         bgSurf.fill((engine.BLACK))
-        utils.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
+        engine.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
 
         engine.drawText('You lose!', 150, 150, engine.WHITE, self.alpha)
         self.menu.draw()
