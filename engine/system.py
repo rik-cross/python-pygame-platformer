@@ -6,15 +6,11 @@ class System():
         pass
     def check(self, entity):
         return True
-    def update(self, screen=None, inputStream=None):
+    def update(self, screen=None):
 
-        #for entity in globals.world.entities:
-        #    if self.check(entity):
-        #        self.updateEntity(screen, inputStream, entity)
-        
         for entity in engine.world.entities:
             if self.check(entity):
-                self.updateEntity(screen, inputStream, entity)
+                self.updateEntity(screen, entity)
 
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
         pass

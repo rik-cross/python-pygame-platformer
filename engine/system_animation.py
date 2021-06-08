@@ -10,7 +10,7 @@ class AnimationSystem(System):
     def check(self, entity):
         return entity.hasComponent('imagegroups') #entity.imageGroups is not None
     
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
         ig = entity.getComponent('imagegroups')
         if entity.state in entity.getComponent('imagegroups').animationList.keys():
             ig.animationList[entity.state].update()

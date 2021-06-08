@@ -11,12 +11,12 @@ class SceneManager:
     def exitScene(self):
         if len(self.scenes) > 0:
             self.scenes[-1].onExit()
-    def input(self, inputStream):
+    def input(self):
         if len(self.scenes) > 0:
-            self.scenes[-1].input(self, inputStream)
-    def update(self, inputStream):
+            self.scenes[-1].input(self)
+    def update(self):
         if len(self.scenes) > 0:
-            self.scenes[-1].update(self, inputStream)
+            self.scenes[-1].update(self)
     def draw(self, screen):
         if len(self.scenes) > 0:
             self.scenes[-1].draw(self, screen)

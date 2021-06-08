@@ -10,7 +10,7 @@ class CameraSystem(System):
     def check(self, entity):
         return entity.hasComponent('camera')
     
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
 
         # set clipping rectangle
         cameraComponent = entity.getComponent('camera')

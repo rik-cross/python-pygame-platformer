@@ -27,29 +27,29 @@ class PlayerSelectScene(engine.Scene):
 
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
-    def update(self, sm, inputStream):
+    def update(self, sm):
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
             player.getComponent('imagegroups').animationList['idle'].update()
 
-    def input(self, sm, inputStream):
+    def input(self, sm):
 
-        self.mainMenu.update(inputStream)
+        self.mainMenu.update()
 
         # handle each player
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
 
             # add to the game
-            if inputStream.isPressed(player.getComponent('input').b1):
+            if engine.inputManager.isPressed(player.getComponent('input').b1):
                 if player not in globals.players:
                     globals.players.append(player)
             
             # remove from the game
-            if inputStream.isPressed(player.getComponent('input').b2):
+            if engine.inputManager.isPressed(player.getComponent('input').b2):
                 if player in globals.players:
                     globals.players.remove(player)
             
             # recolour
-            if inputStream.isPressed(player.getComponent('input').right):
+            if engine.inputManager.isPressed(player.getComponent('input').right):
                 if player in globals.players:
 
                     colourClash = True
@@ -67,7 +67,7 @@ class PlayerSelectScene(engine.Scene):
                     
                     player.getComponent('imagegroups').hue = nextHue
             
-            if inputStream.isPressed(player.getComponent('input').left):
+            if engine.inputManager.isPressed(player.getComponent('input').left):
                 if player in globals.players:
 
                     colourClash = True

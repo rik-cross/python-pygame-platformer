@@ -281,7 +281,7 @@ def resetPlayer(entity):
     if entity.hasComponent('motion'):
         entity.getComponent('motion').reset()
 
-def playerInput(inputStream, entity):
+def playerInput(entity):
     
     if not entity.hasComponent('input'):
         return
@@ -290,32 +290,32 @@ def playerInput(inputStream, entity):
     intentionComponent = entity.getComponent('intention')
 
     # up = jump
-    if inputStream.isDown(inputComponent.up):
+    if engine.inputManager.isDown(inputComponent.up):
         intentionComponent.jump = True
     else:
         intentionComponent.jump = False
     # left = moveLeft
-    if inputStream.isDown(inputComponent.left):
+    if engine.inputManager.isDown(inputComponent.left):
         intentionComponent.moveLeft = True
     else:
         intentionComponent.moveLeft = False
     # right = moveRight    
-    if inputStream.isDown(inputComponent.right):
+    if engine.inputManager.isDown(inputComponent.right):
         intentionComponent.moveRight = True
     else:
         intentionComponent.moveRight = False
     # down = balloon
-    if inputStream.isPressed(inputComponent.down):
+    if engine.inputManager.isPressed(inputComponent.down):
         intentionComponent.fire = True
     else:
         intentionComponent.fire = False
     # b1 = zoom out
-    if inputStream.isDown(inputComponent.b1):
+    if engine.inputManager.isDown(inputComponent.b1):
         intentionComponent.zoomOut = True
     else:
         intentionComponent.zoomOut = False        
     # b2 = zoom in
-    if inputStream.isDown(inputComponent.b2):
+    if engine.inputManager.isDown(inputComponent.b2):
         intentionComponent.zoomIn = True
     else:
         intentionComponent.zoomIn = False

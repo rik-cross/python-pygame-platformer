@@ -21,8 +21,8 @@ class GameScene(engine.Scene):
         self.triggerSystem = engine.TriggerSystem()
     def onEnter(self):
         engine.soundManager.playMusicFade('dawn')
-    def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.keys.esc):
+    def input(self, sm):
+        if engine.inputManager.isPressed(engine.keys.esc):
             sm.pop()
             sm.push(scene_fade_transition.FadeTransitionScene([self], []))
         if globals.world.isWon():
@@ -34,8 +34,8 @@ class GameScene(engine.Scene):
             sm.push(scene_win.WinScene())
         if globals.world.isLost():
             sm.push(scene_lose.LoseScene())
-    def update(self, sm, inputStream):
-        self.inputSystem.update(inputStream=inputStream)
+    def update(self, sm):
+        self.inputSystem.update()
         self.collectionSystem.update()
         self.battleSystem.update()
         self.physicsSystem.update()

@@ -10,7 +10,7 @@ class PhysicsSystem(System):
     def check(self, entity):
         return entity.hasComponent('position') and entity.hasComponent('collider')
     
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
 
         #
         # use the entity intentions to update the transform component

@@ -30,12 +30,12 @@ class LevelSelectScene(engine.Scene):
 
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
-    def update(self, sm, inputStream):
-        self.menu.update(inputStream)
-    def input(self, sm, inputStream):
-        if inputStream.isPressed(engine.keys.a):
+    def update(self, sm):
+        self.menu.update()
+    def input(self, sm):
+        if engine.inputManager.isPressed(engine.keys.a):
             globals.curentLevel = max(globals.curentLevel-1, 1)
-        if inputStream.isPressed(engine.keys.d):
+        if engine.inputManager.isPressed(engine.keys.d):
             globals.curentLevel = min(globals.curentLevel+1, globals.lastCompletedLevel)
             
     def draw(self, sm, screen):

@@ -12,8 +12,8 @@ class PowerupSystem(engine.System):
     def check(self, entity):
         return entity.hasComponent('effect') #entity.effect is not None
     
-    def update(self, screen=None, inputStream=None):
-        super().update(screen, inputStream)
+    def update(self, screen=None):
+        super().update(screen)
 
         # count the number of powerups in the world
         count = 0
@@ -40,7 +40,7 @@ class PowerupSystem(engine.System):
                         )
                         engine.soundManager.playSound('powerup_appear', engine.soundManager.soundVolume / 2)
 
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
 
         # player collection of powerups
         for otherEntity in globals.world.entities:
@@ -71,7 +71,7 @@ class PowerupSystem(engine.System):
 class CollectionSystem(engine.System):
     def check(self, entity):
         return entity.tags.has('player') and entity.hasComponent('score') #score is not None   
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
         for otherEntity in engine.world.entities:
             if otherEntity is not entity and otherEntity.tags.has('collectable'):
                 ep = entity.getComponent('position')
@@ -85,7 +85,7 @@ class CollectionSystem(engine.System):
 class BattleSystem(engine.System):
     def check(self, entity):
         return entity.getComponent('tags').has('player') and entity.hasComponent('battle') #battle is not None   
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
          # throwing balloons
 
         if entity.hasComponent('intention'): #intention is not None:

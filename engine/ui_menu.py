@@ -1,4 +1,5 @@
 import pygame
+import engine
 from .inputmanager import *
 
 class Menu:
@@ -18,15 +19,15 @@ class Menu:
     def addButton(self, button):
         self.buttons.append(button)
     
-    def update(self, inputStream):
+    def update(self):
         # update active button based on input
-        if inputStream.isPressed(keys.w):
+        if engine.inputManager.isPressed(keys.w):
             self.activeButtonIndex = max(0, self.activeButtonIndex - 1)
-        if inputStream.isPressed(keys.s):
+        if engine.inputManager.isPressed(keys.s):
             self.activeButtonIndex = min(len(self.buttons)-1, self.activeButtonIndex + 1)
         # update buttons in the button group    
         for i in range(len(self.buttons)):
-            self.buttons[i].update(self.activeButtonIndex == i, self.activeButtonIndex == i and inputStream.isPressed(keys.enter))
+            self.buttons[i].update(self.activeButtonIndex == i, self.activeButtonIndex == i and engine.inputManager.isPressed(keys.enter))
 
     def draw(self, screen):
         bX = self.x

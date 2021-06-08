@@ -5,9 +5,9 @@ class Scene:
         pass
     def onExit(self):
         pass
-    def input(self, sm, inputStream):
+    def input(self, sm):
         pass
-    def update(self, sm, inputStream):
+    def update(self, sm):
         pass
     def draw(self, sm, screen):
         pass

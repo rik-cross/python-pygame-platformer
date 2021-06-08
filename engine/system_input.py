@@ -11,9 +11,9 @@ class InputSystem(System):
         #return entity.input is not None and entity.intention is not None
         return entity.hasComponent('input') and entity.hasComponent('intention')
     
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
         #if entity.input.inputFunc is not None:
         #    entity.input.inputFunc(inputStream, entity)
         if entity.getComponent('input').inputFunc is not None:
-            entity.getComponent('input').inputFunc(inputStream, entity)
+            entity.getComponent('input').inputFunc(entity)
         

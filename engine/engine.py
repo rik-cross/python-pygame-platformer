@@ -45,8 +45,8 @@ def run():
 
         if sceneManager.isEmpty():
             running = False
-        sceneManager.input(inputManager)
-        sceneManager.update(inputManager)
+        sceneManager.input()
+        sceneManager.update()
         sceneManager.draw(screen) 
 
         #print(clock.get_fps())

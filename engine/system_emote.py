@@ -5,7 +5,7 @@ class EmoteSystem(System):
     def check(self, entity):
         return entity.hasComponent('emote') #emote is not None
     
-    def updateEntity(self, screen, inputStream, entity):
+    def updateEntity(self, screen, entity):
         em = entity.getComponent('emote')
         em.update()
         if em.destroy:
