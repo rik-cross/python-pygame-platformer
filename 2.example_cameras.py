@@ -31,9 +31,9 @@ engine.resourceManager.addImage('player_idle_4', 'images/player/vita_03.png')
 #
 
 heartEntity = engine.Entity(
-    engine.Position(100,200,27,30)
+    engine.Position(100, 200, 27, 30)
 )
-heartImage = engine.Image(engine.resourceManager.getImage('heart'))
+heartImage = engine.ImageGroup(engine.resourceManager.getImage('heart'))
 heartEntity.getComponent('imagegroups').add('idle', heartImage)
 
 #
@@ -41,9 +41,9 @@ heartEntity.getComponent('imagegroups').add('idle', heartImage)
 #
 
 playerEntity = engine.Entity(
-    engine.Position(250,200,45,51)
+    engine.Position(250, 200, 45, 51)
 )
-playerAnimation = engine.Animation(
+playerAnimation = engine.ImageGroup(
         engine.resourceManager.getImage('player_idle_1'),
         engine.resourceManager.getImage('player_idle_2'),
         engine.resourceManager.getImage('player_idle_3'),
@@ -56,21 +56,21 @@ playerEntity.getComponent('imagegroups').add('idle', playerAnimation)
 #
 
 worldCameraEntity = engine.Entity(
-    engine.CameraComponent(0,0,400,400,bgColour=engine.BLUE)
+    engine.CameraComponent(0, 0, 400, 400, bgColour=engine.BLUE)
 )
-worldCameraEntity.getComponent('camera').moveTo(200,200)
+worldCameraEntity.getComponent('camera').setPosition(200, 200)
 
 heartCameraEntity = engine.Entity(
-    engine.CameraComponent(400,0,200,200,bgColour=engine.DARK_GREY)
+    engine.CameraComponent(400, 0, 200, 200, bgColour=engine.RED)
 )
 heartCameraEntity.getComponent('camera').goToEntity(heartEntity)
-heartCameraEntity.getComponent('camera').setZoomLevel(1.5)
+heartCameraEntity.getComponent('camera').setZoom(5, duration=300)
 
 playerCameraEntity = engine.Entity(
-    engine.CameraComponent(400,200,200,200,bgColour=engine.LIGHT_GREY)
+    engine.CameraComponent(400, 200, 200, 200,bgColour=engine.GREEN)
 )
 playerCameraEntity.getComponent('camera').trackEntity(playerEntity)
-playerCameraEntity.getComponent('camera').setZoomLevel(3)
+playerCameraEntity.getComponent('camera').setZoom(3)
 
 #
 # Add entities to world
@@ -88,6 +88,6 @@ engine.world.entities.append(playerCameraEntity)
 # Add scene to the engine and start
 #
 
-engine.init((600,400), caption='Engine // Camera Example')
+engine.init((600, 400), caption='Engine // Camera Example')
 engine.sceneManager.push(mainScene)
 engine.run()

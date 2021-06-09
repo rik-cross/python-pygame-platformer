@@ -7,8 +7,10 @@ class CameraComponent(Component):
 
     def __init__(self, x, y, w, h, bgColour=BLACK):
         self.key = 'camera'
-        self.bgColour = bgColour
+        
         self.rect = pygame.Rect(x,y,w,h)
+        self.bgColour = bgColour
+        
         self.worldX = 0
         self.worldY = 0
         self.entityToTrack = None
@@ -22,23 +24,22 @@ class CameraComponent(Component):
         self.movementPerFrameX = 0
         self.movementPerFrameY = 0
     
-    def setZoomLevel(self, level):
-        self.zoomLevel = level
-    
-    def zoomTo(self, level, overFrames=1):
+    def setZoom(self, level, duration=1):
+        if duration < 1:
+            return
         self.targetZoom = level
-        self.zoomPerFrame = (self.targetZoom - self.zoomLevel) / overFrames
+        self.zoomPerFrame = (self.targetZoom - self.zoomLevel) / duration
 
-    def moveTo(self, x, y, overFrames=1):
-        if overFrames < 1:
+    def setPosition(self, x, y, duration=1):
+        if duration < 1:
             return
         self.entityToTrack = None
         self.targetX = x
         self.targetY = y
-        self.movementPerFrameX = (self.targetX - self.worldX) / overFrames
-        self.movementPerFrameY = (self.targetY - self.worldY) / overFrames
+        self.movementPerFrameX = (self.targetX - self.worldX) / duration
+        self.movementPerFrameY = (self.targetY - self.worldY) / duration
 
-    def setWorldPos(self, x, y):
+    def _updateWorldPos(self, x, y):
 
         newX = x
         newY = y

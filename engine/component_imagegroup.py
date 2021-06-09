@@ -8,7 +8,7 @@ def changeColour(image, colour):
     finalImage.blit(colouredImage, (0, 0), special_flags = pygame.BLEND_MULT)
     return finalImage
     
-class Animation:
+class ImageGroup:
     def __init__(self, image, *additionalImages, delay=8):
         self.imageList = [image]
         for i in additionalImages:

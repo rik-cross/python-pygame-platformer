@@ -31,9 +31,9 @@ engine.resourceManager.addImage('player_idle_4', 'images/player/vita_03.png')
 #
 
 heartEntity = engine.Entity(
-    engine.Position(100,100,27,30)
+    engine.Position(100, 100, 27, 30)
 )
-heartImage = engine.Image(engine.resourceManager.getImage('heart'))
+heartImage = engine.ImageGroup(engine.resourceManager.getImage('heart'))
 heartEntity.getComponent('imagegroups').add('idle', heartImage)
 
 #
@@ -41,9 +41,9 @@ heartEntity.getComponent('imagegroups').add('idle', heartImage)
 #
 
 playerEntity = engine.Entity(
-    engine.Position(300,100,45,51)
+    engine.Position(300, 100, 45, 51)
 )
-playerAnimation = engine.Animation(
+playerAnimation = engine.ImageGroup(
         engine.resourceManager.getImage('player_idle_1'),
         engine.resourceManager.getImage('player_idle_2'),
         engine.resourceManager.getImage('player_idle_3'),
@@ -56,9 +56,9 @@ playerEntity.getComponent('imagegroups').add('idle', playerAnimation)
 #
 
 cameraEntity = engine.Entity(
-    engine.CameraComponent(0,0,600,400,bgColour=engine.BLUE)
+    engine.CameraComponent(0, 0, 600, 400, bgColour=engine.BLUE)
 )
-cameraEntity.getComponent('camera').moveTo(300,200)
+cameraEntity.getComponent('camera').setPosition(300, 200)
 
 #
 # Add entities to world
@@ -72,6 +72,6 @@ engine.world.entities.append(cameraEntity)
 # Add scene to the engine and start
 #
 
-engine.init((600,400), caption='Engine // Image and Animation Example')
+engine.init((600, 400), caption='Engine // Image and Animation Example')
 engine.sceneManager.push(mainScene)
 engine.run()

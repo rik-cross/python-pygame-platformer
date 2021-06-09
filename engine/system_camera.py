@@ -42,7 +42,7 @@ class CameraSystem(System):
             targetX = trackedEntityPosition.rect.x + trackedEntityPosition.rect.w/2
             targetY = trackedEntityPosition.rect.y + trackedEntityPosition.rect.h/2
 
-            cameraComponent.setWorldPos((currentX * 0.95) + (targetX * 0.05), (currentY * 0.95) + (targetY * 0.05))
+            cameraComponent.setPosition((currentX * 0.95) + (targetX * 0.05), (currentY * 0.95) + (targetY * 0.05))
 
         # calculate offsets
         offsetX = cameraRect.x + cameraRect.w/2 - (cameraComponent.worldX * cameraComponent.zoomLevel)
