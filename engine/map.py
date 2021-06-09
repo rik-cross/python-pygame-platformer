@@ -80,7 +80,7 @@ class Map:
         for r in range(self.h_map):
             for c in range(self.w_map):
                 tile = self.map[r][c]
-                if Tile.tiles[tile].texture is not None: 
+                if Tile.tiles[tile].image is not None: 
                     newX = x + c*(self.tileSize*z)
                     newY = y + r*(self.tileSize*z)
                     newWidth = math.ceil(self.tileSize * z)

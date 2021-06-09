@@ -1,7 +1,7 @@
 import engine
 
 #
-# Create a main scene
+# create a main scene
 #
 
 class MainScene(engine.Scene):
@@ -16,7 +16,7 @@ class MainScene(engine.Scene):
 mainScene = MainScene()
 
 #
-# Add some resources
+# add some resources
 #
 
 engine.resourceManager.addImage('heart', 'images/heart.png')
@@ -27,7 +27,7 @@ engine.resourceManager.addImage('player_idle_3', 'images/player/vita_02.png')
 engine.resourceManager.addImage('player_idle_4', 'images/player/vita_03.png')
 
 #
-# Create a heart entity
+# create a heart entity
 #
 
 heartEntity = engine.Entity(
@@ -37,7 +37,7 @@ heartImage = engine.ImageGroup(engine.resourceManager.getImage('heart'))
 heartEntity.getComponent('imagegroups').add('idle', heartImage)
 
 #
-# Create an animated player
+# create an animated player
 #
 
 playerEntity = engine.Entity(
@@ -52,19 +52,25 @@ playerAnimation = engine.ImageGroup(
 playerEntity.getComponent('imagegroups').add('idle', playerAnimation)
 
 #
-# Create some cameras
+# create some cameras
 #
+
+# world camera
 
 worldCameraEntity = engine.Entity(
     engine.CameraComponent(0, 0, 400, 400, bgColour=engine.BLUE)
 )
 worldCameraEntity.getComponent('camera').setPosition(200, 200)
 
+# heart camera
+
 heartCameraEntity = engine.Entity(
     engine.CameraComponent(400, 0, 200, 200, bgColour=engine.RED)
 )
 heartCameraEntity.getComponent('camera').goToEntity(heartEntity)
 heartCameraEntity.getComponent('camera').setZoom(5, duration=300)
+
+# player camera
 
 playerCameraEntity = engine.Entity(
     engine.CameraComponent(400, 200, 200, 200,bgColour=engine.GREEN)
@@ -73,19 +79,22 @@ playerCameraEntity.getComponent('camera').trackEntity(playerEntity)
 playerCameraEntity.getComponent('camera').setZoom(3)
 
 #
-# Add entities to world
+# add entities to world
 #
+
+# game entities
 
 engine.world.entities.append(heartEntity)
 engine.world.entities.append(playerEntity)
+
+# cameras
 
 engine.world.entities.append(worldCameraEntity)
 engine.world.entities.append(heartCameraEntity)
 engine.world.entities.append(playerCameraEntity)
 
-
 #
-# Add scene to the engine and start
+# add scene to the engine and start
 #
 
 engine.init((600, 400), caption='Engine // Camera Example')

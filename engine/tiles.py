@@ -5,17 +5,17 @@ class Tile:
     tiles = {}
 
     @classmethod
-    def addTile(cls, tileString, tile):
-        cls.tiles[tileString] = tile
+    def addTile(cls, tileString, tileImage):
+        cls.tiles[tileString] = tileImage
 
-    def __init__(self, texture=None, solid=False):
-        self.texture = texture
+    def __init__(self, image=None, solid=False):
+        self.image = image
         self.solid = solid
     
     def draw(self, screen, x, y, w, h):
-        if self.texture is None:
+        if self.image is None:
             return
-        screen.blit(pygame.transform.scale(self.texture, (w,h)), (x,y))
+        screen.blit(pygame.transform.scale(self.image, (w,h)), (x,y))
 
 # add the default empty tile
 Tile.addTile('none', Tile())

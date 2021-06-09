@@ -1,7 +1,7 @@
 import engine
 
 #
-# Create a main scene
+# create a main scene
 #
 
 class MainScene(engine.Scene):
@@ -16,7 +16,7 @@ class MainScene(engine.Scene):
 mainScene = MainScene()
 
 #
-# Add some resources
+# add some resources
 #
 
 engine.resourceManager.addImage('heart', 'images/heart.png')
@@ -27,7 +27,7 @@ engine.resourceManager.addImage('player_idle_3', 'images/player/vita_02.png')
 engine.resourceManager.addImage('player_idle_4', 'images/player/vita_03.png')
 
 #
-# Create a heart entity
+# create a heart entity
 #
 
 heartEntity = engine.Entity(
@@ -37,7 +37,7 @@ heartImage = engine.ImageGroup(engine.resourceManager.getImage('heart'))
 heartEntity.getComponent('imagegroups').add('idle', heartImage)
 
 #
-# Create an animated player
+# create an animated player
 #
 
 playerEntity = engine.Entity(
@@ -52,7 +52,7 @@ playerAnimation = engine.ImageGroup(
 playerEntity.getComponent('imagegroups').add('idle', playerAnimation)
 
 #
-# Create a camera
+# create a camera
 #
 
 cameraEntity = engine.Entity(
@@ -61,7 +61,7 @@ cameraEntity = engine.Entity(
 cameraEntity.getComponent('camera').setPosition(300, 200)
 
 #
-# Add entities to world
+# add entities to world
 #
 
 engine.world.entities.append(heartEntity)
@@ -69,7 +69,7 @@ engine.world.entities.append(playerEntity)
 engine.world.entities.append(cameraEntity)
 
 #
-# Add scene to the engine and start
+# add scene to the engine and start
 #
 
 engine.init((600, 400), caption='Engine // Image and Animation Example')
