@@ -23,6 +23,8 @@ class CameraComponent(Component):
         self.targetY = 0
         self.movementPerFrameX = 0
         self.movementPerFrameY = 0
+
+        self.clampToWorld=True
     
     def setZoom(self, level, duration=1):
         if duration < 1:
@@ -44,7 +46,7 @@ class CameraComponent(Component):
         newX = x
         newY = y
   
-        if world is not None and world.map is not None:
+        if world is not None and world.map is not None and self.clampToWorld:
 
             # calculate x value
 

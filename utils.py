@@ -156,11 +156,11 @@ def setPlayerCameras():
         p2 = globals.players[1]
 
         p1.addComponent(engine.CameraComponent(10,10,cameraWidth, cameraHeight))
-        p1.getComponent('camera')._updateWorldPosition(p1.getComponent('position').initialRect.x, p1.getComponent('position').initialRect.y)
+        #p1.getComponent('camera')._updateWorldPosition(p1.getComponent('position').initialRect.x, p1.getComponent('position').initialRect.y)
         p1.getComponent('camera').trackEntity(p1)
 
         p2.addComponent()
-        p2.getComponent('camera')._updateWorldPosition(p2.getComponent('position').initialRect.x, p2.getComponent('position').initialRect.y)
+        #p2.getComponent('camera')._updateWorldPosition(p2.getComponent('position').initialRect.x, p2.getComponent('position').initialRect.y)
         p2.getComponent('camera').trackEntity(p2)
 
     # 3 or 4 player game
@@ -169,23 +169,23 @@ def setPlayerCameras():
         cameraHeight = (screenHeight - (3*10)) / 2
         p1 = globals.players[0]
         p1.addComponent(engine.CameraComponent(10,10,cameraWidth, cameraHeight))
-        p1.getComponent('camera')._updateWorldPosition(p1.getComponent('position').initialRect.x, p1.getComponent('position').initialRect.y)
+        #p1.getComponent('camera')._updateWorldPosition(p1.getComponent('position').initialRect.x, p1.getComponent('position').initialRect.y)
         p1.getComponent('camera').trackEntity(p1)
 
         p2 = globals.players[1]
         p2.addComponent(engine.CameraComponent((2*10)+cameraWidth,10,cameraWidth, cameraHeight))
-        p2.getComponent('camera')._updateWorldPosition(p2.getComponent('position').initialRect.x, p2.getComponent('position').initialRect.y)
+        #p2.getComponent('camera')._updateWorldPosition(p2.getComponent('position').initialRect.x, p2.getComponent('position').initialRect.y)
         p2.getComponent('camera').trackEntity(p2)
 
         p3 = globals.players[2]
         p3.addComponent(engine.CameraComponent(10,(2*10)+cameraHeight,cameraWidth, cameraHeight))
-        p3.getComponent('camera')._updateWorldPosition(p3.getComponent('position').initialRect.x, p3.getComponent('position').initialRect.y)
+        #p3.getComponent('camera')._updateWorldPosition(p3.getComponent('position').initialRect.x, p3.getComponent('position').initialRect.y)
         p3.getComponent('camera').trackEntity(p3)
 
         if len(globals.players) == 4:
             p4 = globals.players[3]
             p4.addComponent(engine.CameraComponent((2*10)+cameraWidth,(2*10)+cameraHeight,cameraWidth, cameraHeight))
-            p4.getComponent('camera')._updateWorldPosition(p4.getComponent('position').initialRect.x, p4.getComponent('position').initialRect.y)
+            #p4.getComponent('camera')._updateWorldPosition(p4.getComponent('position').initialRect.x, p4.getComponent('position').initialRect.y)
             p4.getComponent('camera').trackEntity(p4)
 
 def resetPlayer(entity):
@@ -194,7 +194,7 @@ def resetPlayer(entity):
     entity.getComponent('position').reset()
     entity.speed = 0
     entity.acceleration = entity.initialAcceleration
-    entity.getComponent('camera')._updateWorldPosition(entity.getComponent('position').initialRect.x, entity.getComponent('position').initialRect.y)
+    #entity.getComponent('camera')._updateWorldPosition(entity.getComponent('position').initialRect.x, entity.getComponent('position').initialRect.y)
     entity.direction = 'right'
     entity.getComponent('imagegroups').alpha = 255
     entity.removeComponent('effect')
