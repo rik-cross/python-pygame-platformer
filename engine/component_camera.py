@@ -39,7 +39,7 @@ class CameraComponent(Component):
         self.movementPerFrameX = (self.targetX - self.worldX) / duration
         self.movementPerFrameY = (self.targetY - self.worldY) / duration
 
-    def _updateWorldPos(self, x, y):
+    def _updateWorldPosition(self, x, y):
 
         newX = x
         newY = y
