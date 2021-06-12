@@ -7,9 +7,9 @@ import random
 
 class CameraSystem(System):
 
-    def check(self, entity):
-        return entity.hasComponent('camera')
-    
+    def setRequirements(self):
+        self.requiredComponents = ['camera']
+
     def updateEntity(self, entity):
 
         # set clipping rectangle
@@ -80,13 +80,13 @@ class CameraSystem(System):
                         (img.y * cameraComponent.zoomLevel) + offsetY,
                         cameraComponent.zoomLevel) 
 
-        # render map (to replace platforms)
+        # render map
         if engine.world.map is not None:
             engine.world.map.draw(engine.screen, offsetX, offsetY, cameraComponent.zoomLevel)
 
         # render entities
         for e in engine.world.entities:
-            if e.hasComponent('imagegroups'): #imageGroups is not None:
+            if e.hasComponent('imagegroups'):
                 igComp = e.getComponent('imagegroups')
                 p = e.getComponent('position')
                 if e.state in igComp.animationList:

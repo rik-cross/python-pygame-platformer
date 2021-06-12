@@ -1,6 +1,6 @@
 import pygame
 from .component_transform import TransformComponent
-from .component_tag import TagsComponent
+from .component_tags import TagsComponent
 from .component_imagegroups import ImageGroups
 
 def resetEntity(entity):
@@ -47,8 +47,15 @@ class Entity:
     def reset(self):
         self.reset()
 
-    def hasComponent(self, componentKey):
-        return componentKey in self.components.keys()
+    #def hasTag(self, tag, *otherTags):
+        #for t in [tag] + list(otherTags):
+        #    if t not in self.getComponent('tags')
+
+    def hasComponent(self, componentKey, *otherComponentKeys):
+        for c in [componentKey] + list(otherComponentKeys):
+            if c not in self.components.keys():
+                return False
+        return True
     
     def getComponent(self, componentKey):
         if componentKey not in self.components.keys():

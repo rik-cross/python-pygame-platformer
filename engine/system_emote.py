@@ -2,8 +2,8 @@ from .system import System
 
 class EmoteSystem(System):
 
-    def check(self, entity):
-        return entity.hasComponent('emote') #emote is not None
+    def setRequirements(self):
+        self.requiredComponents = ['emote']
     
     def updateEntity(self, entity):
         em = entity.getComponent('emote')

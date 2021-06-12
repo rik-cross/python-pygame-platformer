@@ -32,7 +32,7 @@ from .component_position import *
 from .component_transform import *
 from .component_motion import *
 
-from .component_tag import *
+from .component_tags import *
 
 from .soundmanager import *
 from .inputmanager import *

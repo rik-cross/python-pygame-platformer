@@ -40,7 +40,7 @@ map = engine.Map(map=[
     ['grass','water','water'],
     ['grass','dirt','water']
 ])
-mainScene.map = map
+engine.map = map
 
 #
 # create a camera

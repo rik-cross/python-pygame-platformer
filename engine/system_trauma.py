@@ -7,7 +7,7 @@ import random
 
 class TraumaSystem(System):
 
-    def check(self, entity):
+    def _check(self, entity):
         return entity.trauma is not None
     
     def updateEntity(self, entity):    

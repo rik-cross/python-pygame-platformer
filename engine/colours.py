@@ -1,10 +1,10 @@
-WHITE      = (255,255,255)
-LIGHT_GREY = (150,150,150)
-DARK_GREY  = (50,50,50)
-BLACK      = (0,0,0)
+from pygame import color
 
-RED        = (255,0,0)
-GREEN      = (0,255,0)
-BLUE       = (50,50,150)
+WHITE      = color.Color(255,255,255)
+LIGHT_GREY = color.Color(150,150,150)
+DARK_GREY  = color.Color(50,50,50)
+BLACK      = color.Color(0,0,0)
 
-MUSTARD    = (209,206,25)
+RED        = color.Color(150,50,50)
+GREEN      = color.Color(50,150,50)
+BLUE       = color.Color(50,50,150)

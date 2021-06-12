@@ -7,9 +7,10 @@ import random
 
 class AnimationSystem(System):
 
-    def check(self, entity):
-        return entity.hasComponent('imagegroups') #entity.imageGroups is not None
-    
+    def setRequirements(self):
+        self.requiredComponents = ['imagegroups']
+        self.requiredTags = []
+
     def updateEntity(self, entity):
         ig = entity.getComponent('imagegroups')
         if entity.state in entity.getComponent('imagegroups').animationList.keys():

@@ -7,9 +7,8 @@ import random
 
 class InputSystem(System):
 
-    def check(self, entity):
-        #return entity.input is not None and entity.intention is not None
-        return entity.hasComponent('input') and entity.hasComponent('intention')
+    def setRequirements(self):
+        self.requiredComponents = ['input', 'intention']
     
     def updateEntity(self, entity):
         #if entity.input.inputFunc is not None:

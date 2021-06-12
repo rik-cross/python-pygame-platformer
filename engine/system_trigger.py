@@ -3,9 +3,9 @@ from .engine import *
 
 class TriggerSystem(System):
 
-    def check(self, entity):
-        return entity.hasComponent('position') and entity.hasComponent('triggers') # position is not None and entity.triggers is not None
-    
+    def setRequirements(self):
+        self.requiredComponents = ['position', 'triggers']
+
     def updateEntity(self, entity):
 
         trg = entity.getComponent('triggers')

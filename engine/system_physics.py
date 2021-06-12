@@ -7,8 +7,8 @@ import random
 
 class PhysicsSystem(System):
 
-    def check(self, entity):
-        return entity.hasComponent('position') and entity.hasComponent('collider')
+    def setRequirements(self):
+        self.requiredComponents = ['position', 'collider']
     
     def updateEntity(self, entity):
 

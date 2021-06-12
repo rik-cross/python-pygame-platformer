@@ -34,7 +34,7 @@ globals.player2 = utils.makePlayer(350,50)
 globals.player2.addComponent(engine.Input(engine.controller[0].dpad_up, engine.controller[0].dpad_down, engine.controller[0].dpad_left, engine.controller[0].dpad_right, engine.controller[0].a, engine.controller[0].b))
 globals.player2.getComponent('input').inputFunc = utils.playerInput
 globals.player2.getComponent('imagegroups').hue = 50
-globals.player2.getComponent('tags').add('player2')
+globals.player2.getComponent('tags').add('player2', 'second', 'main')
 
 # player 3
 globals.player3 = utils.makePlayer(400,50)

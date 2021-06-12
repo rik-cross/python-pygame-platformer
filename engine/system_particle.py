@@ -2,9 +2,9 @@ from .system import *
 
 class ParticleSystem(System):
 
-    def check(self, entity):
-        return entity.hasComponent('emitter') #particle_emitter is not None
-    
+    def setRequirements(self):
+        self.requiredComponents = ['emitter']
+
     def updateEntity(self, entity):
         emt = entity.getComponent('emitter')
         pos = entity.getComponent('position')

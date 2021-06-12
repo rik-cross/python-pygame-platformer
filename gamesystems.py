@@ -8,9 +8,11 @@ class PowerupSystem(engine.System):
     
     def __init__(self):
         self.timer = 0
+        self.requiredComponents = ['effect']
+        self.requiredTags = []
     
-    def check(self, entity):
-        return entity.hasComponent('effect') #entity.effect is not None
+    #def check(self, entity):
+    #    return entity.hasComponent('effect') #entity.effect is not None
     
     def update(self):
         super().update()
@@ -69,8 +71,14 @@ class PowerupSystem(engine.System):
                 ee = None
 
 class CollectionSystem(engine.System):
-    def check(self, entity):
-        return entity.getComponent('tags').has('player') and entity.hasComponent('score') #score is not None   
+    
+    def setRequirements(self):
+        self.requiredComponents = ['score']
+        self.requiredTags = ['player']
+    
+    #def check(self, entity):
+    #    return entity.getComponent('tags').has('player') and entity.hasComponent('score') #score is not None   
+    
     def updateEntity(self, entity):
         for otherEntity in engine.world.entities:
             if otherEntity is not entity and otherEntity.getComponent('tags').has('collectable'):
@@ -83,8 +91,11 @@ class CollectionSystem(engine.System):
                     entity.getComponent('score').score += 1
 
 class BattleSystem(engine.System):
-    def check(self, entity):
-        return entity.getComponent('tags').has('player') and entity.hasComponent('battle') #battle is not None   
+
+    def setRequirements(self):
+        self.requiredComponents = ['battle']
+        self.requiredTags = ['player']
+    
     def updateEntity(self, entity):
          # throwing balloons
 
