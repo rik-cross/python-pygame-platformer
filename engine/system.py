@@ -3,10 +3,16 @@ import engine
 
 class System():
 
+    systems = []
+
+    @classmethod
+    def addSystem(cls, system):
+        cls.systems.append(system)
+    
     def __init__(self):
         self.requiredComponents = []
         self.requiredTags = []
-        self.setRequirements()
+        self.setRequirements()        
     
     def setRequirements(self):
         pass
@@ -23,3 +29,7 @@ class System():
 
     def updateEntity(self, entity):
         pass
+
+    @classmethod
+    def swap(cls, s1, s2):
+        cls.systems[s1], cls.systems[s2] = cls.systems[s2], cls.systems[s1]

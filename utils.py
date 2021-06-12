@@ -263,7 +263,6 @@ def makePlayer(x,y):
     entity.addComponent(engine.Collider(10,1,25,50))
     entity.getComponent('tags').add('player')
     entity.addComponent(engine.Motion(acceleration=pygame.math.Vector2(0,0.3)))
-
     return entity
 
 def makeCollision(x,y):
@@ -271,7 +270,6 @@ def makeCollision(x,y):
     entity.addComponent(engine.Position(x,y,1,1))
     entity.addComponent(engine.ParticleEmitter())
     entity.removeComponent('imagegroups')
-
     return entity
 
 def makeExplosion(x,y):
@@ -279,7 +277,6 @@ def makeExplosion(x,y):
     entity.addComponent(engine.Position(x,y,1,1))
     entity.addComponent(engine.ParticleEmitter(size=40, colour=engine.colours.BLUE))
     entity.removeComponent('imagegroups')
-
     return entity
 
 balloon = pygame.image.load('images/balloon.png')
@@ -294,5 +291,4 @@ def makeBalloon(x,y):
     entity.addComponent(engine.Collider(2,2,12,12))
     entity.getComponent('tags').add('balloon')
     entity.addComponent(engine.Motion(acceleration=pygame.math.Vector2(0,0.3)))
-
     return entity

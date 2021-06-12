@@ -32,7 +32,6 @@ class Entity:
 
         self.state = 'idle'
         self.type = 'normal'
-        #self.imageGroups = ImageGroups()
         self.direction = 'right'
         self.on_ground = False
         self.reset = resetEntity
@@ -46,10 +45,6 @@ class Entity:
     
     def reset(self):
         self.reset()
-
-    #def hasTag(self, tag, *otherTags):
-        #for t in [tag] + list(otherTags):
-        #    if t not in self.getComponent('tags')
 
     def hasComponent(self, componentKey, *otherComponentKeys):
         for c in [componentKey] + list(otherComponentKeys):

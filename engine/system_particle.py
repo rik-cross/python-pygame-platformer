@@ -1,4 +1,5 @@
 from .system import *
+#from .engine import world
 
 class ParticleSystem(System):
 
@@ -10,4 +11,6 @@ class ParticleSystem(System):
         pos = entity.getComponent('position')
         emt.update(pos.rect.x, pos.rect.y)
         if emt.destroy:
-            emt = None
+            entity.removeComponent('emitter')
+            #if len(entity.components) == 4 and entity.hasComponent('emitter', 'position', 'transform', 'tags'):
+            #    world.deleteEntity(entity)

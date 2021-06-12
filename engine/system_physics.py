@@ -144,9 +144,3 @@ class PhysicsSystem(System):
                 engine.world.entities.append(engine.entityFactory.create('explosion', positionComponent.rect.x, positionComponent.rect.y))
                 engine.soundManager.playSound('explosion_small', engine.soundManager.soundVolume / 2)
                 engine.world.entities.remove(entity)
-
-        #print(entity.getComponent('position').rect.x, entity.getComponent('position').rect.y)
-
-        # reset intentions
-        if entity.hasComponent('intention'):
-            entity.getComponent('intention').reset()

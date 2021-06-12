@@ -99,10 +99,8 @@ class BattleSystem(engine.System):
     def updateEntity(self, entity):
          # throwing balloons
 
-        if entity.hasComponent('intention'): #intention is not None:
+        if entity.hasComponent('intention'):
             if entity.getComponent('intention').fire == True:
-
-                #if entity.intention.fire == True:
 
                 pos = entity.getComponent('position')
 
@@ -168,3 +166,7 @@ class BattleSystem(engine.System):
                     # remove player if no lives left
                     if entity.getComponent('battle').lives <= 0:
                         engine.world.entities.remove(entity)
+
+engine.System.addSystem(CollectionSystem())
+engine.System.addSystem(BattleSystem())
+engine.System.addSystem(PowerupSystem())

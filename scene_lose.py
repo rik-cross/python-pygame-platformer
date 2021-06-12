@@ -16,7 +16,7 @@ class LoseScene(engine.Scene):
         self.menu = engine.Menu(1500/2, 650)
         self.menu.addButton(engine.ButtonUI('Back', actionListener=engine.ActionListener(back)))
 
-    def update(self, sm):
+    def update(self):
         self.alpha = min(255, self.alpha + 10)
         self.menu.update()
     def draw(self):

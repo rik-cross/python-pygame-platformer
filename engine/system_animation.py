@@ -5,7 +5,7 @@ from .system import *
 from .colours import *
 import random
 
-class AnimationSystem(System):
+class AnimationSystem(System): #TODO -- call ...(System(required=...))
 
     def setRequirements(self):
         self.requiredComponents = ['imagegroups']

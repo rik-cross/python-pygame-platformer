@@ -39,8 +39,6 @@ class TriggerSystem(System):
 
                         if adjustedRect.colliderect(otherRect):
                             trigger.current.append(otherEntity.ID)
-
-                #print(trigger.current)
                 
             if trigger.current and not trigger.last:
                 trigger.onEnter(entity)
@@ -48,6 +46,3 @@ class TriggerSystem(System):
                 trigger.onExit(entity)
             elif trigger.current:
                 trigger.onStay(entity)
-            
-                #print(world.getEntitiesByTagList(['player1'])[0].ID)
-                            #trigger.onCollide(otherEntity)

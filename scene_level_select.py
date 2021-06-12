@@ -10,6 +10,8 @@ hues = [0, 30, 50, 90, 190, 300]
 class LevelSelectScene(engine.Scene):
     def __init__(self):
     
+        #engine.world.clear()
+
         def loadNext():
              # keep players in a sensible order (mainly for cameras)
             utils.orderPlayers()

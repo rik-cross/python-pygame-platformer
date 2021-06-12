@@ -4,16 +4,7 @@ import engine
 # create a main scene
 #
 
-class MainScene(engine.Scene):
-    def __init__(self):
-        self.cameraSystem = engine.CameraSystem()
-        self.animationSystem = engine.AnimationSystem()
-    def update(self):
-        self.animationSystem.update()
-    def draw(self):
-        self.cameraSystem.update()
-
-mainScene = MainScene()
+mainScene = engine.Scene()
 
 #
 # add some resources

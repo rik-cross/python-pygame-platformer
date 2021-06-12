@@ -29,3 +29,7 @@ class World:
             if e.hasComponent(*componentKeys):
                 entityList.append(e)
         return entityList
+    
+    def clear(self):
+        self.entities = []
+        self.map = None

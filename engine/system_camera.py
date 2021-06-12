@@ -1,9 +1,10 @@
 import pygame
 import globals
 import utils
-from .system import *
+from .system import System
 from .colours import *
 import random
+import engine
 
 class CameraSystem(System):
 

@@ -1,9 +1,22 @@
+from engine.component_imagegroup import ImageGroup
 import pygame
 
 from .soundmanager import *
 from .inputmanager import *
 from .scenemanager import *
 from .resourcemanager import *
+
+from .system import System
+
+from .system_animation import *
+from .system_camera import *
+from .system_emote import *
+from .system_input import *
+from .system_particle import *
+from .system_physics import *
+from .system_text import *
+from .system_trauma import *
+from .system_trigger import *
 
 from .entity_factory import *
 
@@ -16,6 +29,17 @@ inputManager = InputManager()
 
 soundManager = SoundManager()
 resourceManager = ResourceManager()
+
+# add core game systems
+System.addSystem(AnimationSystem())
+System.addSystem(EmoteSystem())
+System.addSystem(InputSystem())
+System.addSystem(PhysicsSystem())
+System.addSystem(TextSystem())
+System.addSystem(TraumaSystem())
+System.addSystem(TriggerSystem())
+System.addSystem(ParticleSystem())
+System.addSystem(CameraSystem())
 
 entityFactory = EntityFactory()
 
@@ -48,6 +72,9 @@ def run():
         sceneManager.input()
         sceneManager.update()
         sceneManager.draw() 
+
+        for s in System.systems:
+            s.update()
 
         #print(clock.get_fps())
         clock.tick(60)
