@@ -63,4 +63,3 @@ engine.soundManager.addSound('powerup_appear', 'sounds/powerup_appear.wav')
 engine.soundManager.addSound('powerup_get', 'sounds/powerup_get.wav')
 
 engine.resourceManager.addImage('heart_small', 'images/heart_small.png')
-engine.resourceManager.addFont('munro24', 'fonts/munro.ttf')

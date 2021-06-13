@@ -29,6 +29,7 @@ inputManager = InputManager()
 
 soundManager = SoundManager()
 resourceManager = ResourceManager()
+resourceManager.addFont('munro24', 'fonts/munro.ttf')
 
 # add core game systems
 System.addSystem(AnimationSystem())
