@@ -1,8 +1,6 @@
 import engine
 import random
 
-import pygame
-
 #
 # create some functions to attach to the menu buttons
 #
@@ -79,12 +77,7 @@ class FourthScene(engine.Scene):
         if len(engine.sceneManager.scenes) > 1:
             engine.sceneManager.scenes[-2]._draw()
         
-        # fade overlay
-        overlay = pygame.Surface((300,200))
-        overlay.set_alpha(200)
-        overlay.fill(engine.BLACK)
-        engine.screen.blit(overlay, (150,100))
-
+        engine.drawRect(150,100,300,200,engine.BLACK,200)
         engine.drawText('Fourth scene', 175, 125, engine.WHITE, 255)
         
 firstScene = FirstScene()
