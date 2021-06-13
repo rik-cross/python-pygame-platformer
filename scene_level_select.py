@@ -8,7 +8,7 @@ import scene_fade_transition
 hues = [0, 30, 50, 90, 190, 300]
 
 class LevelSelectScene(engine.Scene):
-    def __init__(self):
+    def init(self):
     
         #engine.world.clear()
 

@@ -4,7 +4,7 @@ import scene_player_select
 
 class MainMenuScene(engine.Scene):
 
-    def __init__(self):
+    def init(self):
 
         def loadNext():
             engine.sceneManager.push(scene_fade_transition.FadeTransitionScene([self], [scene_player_select.PlayerSelectScene()]))
@@ -12,15 +12,15 @@ class MainMenuScene(engine.Scene):
         def quitGame():
             engine.sceneManager.pop()
 
-        self.mainMenu = engine.Menu(1500/2, 650)
-        self.mainMenu.addButton(engine.ButtonUI('New game', actionListener=engine.ActionListener(loadNext)))
-        self.mainMenu.addButton(engine.ButtonUI('Quit', actionListener=engine.ActionListener(quitGame)))
+        self.menu = engine.Menu(1500/2, 650)
+        self.menu.addButton(engine.ButtonUI('New game', actionListener=engine.ActionListener(loadNext)))
+        self.menu.addButton(engine.ButtonUI('Quit', actionListener=engine.ActionListener(quitGame)))
 
     def onEnter(self):       
         engine.soundManager.playMusicFade('solace')
-    def update(self):
-        self.mainMenu.update()
+    #def update(self):
+    #    self.mainMenu.update()
     def draw(self):
         # background
         engine.screen.fill(engine.DARK_GREY)
-        self.mainMenu.draw()
+        #self.mainMenu.draw()

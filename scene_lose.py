@@ -7,7 +7,7 @@ import scene_game
 import scene_player_select
 
 class LoseScene(engine.Scene):
-    def __init__(self):
+    def init(self):
         self.alpha = 0
         
         def back():
@@ -18,7 +18,7 @@ class LoseScene(engine.Scene):
 
     def update(self):
         self.alpha = min(255, self.alpha + 10)
-        self.menu.update()
+        #self.menu.update()
     def draw(self):
         if len(engine.sceneManager.scenes) > 1:
             engine.sceneManager.scenes[-2].draw()
@@ -29,4 +29,4 @@ class LoseScene(engine.Scene):
         engine.blit_alpha(engine.screen, bgSurf, (0,0), self.alpha * 0.7)
 
         engine.drawText('You lose!', 150, 150, engine.WHITE, self.alpha)
-        self.menu.draw()
+        #self.menu.draw()

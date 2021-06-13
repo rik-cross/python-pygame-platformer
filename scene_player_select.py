@@ -11,7 +11,7 @@ import scene_fade_transition
 hues = [0, 30, 50, 90, 190, 300]
 
 class PlayerSelectScene(engine.Scene):
-    def __init__(self):
+    def init(self):
 
         def pushNextScene():
             if len(globals.players) > 0:
@@ -21,9 +21,9 @@ class PlayerSelectScene(engine.Scene):
             engine.sceneManager.pop()
             engine.sceneManager.push(scene_fade_transition.FadeTransitionScene([self], []))
 
-        self.mainMenu = engine.Menu(1500/2, 650)
-        self.mainMenu.addButton(engine.ButtonUI('Choose level', actionListener=engine.ActionListener(pushNextScene)))
-        self.mainMenu.addButton(engine.ButtonUI('Back to main menu', actionListener=engine.ActionListener(popScene)))
+        self.menu = engine.Menu(1500/2, 650)
+        self.menu.addButton(engine.ButtonUI('Choose level', actionListener=engine.ActionListener(pushNextScene)))
+        self.menu.addButton(engine.ButtonUI('Back to main menu', actionListener=engine.ActionListener(popScene)))
 
     def onEnter(self):
         engine.soundManager.playMusicFade('solace')
@@ -33,7 +33,7 @@ class PlayerSelectScene(engine.Scene):
 
     def input(self):
 
-        self.mainMenu.update()
+        #self.mainMenu.update()
 
         # handle each player
         for player in [globals.player1, globals.player2, globals.player3, globals.player4]:
@@ -111,4 +111,4 @@ class PlayerSelectScene(engine.Scene):
             #screen.blit(pygame.transform.scale(utils.player_shadow, (144*2,144*2)), (positions[players.index(player)]-53,200)) 
             engine.screen.blit(pygame.transform.scale(utils.changeColour(img, colour), (45*4,51*4)), (positions[players.index(player)],250))
 
-        self.mainMenu.draw()            
+        #self.mainMenu.draw()            

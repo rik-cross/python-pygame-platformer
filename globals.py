@@ -1,3 +1,5 @@
+world = None
+
 maxLevel = 2
 lastCompletedLevel = 1
 curentLevel = 1

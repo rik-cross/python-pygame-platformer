@@ -6,7 +6,9 @@ class TransitionScene(Scene):
         self.currentPercentage = 0
         self.fromScenes = fromScenes
         self.toScenes = toScenes
-    def update(self):
+        self.menu = None
+        self.init()
+    def _update(self):
         self.currentPercentage += 2
         if self.currentPercentage >= 100:
             sceneManager.pop()

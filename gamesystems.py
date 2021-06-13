@@ -11,11 +11,11 @@ class PowerupSystem(engine.System):
         self.requiredComponents = ['effect']
         self.requiredTags = []
     
-    #def check(self, entity):
-    #    return entity.hasComponent('effect') #entity.effect is not None
-    
     def update(self):
         super().update()
+
+        if globals.world is None:
+            return
 
         # count the number of powerups in the world
         count = 0
