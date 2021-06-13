@@ -55,7 +55,7 @@ def init(size, caption=''):
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption(caption)
 
-def run():
+def run(fps=60):
     running = True
     while running:
     # game loop
@@ -78,7 +78,7 @@ def run():
             s.update()
 
         #print(clock.get_fps())
-        clock.tick(60)
+        clock.tick(fps)
 
     # quit
     pygame.quit()

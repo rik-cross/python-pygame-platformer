@@ -19,6 +19,13 @@ class Menu:
     def addButton(self, button):
         self.buttons.append(button)
     
+    def reset(self):
+        self.activeButtonIndex = 0
+        for b in self.buttons:
+            b.reset()
+        if len(self.buttons) > 0:
+            self.buttons[0].update(True, False)
+
     def update(self):
         # update active button based on input
         if engine.inputManager.isPressed(keys.w):

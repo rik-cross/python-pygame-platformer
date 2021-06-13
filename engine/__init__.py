@@ -1,7 +1,15 @@
 from .engine import *
 
+# TODO -- 
+# remove transitions as scenes
+# add optional position to draw scenes, map, etc.
+# so that one transition can be moving scenes
+# draw map somewhere else, etc.
+
 from .scene import *
 from .scene_transition import *
+from .scene_transition_fade import *
+from .transition import *
 
 from .entity import *
 from .entity_factory import *

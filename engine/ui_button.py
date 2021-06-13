@@ -17,7 +17,7 @@ class ButtonUI:
         self.pressedCurrent = False
         self.pressedPrevious = False
 
-        self.activeLength = 15
+        self.activeLength = 35
         self.pressedTimer = 0
 
         self.execNextFrame = False
@@ -31,6 +31,20 @@ class ButtonUI:
         self.width = 100
         self.height = 45
         self.text = text
+
+    def reset(self):
+
+        self.activeCurrent = False
+        self.activePrevious = False
+        
+        self.pressedCurrent = False
+        self.pressedPrevious = False
+
+        self.pressedTimer = 0
+
+        self.execNextFrame = False
+
+        self.colour = self.normalColour
 
     def update(self, active, pressed):
 

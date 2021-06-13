@@ -1,3 +1,5 @@
+from .engine import sceneManager
+
 class Scene:
     
     def __init__(self):
@@ -9,13 +11,15 @@ class Scene:
     def setMenu(self, menu):
         self.menu = menu
     
-    def __del__(self):
-    #    self.unload()
-    #def unload(self):
-        pass
-    
+    def _onEnter(self):
+        self.onEnter()
     def onEnter(self):
         pass
+
+    def _onExit(self):
+        if self.menu is not None:
+            self.menu.reset()
+        self.onExit()
     def onExit(self):
         pass
     
@@ -36,3 +40,9 @@ class Scene:
         pass
     def draw(self):
         pass
+
+    def getSceneBelow(self): # TODO
+        #s = self
+        #print(s in sceneManager.scenes)
+        #i = sceneManager.scenes.index(self)
+        return sceneManager.scenes
