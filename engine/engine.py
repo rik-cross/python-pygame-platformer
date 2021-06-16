@@ -81,6 +81,7 @@ def run(fps=60):
         clock.tick(fps)
 
     # quit
+    sceneManager.clear()
     pygame.quit()
 
 

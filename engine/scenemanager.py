@@ -46,6 +46,11 @@ class SceneManager:
             self.pop()
         # add new scenes
         for s in scenes:
-            self.push(s)
+            self.scenes.append(s)
+        # enter the top scene
+        self.enterScene()
+    def clear(self):
+        while len(self.scenes) > 0:
+            self.pop() 
     def setTransition(self, t):
         self.transition = t
