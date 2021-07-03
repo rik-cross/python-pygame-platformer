@@ -1,6 +1,7 @@
 import pygame
 
 class SceneManager:
+    
     def __init__(self):
         self.scenes = []
         self.transition = None
@@ -8,27 +9,27 @@ class SceneManager:
         return len(self.scenes) == 0
     def enterScene(self):
         if len(self.scenes) > 0:
-            self.scenes[-1]._onEnter()
+            self.getTopScene()._onEnter()
     def exitScene(self):
         if len(self.scenes) > 0:
-            self.scenes[-1]._onExit()
+            self.getTopScene()._onExit()
     def input(self):
         if len(self.scenes) > 0:
-            self.scenes[-1]._input()
+            self.getTopScene()._input()
     
     def update(self):
         if self.transition is not None:
             self.transition._update()
         else:
             if len(self.scenes) > 0:
-                self.scenes[-1]._update()
+                self.getTopScene()._update()
     
     def draw(self):
         if self.transition is not None:
             self.transition._draw()
         else:
             if len(self.scenes) > 0:
-                self.scenes[-1]._draw()
+                self.getTopScene()._draw()
         # present screen
         pygame.display.flip()
     
@@ -54,3 +55,7 @@ class SceneManager:
             self.pop() 
     def setTransition(self, t):
         self.transition = t
+    def getSceneBelow(self, scene):
+        pass
+    def getTopScene(self):
+        return self.scenes[-1]

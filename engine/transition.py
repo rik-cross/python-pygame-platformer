@@ -33,7 +33,6 @@ class Transition:
             ts._update()
 
         if self.currentPercentage == 100:
-
             
             sceneManager.transition = None
             self.onComplete()
@@ -52,6 +51,7 @@ class TransitionCrossFade(Transition):
     def draw(self):
 
         if self.currentPercentage < 50:
+            sceneManager.getTopScene()._draw()
             for s in self.fromScenes:
                 s._draw()
         else:

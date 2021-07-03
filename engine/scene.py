@@ -1,4 +1,6 @@
+import pygame
 from .engine import sceneManager
+from .engine import screen
 
 class Scene:
     
@@ -45,4 +47,4 @@ class Scene:
         #s = self
         #print(s in sceneManager.scenes)
         #i = sceneManager.scenes.index(self)
-        return sceneManager.scenes
+        return sceneManager.scenes# ........
