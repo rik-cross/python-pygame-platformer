@@ -73,7 +73,113 @@ def loadLevel(levelNumber):
             loseFunc = lostLevel,
             powerupSpawnPoints = [(400,260),(300,100)]
         )
+     if levelNumber == 3:
+            # load level 3
+            globals.world = Level(
+                platforms=[
+                    # middle
+                    # reminder rect =left top width height
+                    pygame.Rect(100, 300, 400, 50),
+                    pygame.Rect(150, 200, 400, 40),
+                    pygame.Rect(160, 500, 400, 50)
+                #     WARNING  THIS CODE IS BUGGY   FIXXXXX ITTTT ORRR ELSSSEEEEE!!!!!
+                #     FIXME: THIS CODE IS BUGGY
+                #     ERROR THIS CODE IS EXTREMELY BUGGY FIX IT
 
+                ],
+                entities=[
+                    utils.makeCoin(100, 200),
+                    utils.makeCoin(500, 240),
+                    utils.makeCoin(30, 500),
+                    utils.makeEnemy(200, 480)
+                ],
+                winFunc=wonLevel,
+                loseFunc=lostLevel,
+                powerupSpawnPoints=[(400, 260), (300, 100)]
+            )
+    if levelNumber == 4:
+        # load level 4
+        globals.world = Level(
+            platforms = [ # TODO: "fix this code... find the rectangle (pygame.Rect... to make the game playable )"
+                # middle
+                # reminder rect =left top width height
+                pygame.Rect(100, 300, 400, 50),
+                pygame.Rect(150, 200, 400, 40),
+                pygame.Rect(160, 500, 400, 50),
+                pygame.Rect(0, 700, 900, 50),
+            #  TODO: "add more rectangle dont screw this up again make it playable"
+
+            ],
+            entities = [
+                utils.makeCoin(100,200),
+                utils.makeCoin(500,240),
+                utils.makeCoin(30, 500),
+                utils.makeCoin(900, 700),
+                utils.makeEnemy(200,480),
+            ],
+            winFunc = wonLevel,
+            loseFunc = lostLevel,
+            powerupSpawnPoints = [(400,260),(300,100)]
+            )
+    if levelNumber == 5:
+        # load level 5
+        globals.world = Level(
+            platforms = [ # TODO: "fix this code... find the rectangle (pygame.Rect... to make the game playable )"
+                # middle
+                # reminder rect =left top width height
+                pygame.Rect(100, 300, 400, 50),
+                pygame.Rect(150, 200, 400, 40),
+                pygame.Rect(160, 500, 400, 50),
+                pygame.Rect(0, 700, 900, 50),
+                pygame.Rect(900,1000,900,50),
+            #  TODO: "add more rectangle dont screw this up again make it playable"
+
+            ],
+            entities = [
+                utils.makeCoin(100,200),
+                utils.makeCoin(500,240),
+                utils.makeCoin(30, 500),
+                utils.makeCoin(900, 700),
+                utils.makeEnemy(200,480),
+                utils.makeCoin(1500,998)
+            ],
+            winFunc = wonLevel,
+            loseFunc = lostLevel,
+            powerupSpawnPoints = [(400,260),(300,100)]
+            )
+    if levelNumber == 6:
+        # load level 6
+        globals.world = Level(
+            platforms = [ # TODO: "fix this code... find the rectangle (pygame.Rect... to make the game playable )"
+                # middle
+                # reminder rect =left top width height
+                pygame.Rect(120,200,30,500),
+                pygame.Rect(300,300,400,50),
+                pygame.Rect(600,500,400,60),
+
+                pygame.Rect(100, 300, 400, 50),
+                pygame.Rect(200, 100, 300, 100),
+                pygame.Rect(50, 400, 200, 150),
+
+                pygame.Rect(100, 300, 400, 40),
+                pygame.Rect(600, 400, 150, 50),
+                pygame.Rect(200, 500, 300, 50),
+                pygame.Rect(50, 200, 250, 50),
+                pygame.Rect(250, 350, 200, 40),
+                pygame.Rect(50, 350, 100, 40),
+                pygame.Rect(500, 400, 250, 40),
+
+            #  TODO: "add more rectangle dont screw this up again make it playable"
+
+            ],
+            entities = [
+                utils.makeCoin(500,240),
+
+            ],
+            winFunc = wonLevel,
+            loseFunc = lostLevel,
+            powerupSpawnPoints = [(400,260),(300,100)]
+            )
     # add players
     for player in globals.players:
         globals.world.entities.append(player)     
